@@ -1,5 +1,4 @@
 import { Required } from "type-zoo";
-import { initConfig } from "../util/config";
 
 /** get the CSDS domain in cases where we not necessarily have the domain (mostly on the consumer side) */
 const getCsdsDomain = (accountId: string): string => (accountId.startsWith("le") || accountId.startsWith("qa")) ? "hc1n.dev.lrnd.net" : "adminlogin.liveperson.net";
@@ -7,7 +6,7 @@ const getCsdsDomain = (accountId: string): string => (accountId.startsWith("le")
 export type CsdsResponse = { [name: string]: string };
 
 // mark everything optional which has default settings in the default config
-interface ICsdsConfigBase {
+export interface ICsdsConfigBase {
   accountId: string;
   csdsDomain?: string;
 }
@@ -15,7 +14,7 @@ interface ICsdsConfigBase {
 export type ICsdsConfig = Required<ICsdsConfigBase>;
 
 // mark everything optional which has default settings in the default config
-interface ICsdsServiceConfigBase extends ICsdsConfigBase {
+export interface ICsdsServiceConfigBase extends ICsdsConfigBase {
   service: string;
 }
 
@@ -26,8 +25,8 @@ export class DefaultCsdsConfig implements ICsdsConfig {
   public csdsDomain: string;
 
   constructor(config: ICsdsConfigBase) {
-    initConfig(this, config);
-    this.csdsDomain = this.csdsDomain || getCsdsDomain(this.accountId);
+    this.accountId = config.accountId;
+    this.csdsDomain = config.csdsDomain || getCsdsDomain(config.accountId);
   }
 }
 
@@ -36,5 +35,6 @@ export class DefaultCsdsServiceConfig extends DefaultCsdsConfig implements ICsds
 
   constructor(config: ICsdsServiceConfigBase) {
     super(config);
+    this.service = config.service;
   }
 }

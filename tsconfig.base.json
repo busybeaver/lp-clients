@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "target": "es2016",
+    "lib": ["es2017", "dom"],
+    "module": "commonjs",
+    "sourceMap": true,
+    "declaration": true,
+    "outDir": "lib",
+    "moduleResolution": "node",
+    "types": [
+      "node"
+    ],
+    "pretty": true,
+    "allowSyntheticDefaultImports": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "alwaysStrict": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": false,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "strictPropertyInitialization": true
+  }
+}

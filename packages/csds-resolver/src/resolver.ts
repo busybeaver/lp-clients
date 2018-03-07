@@ -1,4 +1,4 @@
-import { CsdsResponse, ICsdsConfig, ICsdsServiceConfig } from "./csds_config";
+import { CsdsResponse, ICsdsConfig, ICsdsServiceConfig } from "@lp-client/csds-config";
 
 export interface ICsdsResolver {
   resolve(config: ICsdsConfig): Promise<CsdsResponse>;

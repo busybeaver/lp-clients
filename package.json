@@ -1,6 +1,6 @@
 {
   "name": "@lp-client/parent",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "main": "lib/index.ts",
   "repository": "https://github.com/busybeaver/lp-clients.git",
   "private": true,
@@ -15,7 +15,11 @@
     }
   ],
   "license": "Apache-2.0",
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
+    "bootstrap": "lerna bootstrap",
     "test": "mocha --require ts-node/register --watch-extensions ts ./tests/**/*.ts --timeout 5000",
     "lint": "tslint 'lib/**/*.ts'",
     "generate": "ts-node build/generate_interfaces.ts",
@@ -52,6 +56,7 @@
     "json-schema-ref-parser": "^4.1.0",
     "json-schema-to-typescript": "^5.3.2",
     "jsonpath": "^1.0.0",
+    "lerna": "^2.9.0",
     "mocha": "^3.2.0",
     "pascal-case": "^2.0.1",
     "pino": "^4.10.3",
@@ -60,7 +65,7 @@
     "ts-simple-ast": "^4.2.1",
     "tslint": "^5.9.1",
     "type-zoo": "^1.1.1",
-    "typescript": "^2.6.2"
+    "typescript": "^2.7.2"
   },
   "engines": {
     "node": ">=8.9.0",
