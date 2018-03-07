@@ -1,0 +1,49 @@
+import { Transport } from "./transport";
+
+// TODO: fix this import * as Logger from "../shared/const"; // TODO: add custom label to winston logger
+const Logger = {
+  // TODO: remove this asa the Logger is working again
+  log: console.log,
+  info: console.info,
+  warn: console.warn,
+  debug: console.debug,
+  verbose: console.debug,
+  error: console.error
+
+};
+
+/**
+ * Handler for WebSocket connections.
+ *
+ * As the underlying library we use https://github.com/websockets/ws/
+ * For queueing we use https://caolan.github.io/async/docs.html#queue
+ *
+ * The Transport object can be conifgured by a Config object, @see TransportConfig
+ *
+ * @class Transport
+ * @extends {EventEmitter}
+ */
+export class AATransport extends Transport {
+ public async sendAsync(message: string) {
+
+  const that = this;
+  return new Promise((res, rej) => {
+    const reshandler = function(e) {
+      removeHandlers();
+      return res(e);
+    };
+    const errhandler = function(e) {
+      removeHandlers();
+      return rej(e);
+    };
+    const removeHandlers = function() {
+      that.removeListener(that.CONNECTED, reshandler);
+      that.removeListener(that.Event.ON_ERROR, errhandler);
+    };
+    that.on(that.Event.ON_CONNECTED, reshandler);
+    that.on(that.Event.ON_ERROR, errhandler);
+    that.send([message]);
+  });
+  }
+
+}

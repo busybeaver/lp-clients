@@ -1,0 +1,37 @@
+# EditorConfig; see: http://editorconfig.org/
+
+# top-most EditorConfig file
+root = true
+
+# Overall settings
+[*]
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+charset = utf-8
+indent_size = 2
+indent_style = space
+continuation_indent_size = 2
+
+# JavaScript/TypeScript files
+[*.{js,jsx,ts,tsx}]
+max_line_length = 150
+quote_type = double
+curly_bracket_next_line = false
+spaces_around_operators = true
+spaces_around_brackets = outside
+indent_brace_style = K&R
+
+# Config files
+[*.{json,yml,yaml}]
+quote_type = double
+
+# HTML files
+[*.html]
+indent_size = 4
+quote_type = single
+
+# XML files
+[*.xml]
+max_line_length = 250
+indent_size = 4
