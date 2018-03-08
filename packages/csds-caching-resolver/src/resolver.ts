@@ -1,7 +1,7 @@
 import * as memorize from "mem";
 
-import { SimpleCsdsResolver } from "./simple_csds_resolver";
-import { CsdsResponse, ICsdsConfig } from "./csds_config";
+import { SimpleCsdsResolver } from "@lp-client/csds-simple-resolver";
+import { CsdsResponse, ICsdsConfig } from "@lp-client/csds-config";
 
 export class CachingCsdsResolver extends SimpleCsdsResolver {
   private readonly cachedResolve: (options: ICsdsConfig) => Promise<CsdsResponse>;

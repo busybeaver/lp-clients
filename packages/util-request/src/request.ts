@@ -1,4 +1,4 @@
-import { JsonStructure, isJsonObject } from "../util/types";
+import { JsonStructure, isJsonObject } from "@lp-client/util-types";
 
 import got, {
   get as getFn,
@@ -25,4 +25,4 @@ const doRequest = async <R extends JsonStructure> (requestFn: GotFn, url: GotUrl
 
 export const get = <R extends JsonStructure> (url: GotUrl, opts?: GotOptions<string>): Promise<Response<R>> => doRequest(getFn, url, opts);
 export const post = <R extends JsonStructure> (url: GotUrl, opts?: GotBodyOptions<string>): Promise<Response<R>> => doRequest(postFn, url, opts);
-export const request = <R extends JsonStructure> (url: GotUrl, opts: GotOptions<string> & /* make method mandatory */ {method: string}): Promise<Response<R>> => doRequest(got, url, opts);
+// export const request = <R extends JsonStructure> (url: GotUrl, opts: GotOptions<string> & /* make method mandatory */ {method: string}): Promise<Response<R>> => doRequest(got, url, opts);

@@ -136,4 +136,4 @@ $RECYCLE.BIN/
 # End of https://www.gitignore.io/api/osx,node,linux,windows,visualstudiocode
 
 # project specific
-dist/**
+**/lib/**

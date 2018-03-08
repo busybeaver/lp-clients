@@ -3,16 +3,7 @@
 // them better "fit in"
 /* tslint:disable: interface-name */
 
-import * as _StateMachine from "javascript-state-machine";
-import { StateMachineConstructor } from "./typings/state-machine";
-
-// ---------------
-
-export const StateMachine: StateMachineConstructor = _StateMachine as StateMachineConstructor;
-
-// ---------------
-
-type JsonType = boolean | number | string | null | JsonStructure;
+export type JsonType = boolean | number | string | null | JsonStructure;
 export type JsonStructure = JsonObject | JsonArray | JsonTypedArray<any>;
 export interface JsonObject { [key: string]: JsonType; }
 export interface JsonArray extends JsonTypedArray<JsonType> {}
@@ -27,7 +18,7 @@ export const isJsonObject = (jsonType: JsonType): jsonType is JsonObject => {
 // ---------------
 
 export type Nullable<T> = T | undefined;
-type Purify<T extends string> = { [P in T]: T; }[T];
+export type Purify<T extends string> = { [P in T]: T; }[T];
 /**
  * Make all properties of `T` optional.
  *

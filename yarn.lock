@@ -16,6 +16,10 @@
   version "0.6.0"
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-0.6.0.tgz#383f456b26bc96c7889f0332079f4358b16c58dc"
 
+"@taoqf/javascript-state-machine@^3.0.8":
+  version "3.0.8"
+  resolved "http://tlvmvnrepository.tlv.lpnet.com/artifactory/api/npm/lp-npm-virtual/@taoqf/javascript-state-machine/-/javascript-state-machine-3.0.8.tgz#6802fef255b7edca938c020b15a1544819229acc"
+
 "@types/async@2.0.47":
   version "2.0.47"
   resolved "https://registry.yarnpkg.com/@types/async/-/async-2.0.47.tgz#f49ba1dd1f189486beb6e1d070a850f6ab4bd521"
@@ -2774,7 +2778,7 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
 
-typescript@^2.4.x, typescript@^2.6.2:
+typescript@^2.4.x:
   version "2.6.2"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.6.2.tgz#3c5b6fd7f6de0914269027f03c0946758f7673a4"
 

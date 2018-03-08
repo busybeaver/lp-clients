@@ -1,7 +1,7 @@
-import { JsonObject, JsonArray, JsonTypedArray } from "../util/types";
-import { CsdsResponse, ICsdsConfig } from "./csds_config";
-import { AbstractCsdsResolver } from "./csds_resolver";
-import { get } from "../util/request";
+import { JsonObject, JsonArray, JsonTypedArray } from "@lp-client/util-types";
+import { CsdsResponse, ICsdsConfig } from "@lp-client/csds-config";
+import { AbstractCsdsResolver } from "@lp-client/csds-resolver";
+import { get } from "@lp-client/util-request";
 
 interface ICsdsEntry extends JsonObject {
   service: string;
