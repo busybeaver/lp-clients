@@ -3,7 +3,7 @@
   "compilerOptions": {
     "baseUrl": "./packages",
     "paths": {
-      "@lp-client/*": ["./*/src"]
+      "@lp-libs/*": ["./*/src"]
     }
   }
 }

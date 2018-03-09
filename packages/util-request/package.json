@@ -1,5 +1,5 @@
 {
-  "name": "@lp-client/util-request",
+  "name": "@lp-libs/util-request",
   "version": "0.1.0",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
@@ -19,7 +19,7 @@
     "prepare": "tsc -p tsconfig.build.json"
   },
   "dependencies": {
-    "@lp-client/util-types": "^0.1.0",
+    "@lp-libs/util-types": "^0.1.0",
     "got": "^8.0.1"
   },
   "devDependencies": {

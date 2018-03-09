@@ -1,5 +1,5 @@
 {
-  "name": "@lp-client/csds-simple-resolver",
+  "name": "@lp-libs/csds-simple-resolver",
   "version": "0.1.0",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
@@ -19,10 +19,10 @@
     "prepare": "tsc -p tsconfig.build.json"
   },
   "dependencies": {
-    "@lp-client/csds-config": "^0.1.0",
-    "@lp-client/csds-resolver": "^0.1.0",
-    "@lp-client/util-request": "^0.1.0",
-    "@lp-client/util-types": "^0.1.0"
+    "@lp-libs/csds-config": "^0.1.0",
+    "@lp-libs/csds-resolver": "^0.1.0",
+    "@lp-libs/util-request": "^0.1.0",
+    "@lp-libs/util-types": "^0.1.0"
   },
   "devDependencies": {
     "typescript": "^2.7.2"

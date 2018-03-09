@@ -1,5 +1,5 @@
 {
-  "name": "@lp-libs/logger",
+  "name": "@lp-libs/csds-client",
   "version": "0.1.0",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
@@ -17,6 +17,13 @@
   "license": "Apache-2.0",
   "scripts": {
     "prepare": "tsc -p tsconfig.build.json"
+  },
+  "dependencies": {
+    "@lp-libs/csds-config": "^0.1.0",
+    "@lp-libs/csds-resolver": "^0.1.0",
+    "@lp-libs/logger": "^0.1.0",
+    "@taoqf/javascript-state-machine": "^3.0.8",
+    "type-zoo": "^1.1.1"
   },
   "devDependencies": {
     "typescript": "^2.7.2"

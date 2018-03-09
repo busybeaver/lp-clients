@@ -1,5 +1,5 @@
 {
-  "name": "@lp-client/csds-caching-resolver",
+  "name": "@lp-libs/csds-caching-resolver",
   "version": "0.1.0",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
@@ -19,8 +19,8 @@
     "prepare": "tsc -p tsconfig.build.json"
   },
   "dependencies": {
-    "@lp-client/csds-config": "^0.1.0",
-    "@lp-client/csds-simple-resolver": "^0.1.0",
+    "@lp-libs/csds-config": "^0.1.0",
+    "@lp-libs/csds-simple-resolver": "^0.1.0",
     "mem": "^3.0.0"
   },
   "devDependencies": {

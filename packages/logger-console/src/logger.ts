@@ -1,4 +1,4 @@
-import { ILogger, ILoggerFactory } from "@lp-client/logger";
+import { ILogger, ILoggerFactory } from "@lp-libs/logger";
 import chalk, { Chalk, ColorSupport } from "chalk";
 
 /**

@@ -1,5 +1,5 @@
 {
-  "name": "@lp-client/util-types",
+  "name": "@lp-libs/util-types",
   "version": "0.1.0",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",

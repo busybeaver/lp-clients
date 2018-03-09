@@ -1,2 +1,2 @@
-export * from "./csds_client_config";
-export * from "./csds_client";
+export * from "./config";
+export * from "./client";

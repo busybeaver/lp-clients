@@ -1,4 +1,4 @@
-import { JsonStructure, isJsonObject } from "@lp-client/util-types";
+import { JsonStructure, isJsonObject } from "@lp-libs/util-types";
 
 import got, {
   get as getFn,

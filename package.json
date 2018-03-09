@@ -1,5 +1,5 @@
 {
-  "name": "@lp-client/parent",
+  "name": "@lp-libs/parent",
   "version": "0.1.0",
   "main": "lib/index.ts",
   "repository": "https://github.com/busybeaver/lp-clients.git",
