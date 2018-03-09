@@ -229,22 +229,23 @@ export type ConsumerNotificationsType = "ms.MessagingEventNotification" | "cqm.E
 
 export const ConsumerNotificationsEvents = ["MessagingEventNotification", "ExConversationChangeNotification"], ConsumerNotificationsTypes = ["ms.MessagingEventNotification", "cqm.ExConversationChangeNotification"];
 
-type Constructor<T extends INotificationHandler<IConsumerNotificationsType, ConsumerNotifications>> = new (...args: any[]) => T;
+export type Constructor<T extends INotificationHandler<IConsumerNotificationsType, ConsumerNotifications>> = new (...args: any[]) => T;
+
+export class ConsumerNotificationsWrapper extends Base {
+  constructor(...args) {
+    super(...args);
+  }
+
+  onMessagingEventNotification(cb: (notification: MessagingEventNotification) => void): void {
+    this.onNotification(ConsumerNotificationsEvent.MessagingEventNotification, cb);
+  }
+
+  onExConversationChangeNotification(cb: (notification: ExConversationChangeNotification) => void): void {
+    this.onNotification(ConsumerNotificationsEvent.ExConversationChangeNotification, cb);
+  }
+}
 
 export function wrapConsumerNotifications<T extends Constructor<INotificationHandler<IConsumerNotificationsType, ConsumerNotifications>>>(Base: T) {
 
-  class ConsumerNotificationsWrapper extends Base {
-    constructor(...args) {
-      super(...args);
-    }
-
-    onMessagingEventNotification(cb: (notification: MessagingEventNotification) => void): void {
-      this.onNotification(ConsumerNotificationsEvent.MessagingEventNotification, cb);
-    }
-
-    onExConversationChangeNotification(cb: (notification: ExConversationChangeNotification) => void): void {
-      this.onNotification(ConsumerNotificationsEvent.ExConversationChangeNotification, cb);
-    }
-  }
   return ConsumerNotificationsWrapper;
 }

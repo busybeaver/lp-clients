@@ -307,30 +307,31 @@ export type AgentNotificationsType = "ms.MessagingEventNotification" | "cqm.ExCo
 
 export const AgentNotificationsEvents = ["MessagingEventNotification", "ExConversationChangeNotification", "routingTaskNotification", "agentStateNotification"], AgentNotificationsTypes = ["ms.MessagingEventNotification", "cqm.ExConversationChangeNotification", "routing.routingTaskNotification", "routing.agentStateNotification"];
 
-type Constructor<T extends INotificationHandler<IAgentNotificationsType, AgentNotifications>> = new (...args: any[]) => T;
+export type Constructor<T extends INotificationHandler<IAgentNotificationsType, AgentNotifications>> = new (...args: any[]) => T;
+
+export class AgentNotificationsWrapper extends Base {
+  constructor(...args) {
+    super(...args);
+  }
+
+  onMessagingEventNotification(cb: (notification: MessagingEventNotification) => void): void {
+    this.onNotification(AgentNotificationsEvent.MessagingEventNotification, cb);
+  }
+
+  onExConversationChangeNotification(cb: (notification: ExConversationChangeNotification) => void): void {
+    this.onNotification(AgentNotificationsEvent.ExConversationChangeNotification, cb);
+  }
+
+  onRoutingTaskNotification(cb: (notification: RoutingTaskNotification) => void): void {
+    this.onNotification(AgentNotificationsEvent.routingTaskNotification, cb);
+  }
+
+  onAgentStateNotification(cb: (notification: AgentStateNotification) => void): void {
+    this.onNotification(AgentNotificationsEvent.agentStateNotification, cb);
+  }
+}
 
 export function wrapAgentNotifications<T extends Constructor<INotificationHandler<IAgentNotificationsType, AgentNotifications>>>(Base: T) {
 
-  class AgentNotificationsWrapper extends Base {
-    constructor(...args) {
-      super(...args);
-    }
-
-    onMessagingEventNotification(cb: (notification: MessagingEventNotification) => void): void {
-      this.onNotification(AgentNotificationsEvent.MessagingEventNotification, cb);
-    }
-
-    onExConversationChangeNotification(cb: (notification: ExConversationChangeNotification) => void): void {
-      this.onNotification(AgentNotificationsEvent.ExConversationChangeNotification, cb);
-    }
-
-    onRoutingTaskNotification(cb: (notification: RoutingTaskNotification) => void): void {
-      this.onNotification(AgentNotificationsEvent.routingTaskNotification, cb);
-    }
-
-    onAgentStateNotification(cb: (notification: AgentStateNotification) => void): void {
-      this.onNotification(AgentNotificationsEvent.agentStateNotification, cb);
-    }
-  }
   return AgentNotificationsWrapper;
 }

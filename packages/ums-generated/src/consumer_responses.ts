@@ -176,11 +176,21 @@ export type ConsumerResponsesType = "cm.RequestConversationResponse" | ".ReqBody
 
 export const ConsumerResponsesEvents = ["RequestConversationResponse", "StringResp", "PublishEventResponse", "GenericSubscribeResponse", "SubscribeExConversationsResponse"], ConsumerResponsesTypes = ["cm.RequestConversationResponse", ".ReqBody$StringResp", "ms.PublishEventResponse", "GenericSubscribeResponse", "cqm.SubscribeExConversationsResponse"];
 
-type Constructor<T extends ISendHandler<ConsumerRequests, ConsumerResponses>> = new (...args: any[]) => T;
+export interface IConsumerResponsesWrapper {
+  doInitConnection(data: Omit<InitConnection, "type">): Promise<StringResp>;
+  doUpdateConversationField(data: Omit<UpdateConversationField, "type">): Promise<StringResp>;
+  doConsumerRequestConversation(data: Omit<ConsumerRequestConversation, "type">): Promise<RequestConversationResponse>;
+  doPublishEvent(data: Omit<PublishEvent, "type">): Promise<PublishEventResponse>;
+  doSubscribeMessagingEvents(data: Omit<SubscribeMessagingEvents, "type">): Promise<GenericSubscribeResponse>;
+  doSubscribeExConversations(data: Omit<SubscribeExConversations, "type">): Promise<SubscribeExConversationsResponse>;
+  doUnsubscribeExConversations(data: Omit<UnsubscribeExConversations, "type">): Promise<StringResp>;
+}
 
-export function wrapConsumerResponses<T extends Constructor<ISendHandler<ConsumerRequests, ConsumerResponses>>>(Base: T) {
+export type Constructor<T extends ISendHandler<ConsumerRequests, ConsumerResponses>> = new (...args: any[]) => T;
 
-  class ConsumerResponsesWrapper extends Base {
+export function wrapConsumerResponses<T extends Constructor<ISendHandler<ConsumerRequests, ConsumerResponses>>>(Base: T) : XConstructor<T> {
+
+  class ConsumerResponsesWrapper extends Base implements IConsumerResponsesWrapper {
     constructor(...args) {
       super(...args);
     }
