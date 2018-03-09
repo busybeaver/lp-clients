@@ -1,6 +1,6 @@
 import { Required } from "type-zoo";
-import { ITransportConfigBase, DefaultTransportConfig } from "../transport_config";
-import { IUserSession } from "../../live_engage/session_provider";
+import { ITransportConfigBase, DefaultTransportConfig } from "@lp-libs/transport";
+import { IUserSession } from "@lp-libs/le-session-provider";
 
 /**
  * The connections strategies determine whether the websocket should be opened only for sending a single message, or kept open until
@@ -13,17 +13,17 @@ export enum ConnectionStrategy {
 }
 
 // mark everything optional which has default settings in the default config
-interface IWsTransportConfigBase<SessionType extends IUserSession> extends ITransportConfigBase<SessionType> {
-  pingInterval?: number;
+export interface IWsTransportConfigBase<SessionType extends IUserSession> extends ITransportConfigBase<SessionType> {
+  readonly pingInterval?: number;
   /** Number of queue workers. NOTE: with number > 1, ordering can not be guaranteed! */
-  queueWorker?: number;
+  readonly queueWorker?: number;
   /** Time until the websocket is closed after it has seen the last message */
-  drainTimeoutMs?: number;
+  readonly drainTimeoutMs?: number;
   /** Interval for checking if the ws is open before sending a message */
-  messagingRetryIntervalMs?: number;
+  readonly messagingRetryIntervalMs?: number;
   /** Number of retries for checking if the ws is open before emitting an error/dropping the message */
-  messagingMaxRetries?: number;
-  connectionStrategy?: ConnectionStrategy;
+  readonly messagingMaxRetries?: number;
+  readonly connectionStrategy?: ConnectionStrategy;
 }
 
 export type IWsTransportConfig<SessionType extends IUserSession> = Required<IWsTransportConfigBase<SessionType>>;
@@ -40,18 +40,24 @@ export class DefaultWsTransportConfig<SessionType extends IUserSession> extends 
   public static readonly MESSAGING_MAX_RETRIES: number = 10;
   public static readonly CONNECTION_STRATEGY: ConnectionStrategy = ConnectionStrategy.LEAVE_OPEN;
 
-  public pingInterval: number = DefaultWsTransportConfig.PING_INTERVAL;
+  public readonly pingInterval: number;
   /** Number of queue workers. NOTE: with number > 1, ordering can not be guaranteed! */
-  public queueWorker: number = DefaultWsTransportConfig.QUEUE_WORKER;
+  public readonly queueWorker: number;
   /** Time until the websocket is closed after it has seen the last message */
-  public drainTimeoutMs: number = DefaultWsTransportConfig.DRAIN_TIMEOUT_MS;
+  public readonly drainTimeoutMs: number;
   /** Interval for checking if the ws is open before sending a message */
-  public messagingRetryIntervalMs: number = DefaultWsTransportConfig.MESSAGING_RETRY_INTERVAL_MS;
+  public readonly messagingRetryIntervalMs: number;
   /** Number of retries for checking if the ws is open before emitting an error/dropping the message */
-  public messagingMaxRetries: number = DefaultWsTransportConfig.MESSAGING_MAX_RETRIES;
-  public connectionStrategy: ConnectionStrategy = DefaultWsTransportConfig.CONNECTION_STRATEGY;
+  public readonly messagingMaxRetries: number;
+  public readonly connectionStrategy: ConnectionStrategy = DefaultWsTransportConfig.CONNECTION_STRATEGY;
 
   constructor(config: IWsTransportConfigBase<SessionType>) {
     super(config);
+    this.pingInterval = config.pingInterval || DefaultWsTransportConfig.PING_INTERVAL;
+    this.queueWorker = config.queueWorker || DefaultWsTransportConfig.QUEUE_WORKER;
+    this.drainTimeoutMs = config.drainTimeoutMs || DefaultWsTransportConfig.DRAIN_TIMEOUT_MS;
+    this.messagingRetryIntervalMs = config.messagingRetryIntervalMs || DefaultWsTransportConfig.MESSAGING_RETRY_INTERVAL_MS;
+    this.messagingMaxRetries = config.messagingMaxRetries || DefaultWsTransportConfig.MESSAGING_MAX_RETRIES;
+    this.connectionStrategy = config.connectionStrategy || DefaultWsTransportConfig.CONNECTION_STRATEGY;
   }
 }

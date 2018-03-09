@@ -19,7 +19,6 @@ const enum ClientTransition {
 export class CsdsClient<ConfigType extends ICsdsClientConfig> {
 
   protected readonly logger: ILogger;
-  // TODO: make config "recursive readonly" so TS understands it's immutable/frozen
   protected readonly config: ConfigType;
 
   private readonly stateMachine: StateMachine;

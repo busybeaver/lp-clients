@@ -1,12 +1,11 @@
 import { Required } from "type-zoo";
 
-import { IUserSession } from "../live_engage/session_provider";
-import { ITransportClientConfig, DefaultTransportClientConfig, ITransportClientConfigBase } from "../transport/transport_client_config";
-import { TypedEventEmitter } from "../util/event_emitter";
-import { ITransportConfig } from "../transport/transport_config";
-import { IIdGenerator, DefaultIdGenerator } from "./id_generator";
-import { InitConnection } from "../generated/consumer_requests";
-import { ISendType, IResponseType, INotificationType, INotificationsType } from "../generated/common_ums";
+import { IUserSession } from "@lp-libs/le-session-provider";
+import { ITransportClientConfig, DefaultTransportClientConfig, ITransportClientConfigBase } from "@lp-libs/transport-client";
+import { TypedEventEmitter } from "@lp-libs/util-types";
+import { ITransportConfig } from "@lp-libs/transport";
+import { IIDGenerator, DefaultIDGenerator } from "@lp-libs/ums-id-generator";
+import { InitConnection, ISendType, IResponseType, INotificationType, INotificationsType } from "@lp-libs/ums-generated";
 
 interface IUmsResponses<ResponseType> {
   [reqId: string]: ResponseType;
@@ -18,10 +17,10 @@ export interface IUmsClientConfigBase<TransportConfigType extends ITransportConf
   NotificationTypes extends INotificationsType<NotificationType>, CredentialsType, SessionType extends IUserSession>
   extends ITransportClientConfigBase<TransportConfigType, SendType, ResponseType | NotificationType, CredentialsType, SessionType> {
 
-  umsNotificationHandler?: TypedEventEmitter<NotificationTypes>;
-  umsResponseHandler?: TypedEventEmitter<IUmsResponses<ResponseType>>;
-  umsRequestTimeout?: number; // in ms
-  idGenerator?: IIdGenerator;
+  readonly umsNotificationHandler?: TypedEventEmitter<NotificationTypes>;
+  readonly umsResponseHandler?: TypedEventEmitter<IUmsResponses<ResponseType>>;
+  readonly umsRequestTimeout?: number; // in ms
+  readonly idGenerator?: IIDGenerator;
 }
 
 export type IUmsClientConfig<TransportConfigType extends ITransportConfig<SessionType>,
@@ -33,12 +32,16 @@ export class DefaultUmsClientConfig<TransportConfigType extends ITransportConfig
   extends DefaultTransportClientConfig<TransportConfigType, SendType, ResponseType | NotificationType, CredentialsType, SessionType>
   implements IUmsClientConfig<TransportConfigType, SendType, ResponseType, NotificationType, NotificationTypes, CredentialsType, SessionType> {
 
-  public umsNotificationHandler: TypedEventEmitter<NotificationType> = new TypedEventEmitter<NotificationType>();
-  public umsResponseHandler: TypedEventEmitter<IUmsResponses<ResponseType>> = new TypedEventEmitter<IUmsResponses<ResponseType>>();
-  public umsRequestTimeout: number = 10000; // in ms
-  public idGenerator: IIdGenerator = new DefaultIdGenerator();
+  public readonly umsNotificationHandler: TypedEventEmitter<NotificationType>;
+  public readonly umsResponseHandler: TypedEventEmitter<IUmsResponses<ResponseType>>;
+  public readonly umsRequestTimeout: number;
+  public readonly idGenerator: IIDGenerator;
 
   constructor(config: IUmsClientConfigBase<TransportConfigType, SendType, ResponseType, NotificationType, NotificationTypes, CredentialsType, SessionType>) {
     super(config);
+    this.umsNotificationHandler = config.umsNotificationHandler || new TypedEventEmitter<NotificationType>();
+    this.umsResponseHandler = config.umsResponseHandler || new TypedEventEmitter<IUmsResponses<ResponseType>>();
+    this.umsRequestTimeout = config.umsRequestTimeout || 10000; // in ms
+    this.idGenerator = config.idGenerator || new DefaultIDGenerator();
   }
 }

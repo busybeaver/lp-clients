@@ -1,5 +1,4 @@
 import { IUserSession } from "../live_engage/session_provider";
-import { initConfig } from "../util/config";
 import { Optional } from "../util/types";
 import { IConnectionFactory, IConnectionOpts } from "../transport/connection_factory";
 

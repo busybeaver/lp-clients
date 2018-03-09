@@ -2,10 +2,10 @@ import * as WebSocket from "ws";
 import { queue, AsyncQueue } from "async";
 import { EventEmitter } from "events";
 import { inspect } from "util";
-import { ILogger } from "../../util/logger";
-import { ITransport, IConnectOptions } from "../transport";
-import { IWsTransportConfig, DefaultWsTransportConfig, ConnectionStrategy } from "./ws_transport_config";
-import { IUserSession } from "../../live_engage/session_provider";
+import { ILogger } from "@lp-libs/logger";
+import { ITransport, IConnectOptions } from "@lp-libs/transport";
+import { IUserSession } from "@lp-libs/le-session-provider";
+import { IWsTransportConfig, DefaultWsTransportConfig, ConnectionStrategy } from "./config";
 
 // https://github.com/websockets/ws/blob/master/doc/ws.md#new-websocketaddress-protocols-options
 const enum WSEvents {
@@ -56,7 +56,7 @@ export class WsTransport<SendType, ReceiveType, SessionType extends IUserSession
   /** internally used; references for the heartbeat/ping/drain timers */
   private drainTimeoutHandle?: NodeJS.Timer;
   private hearBeatHandle?: NodeJS.Timer;
-  private logger: ILogger;
+  private logger?: ILogger;
 
   /**
    *
@@ -72,7 +72,7 @@ export class WsTransport<SendType, ReceiveType, SessionType extends IUserSession
      * Setting up a sending queue and its drain function. If ConnectionStrategy != LEAVE_OPEN, or we have timeout set,
      * the queue waits for this timeout and then closes the WebSocket connection. If a new message arrives, the timeout is reset of course.
      */
-    this.logger.info("Creating a new sending queue...");
+    this.log("info", "Creating a new sending queue...");
     this.sendingQueue = queue((task, callback) => this.transmit(task, callback)); // keep 'this' context
     this.sendingQueue.drain = () => this.drainHandler(); // keep 'this' context
 
@@ -80,19 +80,19 @@ export class WsTransport<SendType, ReceiveType, SessionType extends IUserSession
      * Cleanup if necessary
      */
     if (this.isConnected()) {
-      this.logger.warn(`Transport.connect() while already connected; disconnecting old connection first`);
+      this.log("warn", `Transport.connect() while already connected; disconnecting old connection first`);
       await this.disconnect(true);
     }
 
     /**
      * Connect
      */
-    this.logger.verbose(`Connecting websocket on URL '${domain}'...`);
+    this.log("verbose", `Connecting websocket on URL '${domain}'...`);
     const headers = config.connectionFactory.headers({ session, domain });
     const ws = this.ws = new WebSocket(endpoint, { headers }); // TODO: maybe check and throw error for UX sake
     super.emit(TransportEvent.ON_CONNECTING);
 
-    this.logger.debug("Connecting...");
+    this.log("debug", "Connecting...");
 
     /**
      * Add the event hooks
@@ -100,23 +100,23 @@ export class WsTransport<SendType, ReceiveType, SessionType extends IUserSession
     return new Promise<void>((resolve, reject) => {
       let opened = false;
       ws.on(WSEvents.OPEN, () => {
-        this.logger.info("client <---> server (Connection established)");
+        this.log("info", "client <---> server (Connection established)");
         this.onConnectedHandler();
         opened = true;
         resolve();
       });
       ws.on(WSEvents.CLOSE, (code, reason) => {
-        this.logger.info("client <-X-> server (code: %s reason: '%s')", code, reason);
+        this.log("info", "client <-X-> server (code: %s reason: '%s')", code, reason);
         this.onClosedHandler(code, reason);
       });
       ws.on(WSEvents.ERROR, (err) => {
-        this.logger.error("client -Err- server", err);
+        this.log("error", "client -Err- server", err);
         this.onErrorHandler(err);
         if (!opened) reject(err); // don't reject a promise which was already solved (aka only reject on errors during the connect phase)
       });
       ws.on(WSEvents.MESSAGE, (data) => {
-        this.logger.info("client <---- server (Message received)");
-        this.logger.verbose("client <---- server", data);
+        this.log("info", "client <---- server (Message received)");
+        this.log("verbose", "client <---- server", data);
         let msg: string = "";
         if (typeof data === "string") msg = data;
         if (Buffer.isBuffer(data)) msg = data.toString("utf8");
@@ -124,8 +124,8 @@ export class WsTransport<SendType, ReceiveType, SessionType extends IUserSession
         this.onMessageHandler(msg);
       });
       ws.on(WSEvents.UNEXPECTED_RESPONSE, (req, res) => {
-        this.logger.info("client --?-- server (Unexpected response)");
-        this.logger.debug("Unexpected response %s %s", inspect(req, false, 2), inspect(res, false, 2));
+        this.log("info", "client --?-- server (Unexpected response)");
+        this.log("debug", "Unexpected response %s %s", inspect(req, false, 2), inspect(res, false, 2));
       });
     });
   }
@@ -156,7 +156,7 @@ export class WsTransport<SendType, ReceiveType, SessionType extends IUserSession
    * @param flushQueue If true, the queue will be recreated and all unprocessed items will be deleted!
    */
   public async disconnect(flushQueue = true): Promise<void> {
-    this.logger.info("Disconnecting socket connection...");
+    this.log("info", "Disconnecting socket connection...");
     if (flushQueue && this.sendingQueue && this.sendingQueue.length() > 0) {
       // Remove the items and restart the queue
       this.sendingQueue.drain();
@@ -207,8 +207,8 @@ export class WsTransport<SendType, ReceiveType, SessionType extends IUserSession
   protected sendWithCb(cb?: (err) => void, ...messages: SendType[]) {
     if (!cb) {
       cb = (err: Error) => {
-        if (err) return this.logger.error("Error while processing messages: ", err);
-        this.logger.info("Messages processed");
+        if (err) return this.log("error", "Error while processing messages: ", err);
+        this.log("info", "Messages processed");
       };
     }
     this.sendingQueue
@@ -245,21 +245,21 @@ export class WsTransport<SendType, ReceiveType, SessionType extends IUserSession
       this.ws,
       (err2) => {
         if (err2) {
-          this.logger.error("Received an error when trying to send a message. Queue will be paused, message will be put back to the queue (preserved).");
+          this.log("error", "Received an error when trying to send a message. Queue will be paused, message will be put back to the queue (preserved).");
           if (!this.sendingQueue) return cb("SendQueue not ready/present; not properly initialized/started the transport");
           this.sendingQueue.unshift(message, (err3) => {
-            if (err3) return this.logger.error(err3);
-            this.logger.info("Formerly failed message has now been delivered!");
+            if (err3) return this.log("error", err3);
+            this.log("info", "Formerly failed message has now been delivered!");
           });
           return cb(err2);
         }
 
         if (!this.ws) return cb("failed to send message, since the socket isn't available/initialized");
-        this.logger.info("client ----> server (Sending)");
-        this.logger.verbose("client ----> server (msg: '%s')", message);
+        this.log("info", "client ----> server (Sending)");
+        this.log("verbose", "client ----> server (msg: '%s')", message);
         this.ws.send(JSON.stringify(message), (err3) => {
           if (err3) {
-            this.logger.error("Unable to send message over websocket! Err: " + err3);
+            this.log("error", "Unable to send message over websocket! Err: " + err3);
             return cb(err3.message);
           }
           cb();
@@ -272,12 +272,12 @@ export class WsTransport<SendType, ReceiveType, SessionType extends IUserSession
 
   protected drainHandler() {
     // TODO: add drain timeouts
-    this.logger.debug("all items have been processed");
+    this.log("debug", "all items have been processed");
     if (this.drainTimeoutHandle) clearTimeout(this.drainTimeoutHandle);
     delete this.drainTimeoutHandle;
     if ((this.conf ? this.conf.connectionStrategy : DefaultWsTransportConfig.CONNECTION_STRATEGY) !== ConnectionStrategy.LEAVE_OPEN) {
       this.drainTimeoutHandle = setTimeout(() => {
-        this.logger.verbose(
+        this.log("verbose",
           "Closing WS connection, because we haven't seen messages since %s ms...",
           this.conf ? this.conf.drainTimeoutMs : DefaultWsTransportConfig.DRAIN_TIMEOUT_MS,
         );
@@ -291,7 +291,7 @@ export class WsTransport<SendType, ReceiveType, SessionType extends IUserSession
     this.resume();
     if (!this.ws || this.ws.readyState !== WebSocket.OPEN) {
       // TODO: verify and remove!
-      this.logger.error(new Error(`THIS STATE SHOULD NOT OCCUR! ws = ${this.ws} state = ${this.ws ? this.ws.readyState : "unknown"}`));
+      this.log("error", new Error(`THIS STATE SHOULD NOT OCCUR! ws = ${this.ws} state = ${this.ws ? this.ws.readyState : "unknown"}`));
     }
   }
 
@@ -304,7 +304,7 @@ export class WsTransport<SendType, ReceiveType, SessionType extends IUserSession
   }
 
   protected onErrorHandler(err) {
-    this.logger.error("onError(err)", err);
+    this.log("error", "onError(err)", err);
     if (this.hearBeatHandle) clearTimeout(this.hearBeatHandle);
     delete this.hearBeatHandle;
     this.pause();
@@ -367,7 +367,7 @@ export class WsTransport<SendType, ReceiveType, SessionType extends IUserSession
       }
     } else {
       setTimeout(() => {
-        this.logger.info("wait for connection...");
+        this.log("info", "wait for connection...");
         this.waitForSocketConnection(socket, callback, retryTimeoutInMs, --maxRetries);
       }, retryTimeoutInMs);
     }
@@ -382,7 +382,7 @@ export class WsTransport<SendType, ReceiveType, SessionType extends IUserSession
   private adjustConfByConnectionStrategy(newConf: IWsTransportConfig<SessionType>): IWsTransportConfig<SessionType> {
     if (newConf.connectionStrategy) {
       const strat = newConf.connectionStrategy;
-      this.logger.info("We override the timeouts in favor of ConnectionStrategy '%s'...", strat);
+      this.log("info", "We override the timeouts in favor of ConnectionStrategy '%s'...", strat);
       switch (strat) {
         case ConnectionStrategy.CLOSE_IMMEDIATE:
           newConf.drainTimeoutMs = 100;
@@ -396,5 +396,9 @@ export class WsTransport<SendType, ReceiveType, SessionType extends IUserSession
       }
     }
     return newConf;
+  }
+
+  private log(lvl: keyof ILogger, message?: any, ...optionalParams: any[]): void {
+    if (this.logger) this.logger[lvl](message, optionalParams);
   }
 }

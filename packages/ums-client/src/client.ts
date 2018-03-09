@@ -1,9 +1,8 @@
-import { IUserSession } from "../live_engage/session_provider";
-import { TransportClient } from "../transport/transport_client";
-import { IUmsClientConfig } from "./ums_client_config";
-import { ITransportConfig } from "../transport/transport_config";
-import { INotificationHandler, ISendHandler } from "../generated/common_ums";
-import { ISendType, IResponseType, INotificationType, INotificationsType } from "../generated/common_ums";
+import { IUserSession } from "@lp-libs/le-session-provider";
+import { TransportClient } from "@lp-libs/transport-client";
+import { IUmsClientConfig } from "./config";
+import { ITransportConfig } from "@lp-libs/transport";
+import { ISendType, IResponseType, INotificationType, INotificationsType, INotificationHandler, ISendHandler } from "@lp-libs/ums-generated";
 import { setTimeout } from "timers";
 
 export class UmsClient<ConfigType extends IUmsClientConfig<TransportConfigType, SendType, ResponseType, NotificationType, NotificationTypes, CredentialsType, SessionType>,

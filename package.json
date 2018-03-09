@@ -22,14 +22,8 @@
     "bootstrap": "lerna bootstrap",
     "test": "mocha --require ts-node/register --watch-extensions ts ./tests/**/*.ts --timeout 5000",
     "lint": "tslint 'lib/**/*.ts'",
-    "generate": "ts-node build/generate_interfaces.ts",
     "preinstall": "node -e \"if (!String(process.env.npm_execpath).includes('yarn')) {console.error('>>> Use yarn instead of npm: https://yarnpkg.com/');process.exit(1);}\"",
     "dependency-cost": "cost-of-modules --yarn --no-install"
-  },
-  "dependencies": {
-    "async": "^2.6.0",
-    "most": "^1.7.2",
-    "ws": "^3.3.3"
   },
   "devDependencies": {
     "@types/async": "2.0.47",
@@ -42,6 +36,7 @@
     "@types/mocha": "^2.2.46",
     "@types/node": "8.5.8",
     "@types/pino": "^4.7.0",
+    "@types/uuid": "^3.4.3",
     "@types/ws": "^3.2.1",
     "chai": "^3.5.0",
     "cost-of-modules": "^1.0.1",
@@ -54,7 +49,6 @@
     "pascal-case": "^2.0.1",
     "pino": "^4.10.3",
     "snake-case": "^2.1.0",
-    "ts-node": "^4.1.0",
     "ts-simple-ast": "^4.2.1",
     "tslint": "^5.9.1",
     "type-zoo": "^1.1.1",
