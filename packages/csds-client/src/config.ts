@@ -6,19 +6,19 @@ import { ICsdsResolver } from "@lp-libs/csds-resolver";
 
 // mark everything optional which has default settings in the default config
 export interface ICsdsClientConfigBase {
-  csdsConfig: ICsdsConfig;
-  csdsResolver: ICsdsResolver;
-  loggerFactory: ILoggerFactory;
-  refreshInterval?: number;
+  readonly csdsConfig: ICsdsConfig;
+  readonly csdsResolver: ICsdsResolver;
+  readonly loggerFactory: ILoggerFactory;
+  readonly refreshInterval?: number;
 }
 
 export type ICsdsClientConfig = Required<ICsdsClientConfigBase>;
 
 export class DefaultCsdsClientConfig implements ICsdsClientConfig {
-  public csdsConfig: ICsdsConfig;
-  public csdsResolver: ICsdsResolver;
-  public loggerFactory: ILoggerFactory;
-  public refreshInterval: number;
+  public readonly csdsConfig: ICsdsConfig;
+  public readonly csdsResolver: ICsdsResolver;
+  public readonly loggerFactory: ILoggerFactory;
+  public readonly refreshInterval: number;
 
   constructor(config: ICsdsClientConfigBase) {
     this.csdsConfig = config.csdsConfig;

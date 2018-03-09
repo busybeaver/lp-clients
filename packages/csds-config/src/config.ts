@@ -7,22 +7,22 @@ export type CsdsResponse = { [name: string]: string };
 
 // mark everything optional which has default settings in the default config
 export interface ICsdsConfigBase {
-  accountId: string;
-  csdsDomain?: string;
+  readonly accountId: string;
+  readonly csdsDomain?: string;
 }
 
 export type ICsdsConfig = Required<ICsdsConfigBase>;
 
 // mark everything optional which has default settings in the default config
 export interface ICsdsServiceConfigBase extends ICsdsConfigBase {
-  service: string;
+  readonly service: string;
 }
 
 export type ICsdsServiceConfig = Required<ICsdsServiceConfigBase>;
 
 export class DefaultCsdsConfig implements ICsdsConfig {
-  public accountId: string;
-  public csdsDomain: string;
+  public readonly accountId: string;
+  public readonly csdsDomain: string;
 
   constructor(config: ICsdsConfigBase) {
     this.accountId = config.accountId;
@@ -31,7 +31,7 @@ export class DefaultCsdsConfig implements ICsdsConfig {
 }
 
 export class DefaultCsdsServiceConfig extends DefaultCsdsConfig implements ICsdsServiceConfig {
-  public service: string;
+  public readonly service: string;
 
   constructor(config: ICsdsServiceConfigBase) {
     super(config);

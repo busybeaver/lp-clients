@@ -1,13 +1,13 @@
-import { ILoggerFactory } from "../util/logger";
-import { ITransportConfig } from "./transport_config";
-import { IUserSession } from "../live_engage/session_provider";
+import { ILoggerFactory } from "@lp-libs/logger";
+import { IUserSession } from "@lp-libs/le-session-provider";
+import { ITransportConfig } from "./config";
 
 export interface IConnectOptions<SessionType extends IUserSession, TransportConfigType extends ITransportConfig<SessionType>> {
-  config: TransportConfigType;
-  loggerFactory: ILoggerFactory;
+  readonly config: TransportConfigType;
+  readonly loggerFactory: ILoggerFactory;
   /** the (authenticated) session of the user/client */
-  session: SessionType;
-  domain: string;
+  readonly session: SessionType;
+  readonly domain: string;
 }
 
 /**

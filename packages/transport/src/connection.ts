@@ -1,8 +1,8 @@
-import { IUserSession } from "../live_engage/session_provider";
+import { IUserSession } from "@lp-libs/le-session-provider";
 
 export interface IConnectionOpts<SessionType extends IUserSession> {
-  domain: string;
-  session: SessionType;
+  readonly domain: string;
+  readonly session: SessionType;
 }
 
 // mark everything optional which has default settings in the default config

@@ -3,12 +3,12 @@ import { ICsdsConfig } from "@lp-libs/csds-config";
 import { ICsdsResolver } from "@lp-libs/csds-resolver";
 
 export interface ISessionProviderOptions {
-  csdsConfig: ICsdsConfig;
-  csdsResolver: ICsdsResolver;
+  readonly csdsConfig: ICsdsConfig;
+  readonly csdsResolver: ICsdsResolver;
 }
 
 export interface IUserSession extends JsonObject {
-  accountId: string;
+  readonly accountId: string;
   token: string;
 }
 

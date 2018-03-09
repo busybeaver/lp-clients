@@ -1,7 +1,7 @@
-import { LeClient } from "../live_engage/le_client";
-import { IUserSession } from "../live_engage/session_provider";
-import { ITransportClientConfig } from "./transport_client_config";
-import { ITransportConfig } from "./transport_config";
+import { LeClient } from "@lp-libs/le-client";
+import { IUserSession } from "@lp-libs/le-session-provider";
+import { ITransportClientConfig } from "./config";
+import { ITransportConfig } from "@lp-libs/transport";
 
 export class TransportClient<TransportConfigType extends ITransportConfig<SessionType>, SendType, ReceiveType, ConfigType
   extends ITransportClientConfig<TransportConfigType, SendType, ReceiveType, CredentialsType, SessionType>, CredentialsType, SessionType extends IUserSession>

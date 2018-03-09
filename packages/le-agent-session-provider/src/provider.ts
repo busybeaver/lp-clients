@@ -8,22 +8,22 @@ import { JsonObject } from "@lp-libs/util-types";
 export interface IAgentCredentials {
   // name must be the same as the body param in the login request!
   // do not rename unless you know what you are doing
-  username: Required<string>;
+  readonly username: Required<string>;
 }
 
 export interface IAgentPasswordCredentials extends IAgentCredentials {
   // name must be the same as the body param in the login request!
   // do not rename unless you know what you are doing
-  password: Required<string>;
+  readonly password: Required<string>;
 }
 
 export interface IAgentTokenCredentials extends IAgentCredentials {
   // names must be the same as the body param in the login request!
   // do not rename unless you know what you are doing
-  appKey: Required<string>;
-  secret: Required<string>;
-  accessToken: Required<string>;
-  accessTokenSecret: Required<string>;
+  readonly appKey: Required<string>;
+  readonly secret: Required<string>;
+  readonly accessToken: Required<string>;
+  readonly accessTokenSecret: Required<string>;
 }
 
 export interface IAgentLoginConfig extends JsonObject {

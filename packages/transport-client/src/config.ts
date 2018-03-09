@@ -1,16 +1,15 @@
 import { Required } from "type-zoo";
 
-import { IUserSession } from "../live_engage/session_provider";
-import { ILeClientConfig, DefaultLeClientConfig, ILeClientConfigBase } from "../live_engage/le_client_config";
-import { ITransport } from "./transport";
-import { ITransportConfig, DefaultTransportConfig } from "./transport_config";
+import { IUserSession } from "@lp-libs/le-session-provider";
+import { ILeClientConfig, DefaultLeClientConfig, ILeClientConfigBase } from "@lp-libs/le-client";
+import { ITransport, ITransportConfig, DefaultTransportConfig } from "@lp-libs/transport";
 
 // mark everything optional which has default settings in the default config
 export interface ITransportClientConfigBase<TransportConfigType extends ITransportConfig<SessionType>, SendType, ReceiveType, CredentialsType, SessionType extends IUserSession>
   extends ILeClientConfigBase<CredentialsType, SessionType> {
 
-  transport: ITransport<SendType, ReceiveType, SessionType, TransportConfigType>;
-  transportConfig: TransportConfigType;
+  readonly transport: ITransport<SendType, ReceiveType, SessionType, TransportConfigType>;
+  readonly transportConfig: TransportConfigType;
 }
 
 export type ITransportClientConfig<TransportConfigType extends ITransportConfig<SessionType>, SendType, ReceiveType, CredentialsType, SessionType extends IUserSession>
@@ -20,10 +19,12 @@ export class DefaultTransportClientConfig<TransportConfigType extends ITransport
   extends DefaultLeClientConfig<CredentialsType, SessionType>
   implements ITransportClientConfig<TransportConfigType, SendType, ReceiveType, CredentialsType, SessionType> {
 
-  public transport: ITransport<SendType, ReceiveType, SessionType, TransportConfigType>;
-  public transportConfig: TransportConfigType;
+  public readonly transport: ITransport<SendType, ReceiveType, SessionType, TransportConfigType>;
+  public readonly transportConfig: TransportConfigType;
 
   constructor(config: ITransportClientConfigBase<TransportConfigType, SendType, ReceiveType, CredentialsType, SessionType>) {
     super(config);
+    this.transport = config.transport;
+    this.transportConfig = config.transportConfig;
   }
 }
