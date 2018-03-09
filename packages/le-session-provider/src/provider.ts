@@ -1,6 +1,6 @@
-import { JsonObject } from "../util/types";
-import { ICsdsConfig } from "../csds/csds_config";
-import { ICsdsResolver } from "../csds/csds_resolver";
+import { JsonObject } from "@lp-libs/util-types";
+import { ICsdsConfig } from "@lp-libs/csds-config";
+import { ICsdsResolver } from "@lp-libs/csds-resolver";
 
 export interface ISessionProviderOptions {
   csdsConfig: ICsdsConfig;

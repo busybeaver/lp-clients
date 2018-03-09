@@ -1,7 +1,7 @@
 import { Required } from "type-zoo";
 
-import { DefaultCsdsClientConfig, ICsdsClientConfig, ICsdsClientConfigBase } from "../csds/csds_client_config";
-import { ISessionProvider, IUserSession } from "./session_provider";
+import { DefaultCsdsClientConfig, ICsdsClientConfig, ICsdsClientConfigBase } from "@lp-libs/csds-client";
+import { ISessionProvider, IUserSession } from "@lp-libs/le-session-provider";
 
 // mark everything optional which has default settings in the default config
 export interface ILeClientConfigBase<CredentialsType, SessionType extends IUserSession> extends ICsdsClientConfigBase {
@@ -17,5 +17,7 @@ export class DefaultLeClientConfig<CredentialsType, SessionType extends IUserSes
 
   constructor(config: ILeClientConfigBase<CredentialsType, SessionType>) {
     super(config);
+    this.credentials = config.credentials;
+    this.sessionProvider = config.sessionProvider;
   }
 }

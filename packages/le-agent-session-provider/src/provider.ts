@@ -1,12 +1,11 @@
 import { Required } from "type-zoo";
-import { IUserSession, ISessionProvider, ISessionProviderOptions } from "./session_provider";
-import { ICsdsClientConfig } from "../csds/csds_client_config";
-import { post } from "../util/request";
+import { IUserSession, ISessionProvider, ISessionProviderOptions } from "@lp-libs/le-session-provider";
+import { post } from "@lp-libs/util-request";
 import { serialize, parse } from "cookie";
 import { Response } from "got";
-import { JsonObject } from "../util/types";
+import { JsonObject } from "@lp-libs/util-types";
 
-interface IAgentCredentials {
+export interface IAgentCredentials {
   // name must be the same as the body param in the login request!
   // do not rename unless you know what you are doing
   username: Required<string>;
@@ -27,7 +26,7 @@ export interface IAgentTokenCredentials extends IAgentCredentials {
   accessTokenSecret: Required<string>;
 }
 
-interface IAgentLoginConfig extends JsonObject {
+export interface IAgentLoginConfig extends JsonObject {
   loginName: string;
   userId: string;
   userPid: string;
@@ -41,32 +40,32 @@ interface IAgentLoginConfig extends JsonObject {
   accountTimeZoneId: string;
 }
 
-interface IBaseURI extends JsonObject {
+export interface IBaseURI extends JsonObject {
   account: string;
   baseURI: string;
   service: string;
 }
 
-interface ICsdsCollectionResponse extends JsonObject {
+export interface ICsdsCollectionResponse extends JsonObject {
   baseURIs: IBaseURI[];
 }
 
-interface IAgentLoginAgentGroupsDataItem extends JsonObject {
+export interface IAgentLoginAgentGroupsDataItem extends JsonObject {
   id: number;
   deleted: boolean;
   name: string;
 }
 
-interface IAgentLoginAgentGroupsData extends JsonObject {
+export interface IAgentLoginAgentGroupsData extends JsonObject {
   items: IAgentLoginAgentGroupsDataItem[];
   revision: number;
 }
 
-interface IAgentLoginAccountData extends JsonObject {
+export interface IAgentLoginAccountData extends JsonObject {
   agentGroupsData: IAgentLoginAgentGroupsData;
 }
 
-interface IAgentLoginCredentials extends JsonObject {
+export interface IAgentLoginCredentials extends JsonObject {
   csrf: string;
   wsuk: number;
   config: IAgentLoginConfig;

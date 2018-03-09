@@ -1,0 +1,37 @@
+{
+  "name": "@lp-libs/le-client",
+  "version": "0.1.0",
+  "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
+  "repository": "https://github.com/busybeaver/lp-clients.git",
+  "author": {
+    "name": "busybeaver",
+    "email": "858259+busybeaver@users.noreply.github.com"
+  },
+  "contributors": [
+    {
+      "name": "busybeaver",
+      "email": "858259+busybeaver@users.noreply.github.com"
+    }
+  ],
+  "license": "Apache-2.0",
+  "scripts": {
+    "prepare": "tsc -p tsconfig.build.json"
+  },
+  "dependencies": {
+    "@lp-libs/csds-client": "^0.1.0",
+    "@lp-libs/le-session-provider": "^0.1.0",
+    "@lp-libs/util-request": "^0.1.0",
+    "@lp-libs/util-types": "^0.1.0",
+    "got": "^8.2.0",
+    "type-zoo": "^1.1.1"
+  },
+  "devDependencies": {
+    "typescript": "^2.7.2"
+  },
+  "engines": {
+    "node": ">=8.9.0",
+    "npm": ">=5.5.0",
+    "yarn": ">=1.5.0"
+  }
+}

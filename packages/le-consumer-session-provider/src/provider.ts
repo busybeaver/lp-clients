@@ -1,19 +1,17 @@
 import { Required } from "type-zoo";
 
-import { IUserSession, ISessionProvider, ISessionProviderOptions } from "./session_provider";
-import { ICsdsClientConfig } from "../csds/csds_client_config";
-import { ICsdsConfig } from "../csds/csds_config";
-import { post } from "../util/request";
+import { IUserSession, ISessionProvider, ISessionProviderOptions } from "@lp-libs/le-session-provider";
+import { post } from "@lp-libs/util-request";
 import { Response } from "got";
 import { inspect } from "util";
-import { JsonObject } from "../util/types";
+import { JsonObject } from "@lp-libs/util-types";
 
 // tslint:disable-next-line:no-empty-interface
 export interface IConsumerCredentials {
   // empty... so far
 }
 
-interface IAuthenticatedConsumerCredentials extends IConsumerCredentials {
+export interface IAuthenticatedConsumerCredentials extends IConsumerCredentials {
   userId: Required<string>;
   redirectUri?: string;
 }
@@ -30,11 +28,11 @@ export interface IAuthenticatedConsumerSession extends IConsumerSession {
   userId: string;
 }
 
-interface ILoginResponse extends JsonObject {
+export interface ILoginResponse extends JsonObject {
   jwt: string;
 }
 
-abstract class ConsumerSessionProvider<CredentialsType extends IConsumerCredentials, SessionType extends IConsumerSession> implements ISessionProvider<CredentialsType, SessionType> {
+export abstract class ConsumerSessionProvider<CredentialsType extends IConsumerCredentials, SessionType extends IConsumerSession> implements ISessionProvider<CredentialsType, SessionType> {
   public async login(credentials: CredentialsType, {csdsConfig, csdsResolver}: ISessionProviderOptions): Promise<SessionType> {
     const { accountId, csdsDomain } = csdsConfig;
     return this.parseJwt(await this.doLogin(credentials, await csdsResolver.resolveService({accountId, csdsDomain, service: "idp"}), accountId), credentials, accountId);

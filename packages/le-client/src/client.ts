@@ -1,9 +1,9 @@
-import { IUserSession } from "./session_provider";
-import { CsdsClient } from "../csds/csds_client";
-import { ILeClientConfig } from "./le_client_config";
-import { request } from "../util/request";
+import { IUserSession } from "@lp-libs/le-session-provider";
+import { CsdsClient } from "@lp-libs/csds-client";
+import { ILeClientConfig } from "./config";
+import { request } from "@lp-libs/util-request";
 import { GotOptions, Response } from "got";
-import { JsonStructure } from "../util/types";
+import { JsonStructure } from "@lp-libs/util-types";
 
 export class LeClient<ConfigType extends ILeClientConfig<CredentialsType, SessionType>, CredentialsType, SessionType extends IUserSession> extends CsdsClient<ConfigType> {
 
