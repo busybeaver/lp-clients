@@ -1,0 +1,22 @@
+dist: trusty
+language: node_js
+node_js:
+  - "lts/*"
+  - "9"
+cache:
+  yarn: true
+jobs:
+  include:
+    # lint source code
+    - stage: lint
+      script: yarn lint
+    # ensure TS compiles
+    #- stage: compile
+    #  script: yarn compile
+    # run unit tests
+    #- stage: test
+    #  script: yarn test
+    # create documentation (when on master)
+    #- stage: docs
+    #  script: yarn docs
+    #  if: branch = master
