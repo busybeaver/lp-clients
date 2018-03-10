@@ -11,20 +11,12 @@ cache:
 env:
   # lint source code
   - COMMAND="yarn lint"
+  # ensure TS compiles
+  #- COMMAND="yarn compile"
+  # run unit tests
+  #- COMMAND="yarn test"
+  # create documentation
+  #- COMMAND="yarn docs"
 script:
+  # using env to run the commands in parallel
   - (eval "$COMMAND")
-#jobs:
-#  include:
-    # lint source code
-    #- stage: lint
-    #  script: yarn lint
-    # ensure TS compiles
-    #- stage: compile
-    #  script: yarn compile
-    # run unit tests
-    #- stage: test
-    #  script: yarn test
-    # create documentation (when on master)
-    #- stage: docs
-    #  script: yarn docs
-    #  if: branch = master
