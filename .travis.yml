@@ -3,13 +3,21 @@ language: node_js
 node_js:
   - "lts/*"
   - "9"
+before_install:
+  - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.5.1
+  - export PATH="$HOME/.yarn/bin:$PATH"
 cache:
   yarn: true
-jobs:
-  include:
+env:
+  # lint source code
+  - COMMAND="yarn lint"
+script:
+  - (eval "$COMMAND")
+#jobs:
+#  include:
     # lint source code
-    - stage: lint
-      script: yarn lint
+    #- stage: lint
+    #  script: yarn lint
     # ensure TS compiles
     #- stage: compile
     #  script: yarn compile
