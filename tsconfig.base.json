@@ -5,7 +5,7 @@
     "module": "commonjs",
     "sourceMap": true,
     "declaration": true,
-    "outDir": "lib",
+    "outDir": "dist",
     "moduleResolution": "node",
     "pretty": true,
     "allowSyntheticDefaultImports": true,

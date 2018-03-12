@@ -1,9 +1,13 @@
 {
   "name": "@lp-libs/transport-client",
   "version": "0.1.0",
-  "main": "lib/index.js",
-  "typings": "lib/index.d.ts",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
   "repository": "https://github.com/busybeaver/lp-clients.git",
+  "files": [
+    "src",
+    "dist"
+  ],
   "author": {
     "name": "busybeaver",
     "email": "858259+busybeaver@users.noreply.github.com"
@@ -16,7 +20,8 @@
   ],
   "license": "Apache-2.0",
   "scripts": {
-    "prepare": "tsc -p tsconfig.build.json"
+    "compile": "tsc -p tsconfig.build.json",
+    "prepack": "yarn compile && pkg-ok"
   },
   "dependencies": {
     "@lp-libs/le-client": "^0.1.0",
@@ -25,6 +30,7 @@
     "type-zoo": "^1.1.1"
   },
   "devDependencies": {
+    "pkg-ok": "^2.1.0",
     "typescript": "^2.7.2"
   },
   "engines": {
