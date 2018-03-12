@@ -230,22 +230,27 @@ export type ConsumerNotificationsType = "ms.MessagingEventNotification" | "cqm.E
 export const ConsumerNotificationsEvents = ["MessagingEventNotification", "ExConversationChangeNotification"], ConsumerNotificationsTypes = ["ms.MessagingEventNotification", "cqm.ExConversationChangeNotification"];
 
 export type Constructor<T extends INotificationHandler<IConsumerNotificationsType, ConsumerNotifications>> = new (...args: any[]) => T;
+export type ConsumerNotificationsWrapperConstructor = new (...args: any[]) => IConsumerNotificationsWrapper;
 
-export class ConsumerNotificationsWrapper extends Base {
-  constructor(...args) {
-    super(...args);
-  }
-
-  onMessagingEventNotification(cb: (notification: MessagingEventNotification) => void): void {
-    this.onNotification(ConsumerNotificationsEvent.MessagingEventNotification, cb);
-  }
-
-  onExConversationChangeNotification(cb: (notification: ExConversationChangeNotification) => void): void {
-    this.onNotification(ConsumerNotificationsEvent.ExConversationChangeNotification, cb);
-  }
+export interface IConsumerNotificationsWrapper {
+  onMessagingEventNotification(cb: (notification: MessagingEventNotification) => void): void;
+  onExConversationChangeNotification(cb: (notification: ExConversationChangeNotification) => void): void;
 }
 
-export function wrapConsumerNotifications<T extends Constructor<INotificationHandler<IConsumerNotificationsType, ConsumerNotifications>>>(Base: T) {
+export function wrapConsumerNotifications<T extends Constructor<INotificationHandler<IConsumerNotificationsType, ConsumerNotifications>>>(Base: T): T & ConsumerNotificationsWrapperConstructor {
 
+  class ConsumerNotificationsWrapper extends Base implements IConsumerNotificationsWrapper {
+    constructor(...args) {
+      super(...args);
+    }
+
+    onMessagingEventNotification(cb: (notification: MessagingEventNotification) => void): void {
+      this.onNotification(ConsumerNotificationsEvent.MessagingEventNotification, cb);
+    }
+
+    onExConversationChangeNotification(cb: (notification: ExConversationChangeNotification) => void): void {
+      this.onNotification(ConsumerNotificationsEvent.ExConversationChangeNotification, cb);
+    }
+  }
   return ConsumerNotificationsWrapper;
 }

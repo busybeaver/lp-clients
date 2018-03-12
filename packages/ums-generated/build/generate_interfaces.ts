@@ -158,8 +158,9 @@ const customNotificationData = (baseName: string, schema: any, sourceFile: Sourc
   const notificationType = sourceFile.getInterfaceOrThrow(`I${pascalName}Type`);
   notificationType.addExtends([`${notificationTypesName}<${sourceFile.getTypeAliasOrThrow(pascalName).getName()}>`]);
 
+  const interfaceConfig: InterfaceDeclarationStructure = { name: `I${pascalName}Wrapper`, isExported: true };
   const typeConstraint = `${notificationHandlerName}<${notificationType.getName()}, ${notifications.getName()}>`;
-  const typeConfig: TypeAliasDeclarationStructure = {
+  const typeConfig1: TypeAliasDeclarationStructure = {
     name: "Constructor",
     isExported: true,
     typeParameters: [{
@@ -168,7 +169,13 @@ const customNotificationData = (baseName: string, schema: any, sourceFile: Sourc
     }],
     type: "new(...args: any[]) => T",
   };
-  sourceFile.addTypeAlias(typeConfig);
+  sourceFile.addTypeAlias(typeConfig1);
+  const typeConfig2: TypeAliasDeclarationStructure = {
+    name: `${pascalName}WrapperConstructor`,
+    isExported: true,
+    type: `new(...args: any[]) => ${interfaceConfig.name}`,
+  };
+  sourceFile.addTypeAlias(typeConfig2);
 
   const argsParamName = "args";
   const superClassName = "Base";
@@ -177,7 +184,7 @@ const customNotificationData = (baseName: string, schema: any, sourceFile: Sourc
   const classConfig: ClassDeclarationStructure = {
     name: `${pascalName}Wrapper`,
     extends: superClassName,
-    isExported: true,
+    implements: [interfaceConfig.name],
     ctor: {
       parameters: [{
         name: argsParamName,
@@ -186,7 +193,7 @@ const customNotificationData = (baseName: string, schema: any, sourceFile: Sourc
       bodyText: `super(...${argsParamName});`,
     },
   };
-  classConfig.methods = events.map((event: string): MethodDeclarationStructure => {
+  classConfig.methods = interfaceConfig.methods = events.map((event: string): MethodDeclarationStructure => {
     return {
       name: `on${pascalCase(event)}`,
       scope: Scope.Public,
@@ -198,20 +205,22 @@ const customNotificationData = (baseName: string, schema: any, sourceFile: Sourc
       returnType: "void",
     };
   });
-  sourceFile.addClass(classConfig);
+  sourceFile.addInterface(interfaceConfig);
   const functionConfig: FunctionDeclarationStructure = {
     name: `wrap${pascalName}`,
     typeParameters: [{
       name: typeParamName,
-      constraint: `${typeConfig.name}<${typeConstraint}>`,
+      constraint: `${typeConfig1.name}<${typeConstraint}>`,
     }],
     parameters: [{
       name: superClassName,
       type: typeParamName,
     }],
+    returnType: `${typeParamName} & ${typeConfig2.name}`,
     isExported: true,
   };
   const fn = sourceFile.addFunction(functionConfig);
+  fn.addClass(classConfig);
   fn.setBodyText(`${fn.getBodyOrThrow().getChildSyntaxListOrThrow().getFullText()}\nreturn ${classConfig.name};`);
 };
 
@@ -292,7 +301,7 @@ const customConsumerResponseData = (schema: any, sourceFile: SourceFile, fileNam
   sourceFile.addInterface(interfaceConfig);
 
   const typeConstraint = `${sendMessageHandlerName}<${requestsName}, ${pascalName}>`;
-  const typeConfig: TypeAliasDeclarationStructure = {
+  const typeConfig1: TypeAliasDeclarationStructure = {
     name: "Constructor",
     isExported: true,
     typeParameters: [{
@@ -301,19 +310,25 @@ const customConsumerResponseData = (schema: any, sourceFile: SourceFile, fileNam
     }],
     type: `new(...args: any[]) => ${typeParamName}`,
   };
-  sourceFile.addTypeAlias(typeConfig);
+  sourceFile.addTypeAlias(typeConfig1);
+  const typeConfig2: TypeAliasDeclarationStructure = {
+    name: `${pascalName}WrapperConstructor`,
+    isExported: true,
+    type: `new(...args: any[]) => ${interfaceConfig.name}`,
+  };
+  sourceFile.addTypeAlias(typeConfig2);
 
   const functionConfig: FunctionDeclarationStructure = {
     name: `wrap${pascalName}`,
     typeParameters: [{
       name: typeParamName,
-      constraint: `${typeConfig.name}<${typeConstraint}>`,
+      constraint: `${typeConfig1.name}<${typeConstraint}>`,
     }],
     parameters: [{
       name: superClassName,
       type: typeParamName,
     }],
-    returnType: `${typeParamName} & ${interfaceConfig.name}`,
+    returnType: `${typeParamName} & ${typeConfig2.name}`,
     isExported: true,
   };
   const fn = sourceFile.addFunction(functionConfig);

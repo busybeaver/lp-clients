@@ -187,8 +187,9 @@ export interface IConsumerResponsesWrapper {
 }
 
 export type Constructor<T extends ISendHandler<ConsumerRequests, ConsumerResponses>> = new (...args: any[]) => T;
+export type ConsumerResponsesWrapperConstructor = new (...args: any[]) => IConsumerResponsesWrapper;
 
-export function wrapConsumerResponses<T extends Constructor<ISendHandler<ConsumerRequests, ConsumerResponses>>>(Base: T) : XConstructor<T> {
+export function wrapConsumerResponses<T extends Constructor<ISendHandler<ConsumerRequests, ConsumerResponses>>>(Base: T): T & ConsumerResponsesWrapperConstructor {
 
   class ConsumerResponsesWrapper extends Base implements IConsumerResponsesWrapper {
     constructor(...args) {
