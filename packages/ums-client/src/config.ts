@@ -7,7 +7,7 @@ import { ITransportConfig } from "@lp-libs/transport";
 import { IIDGenerator, DefaultIDGenerator } from "@lp-libs/ums-id-generator";
 import { InitConnection, ISendType, IResponseType, INotificationType, INotificationsType } from "@lp-libs/ums-generated";
 
-interface IUmsResponses<ResponseType> {
+export interface IUmsResponses<ResponseType> {
   [reqId: string]: ResponseType;
 }
 
