@@ -32,14 +32,14 @@ export class DefaultUmsClientConfig<TransportConfigType extends ITransportConfig
   extends DefaultTransportClientConfig<TransportConfigType, SendType, ResponseType | NotificationType, CredentialsType, SessionType>
   implements IUmsClientConfig<TransportConfigType, SendType, ResponseType, NotificationType, NotificationTypes, CredentialsType, SessionType> {
 
-  public readonly umsNotificationHandler: TypedEventEmitter<NotificationType>;
+  public readonly umsNotificationHandler: TypedEventEmitter<NotificationTypes>;
   public readonly umsResponseHandler: TypedEventEmitter<IUmsResponses<ResponseType>>;
   public readonly umsRequestTimeout: number;
   public readonly idGenerator: IIDGenerator;
 
   constructor(config: IUmsClientConfigBase<TransportConfigType, SendType, ResponseType, NotificationType, NotificationTypes, CredentialsType, SessionType>) {
     super(config);
-    this.umsNotificationHandler = config.umsNotificationHandler || new TypedEventEmitter<NotificationType>();
+    this.umsNotificationHandler = config.umsNotificationHandler || new TypedEventEmitter<NotificationTypes>();
     this.umsResponseHandler = config.umsResponseHandler || new TypedEventEmitter<IUmsResponses<ResponseType>>();
     this.umsRequestTimeout = config.umsRequestTimeout || 10000; // in ms
     this.idGenerator = config.idGenerator || new DefaultIDGenerator();

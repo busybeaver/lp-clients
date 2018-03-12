@@ -22,7 +22,7 @@
     "@lp-libs/csds-config": "^0.1.0",
     "@lp-libs/csds-resolver": "^0.1.0",
     "@lp-libs/logger": "^0.1.0",
-    "@taoqf/javascript-state-machine": "^3.0.8",
+    "javascript-state-machine": "^3.0.1",
     "type-zoo": "^1.1.1"
   },
   "devDependencies": {

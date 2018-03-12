@@ -1,6 +1,6 @@
 import { setTimeout, clearTimeout } from "timers";
 
-import StateMachine from "@taoqf/javascript-state-machine";
+import StateMachine from "javascript-state-machine";
 import { CsdsResponse } from "@lp-libs/csds-config";
 import { ICsdsClientConfig } from "./config";
 import { ILogger } from "@lp-libs/logger";
@@ -30,8 +30,6 @@ export class CsdsClient<ConfigType extends ICsdsClientConfig> {
     this.logger = config.loggerFactory.create(loggerName);
 
     const name = (transition: string) => `on${transition.charAt(0).toUpperCase() + transition.slice(1)}`;
-    // @ts-ignore (proper state machine config object, but TS typings are outdated)
-    // https://github.com/jakesgordon/javascript-state-machine/tree/c22a9d3da9e780dcd48ac90f8afa3ec8fe16f5ae#usage
     this.stateMachine = new StateMachine({
       init: ClientState.STOPPED,
       transitions: [
@@ -66,9 +64,6 @@ export class CsdsClient<ConfigType extends ICsdsClientConfig> {
   }
 
   public get state(): string {
-    // @ts-ignore (state property exists in JS but is missing in the TS typings)
-    // https://github.com/jakesgordon/javascript-state-machine/blob/c22a9d3da9e780dcd48ac90f8afa3ec8fe16f5ae/docs/states-and-transitions.md#conditional-transitions
-    // https://github.com/jakesgordon/javascript-state-machine/blob/e09614a51f2a64724bb151da6462bcb34fdb9883/lib/state-machine.js#L571-L582
     return this.stateMachine.state;
   }
 
