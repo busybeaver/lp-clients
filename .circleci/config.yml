@@ -1,7 +1,6 @@
 version: 2
 
 references:
-
   base_container_config: &base_container_config
     working_directory: ~/repo
     parallelism: 3
@@ -33,14 +32,12 @@ references:
     - run: yarn lint
 
 jobs:
-
   lint_lts:
     <<: *base_container_config
     docker:
       - *node_lts_image
     steps:
       <<: *default_steps
-
   lint_9:
     <<: *base_container_config
     docker:
@@ -48,6 +45,7 @@ jobs:
     steps:
       <<: *default_steps
 
+# to run multiple jobs in parallel
 workflows:
   version: 2
   run_parallel:
