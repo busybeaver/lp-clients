@@ -1,11 +1,13 @@
 {
   "name": "@lp-libs/ums-generated",
   "version": "0.1.0",
-  "main": "src/index.ts",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
   "repository": "https://github.com/busybeaver/lp-clients.git",
   "files": [
     "src",
-    "dist"
+    "dist",
+    "build"
   ],
   "author": {
     "name": "busybeaver",
@@ -19,12 +21,15 @@
   ],
   "license": "Apache-2.0",
   "scripts": {
-    "compile": "ts-node build/generate_interfaces.ts",
-    "prepack": "yarn compile && pkg-ok"
+    "generate": "ts-node build/generate_interfaces.ts",
+    "compile": "tsc -p tsconfig.build.json && dts-bundle --baseDir dist --main dist/index.d.ts --name @lp-libs/ums-generated --out index.d.ts --removeSource --outputAsModuleFolder",
+    "prepack": "yarn generate && yarn compile && pkg-ok"
   },
   "devDependencies": {
+    "dts-bundle": "^0.7.3",
     "pkg-ok": "^2.1.0",
-    "ts-node": "^5.0.1"
+    "ts-node": "^5.0.1",
+    "typescript": "^2.7.2"
   },
   "engines": {
     "node": ">=8.9.0",
