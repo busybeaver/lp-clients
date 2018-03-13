@@ -1,21 +1,49 @@
 version: 2
-jobs:
-  build:
-    docker:
-      - image: node:carbon # LTS 8
+
+references:
+
+  base_container_config: &base_container_config
     working_directory: ~/repo
+    parallelism: 3
+  node_lts_image: &node_lts_image
+    image: node:carbon # LTS 8
+  node_9_image: &node_9_image
+    image: node:9
+  cache_key: &cache_key
+    v1-dependencies-{{ checksum "yarn.lock" }}
+  backup_cache_key: &backup_cache_key
+    v1-dependencies-
+  restore_dep_cache: &restore_dep_cache
+    restore_cache:
+      keys:
+      - *cache_key
+      - *backup_cache_key
+  save_dep_cache: &save_dep_cache
+    save_cache:
+      paths:
+        - node_modules
+      key: *cache_key
+  default_steps: &default_steps
+    - run: curl -o- -L https://yarnpkg.com/install.sh | bash
+    - run: echo 'export PATH=$HOME/.yarn/bin:$PATH' >> $BASH_ENV
+    - run: node --version && npm --version && yarn --version
+    - *restore_dep_cache
+    - run: yarn install --no-progress
+    - *save_dep_cache
+    - run: yarn lint
+
+jobs:
+
+  lint_lts:
+    <<: *base_container_config
+    docker:
+      - *node_lts_image
     steps:
-      - checkout
-      - run: curl -o- -L https://yarnpkg.com/install.sh | bash
-      - run: export PATH="$HOME/.yarn/bin:$PATH"
-      - run: node --version && npm --version && yarn --version
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "yarn.lock" }}
-          - v1-dependencies-
-      - run: yarn install
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "yarn.lock" }}
-      - run: yarn lint
+      <<: *default_steps
+
+  lint_9:
+    <<: *base_container_config
+    docker:
+      - *node_9_image
+    steps:
+      <<: *default_steps
