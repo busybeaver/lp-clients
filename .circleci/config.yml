@@ -3,7 +3,7 @@ version: 2
 references:
   base_container_config: &base_container_config
     working_directory: ~/repo
-    parallelism: 3
+    parallelism: 4
   node_lts_image: &node_lts_image
     image: node:carbon # LTS 8
   node_9_image: &node_9_image
@@ -39,11 +39,24 @@ jobs:
     steps:
       <<: *default_steps
   lint_9:
-    <<: *base_container_config
+    working_directory: ~/repo
+    parallelism: 4
     docker:
-      - *node_9_image
+      - image: node:9
     steps:
-      <<: *default_steps
+      - run: curl -o- -L https://yarnpkg.com/install.sh | bash
+      - run: echo 'export PATH=$HOME/.yarn/bin:$PATH' >> $BASH_ENV
+      - run: node --version && npm --version && yarn --version
+      - restore_cache:
+        keys:
+        - v1-dependencies-{{ checksum "yarn.lock" }}
+        - v1-dependencies-
+      - run: yarn install --no-progress
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "yarn.lock" }}
+      - run: yarn lint
 
 # to run multiple jobs in parallel
 workflows:
