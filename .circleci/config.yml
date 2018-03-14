@@ -30,7 +30,7 @@ references:
     - *restore_dep_cache
     - run: yarn install --no-progress
     - *save_dep_cache
-    - run: yarn $YARN_COMMAND
+    - run: echo "Going to execute 'yarn $YARN_COMMAND'" && yarn $YARN_COMMAND
   lint_step: &lint_step
     lint
 
