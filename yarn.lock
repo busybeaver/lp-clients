@@ -786,9 +786,9 @@ json-schema-ref-parser@^4.1.1:
     js-yaml "^3.10.0"
     ono "^4.0.3"
 
-json-schema-to-typescript@^5.3.3:
-  version "5.3.3"
-  resolved "https://registry.yarnpkg.com/json-schema-to-typescript/-/json-schema-to-typescript-5.3.3.tgz#6430606354843f78571f9c57ea5268450f1305ce"
+json-schema-to-typescript@^5.3.4:
+  version "5.3.4"
+  resolved "https://registry.yarnpkg.com/json-schema-to-typescript/-/json-schema-to-typescript-5.3.4.tgz#a898a9ed9e3da51aef373cf73273c5f29e8dd2f8"
   dependencies:
     "@types/cli-color" "^0.3.29"
     "@types/json-schema" "^4.0.0"
@@ -1434,11 +1434,7 @@ type-zoo@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/type-zoo/-/type-zoo-1.2.1.tgz#978f2a825fef06f440718fa4671adf917e8b16cb"
 
-typescript@^2.4.x:
-  version "2.6.2"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.6.2.tgz#3c5b6fd7f6de0914269027f03c0946758f7673a4"
-
-typescript@^2.7.2:
+typescript@^2.4.x, typescript@^2.7.2:
   version "2.7.2"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.7.2.tgz#2d615a1ef4aee4f574425cdff7026edf81919836"
 
