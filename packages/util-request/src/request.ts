@@ -11,7 +11,7 @@ import got, {
 } from "got";
 
 const doRequest = async <R extends JsonStructure> (requestFn: GotFn, url: GotUrl, opts?: GotOptions<string>, secondTry: boolean = false): Promise<Response<R>> => {
-  const options = Object.assign({headers: []}, opts, {encoding: "utf-8", json: true});
+  const options = Object.assign({headers: []}, opts, {encoding: "utf8", json: true});
 
   const response = await Reflect.apply(requestFn, null, [url, options]) as Response<R>;
   const { body, statusCode, statusMessage } = response;

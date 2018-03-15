@@ -5,7 +5,7 @@ import { ITransportClientConfig, DefaultTransportClientConfig, ITransportClientC
 import { TypedEventEmitter } from "@lp-libs/util-types";
 import { ITransportConfig } from "@lp-libs/transport";
 import { IIDGenerator, DefaultIDGenerator } from "@lp-libs/ums-id-generator";
-import { InitConnection, ISendType, IResponseType, INotificationType, INotificationsType } from "@lp-libs/ums-generated";
+import { ISendType, IResponseType, INotificationType, INotificationsType } from "@lp-libs/ums-generated";
 
 export interface IUmsResponses<ResponseType> {
   [reqId: string]: ResponseType;
