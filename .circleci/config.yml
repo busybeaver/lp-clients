@@ -3,11 +3,13 @@ version: 2
 references:
   base_container_config: &base_container_config
     working_directory: ~/repo
-    # parallelism: 4
+    parallelism: 2
+    environment:
+      - YARN_COMMANDS: lint compile
   node_lts_image: &node_lts_image
     image: node:carbon # LTS 8
-  node_9_image: &node_9_image
-    image: node:9
+  node_stable_image: &node_stable_image
+    image: node:latest
   cache_key: &cache_key
     v1-dependencies-{{ checksum "yarn.lock" }}
   backup_cache_key: &backup_cache_key
@@ -24,30 +26,29 @@ references:
       key: *cache_key
   default_steps: &default_steps
     - checkout
+    - run: curl -o /usr/local/bin/circleci https://circle-downloads.s3.amazonaws.com/releases/build_agent_wrapper/circleci && chmod +x /usr/local/bin/circleci
     - run: curl -o- -L https://yarnpkg.com/install.sh | bash
     - run: echo 'export PATH=$HOME/.yarn/bin:$PATH' >> $BASH_ENV
     - run: node --version && npm --version && yarn --version
     - *restore_dep_cache
     - run: yarn install --no-progress
     - *save_dep_cache
+    - run: YARN_COMMAND=$(circleci tests split $(echo $YARN_COMMANDS | tr " " "\n"))
     - run: echo "Going to execute 'yarn $YARN_COMMAND'" && yarn $YARN_COMMAND
   lint_step: &lint_step
     lint
 
 jobs:
-  lint-lts:
+  node-lts:
     <<: *base_container_config
     docker:
       - *node_lts_image
-    environment:
-      - YARN_COMMAND: *lint_step
     steps:
       *default_steps
-  lint-9:
+  node-stable:
+    <<: *base_container_config
     docker:
-      - *node_9_image
-    environment:
-      - YARN_COMMAND: *lint_step
+      - *node_stable_image
     steps:
       *default_steps
 
