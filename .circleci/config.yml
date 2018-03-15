@@ -57,5 +57,5 @@ workflows:
   version: 2
   run_parallel:
     jobs:
-      - lint-lts
-      - lint-9
+      - node-lts
+      - node-stable
