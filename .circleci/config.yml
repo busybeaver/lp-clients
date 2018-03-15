@@ -1,21 +1,22 @@
 version: 2
 
 references:
-  base_container_config: &base_container_config
+  defaults: &defaults
     working_directory: ~/repo
-    parallelism: 2
-    environment:
-      - YARN_COMMANDS: lint compile
-  node_lts_image: &node_lts_image
-    image: circleci/node:carbon # LTS 8
-  node_stable_image: &node_stable_image
-    image: circleci/node:latest
+  defaults_node_lts: &defaults_node_lts
+    <<: *defaults
+    docker:
+      - image: node:carbon # LTS 8
+  defaults_node_stable: &defaults_node_stable
+    <<: *defaults
+    docker:
+      - image: node:latest
   cache_key: &cache_key
-    v2-dependencies-{{ .Branch }}-{{ checksum "yarn.lock" }}
+    v3-dependencies-{{ .Branch }}-{{ checksum "yarn.lock" }}
   backup1_cache_key: &backup1_cache_key
-    v2-dependencies-{{ .Branch }}-
+    v3-dependencies-{{ .Branch }}-
   backup2_cache_key: &backup2_cache_key
-    v2-dependencies-
+    v3-dependencies-
   restore_dep_cache: &restore_dep_cache
     restore_cache:
       keys:
@@ -35,22 +36,17 @@ references:
     - *restore_dep_cache
     - run: yarn install --no-progress --frozen-lockfile
     - *save_dep_cache
-    - run: YARN_COMMAND=$(circleci tests split $(echo $YARN_COMMANDS | tr " " "\n"))
     - run: echo "Going to execute 'yarn $YARN_COMMAND'" && yarn $YARN_COMMAND
   lint_step: &lint_step
     lint
 
 jobs:
   node-lts:
-    <<: *base_container_config
-    docker:
-      - *node_lts_image
+    <<: *defaults_node_lts
     steps:
       *default_steps
   node-stable:
-    <<: *base_container_config
-    docker:
-      - *node_stable_image
+    <<: *defaults_node_stable
     steps:
       *default_steps
 
