@@ -446,9 +446,9 @@ const jsonSchemaUrls: ISchemaType[] = [
       .reduce((previous, schema) => [...schema.anyOf, ...previous], []);
 
     const merged = jsonSchemaMerge({ anyOf: test });
-    await writeJson(join(process.cwd(), "src", "ums_schema.json"), merged, { encoding: "utf8", flag: "w+", spaces: 2 });
+    await writeJson(join(process.cwd(), "generated", "ums_schema.json"), merged, { encoding: "utf8", flag: "w+", spaces: 2 });
 
-    const file = join(process.cwd(), "src", "index.ts");
+    const file = join(process.cwd(), "generated", "index.ts");
     const typings = await compile(merged, "UmsSchema", { enableConstEnums: true, bannerComment: "" });
     await remove(file); // remove old/previous versions
     const ast = new Ast();
