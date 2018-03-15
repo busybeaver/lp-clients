@@ -54,7 +54,7 @@
     "jsonpath": "^1.0.0",
     "mocha": "^3.2.0",
     "pascal-case": "^2.0.1",
-    "pino": "^4.13.0",
+    "pino": "^4.14.0",
     "snake-case": "^2.1.0",
     "ts-node": "^4.1.0",
     "ts-simple-ast": "^4.2.1",
