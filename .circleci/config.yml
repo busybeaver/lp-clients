@@ -2,7 +2,7 @@ version: 2
 
 references:
   base_container_config: &base_container_config
-    # working_directory: ~/repo
+    working_directory: ~/repo
     parallelism: 2
     environment:
       - YARN_COMMANDS: lint compile
@@ -11,11 +11,11 @@ references:
   node_stable_image: &node_stable_image
     image: circleci/node:latest
   cache_key: &cache_key
-    v1-dependencies-{{ .Branch }}-{{ checksum "yarn.lock" }}
+    v2-dependencies-{{ .Branch }}-{{ checksum "yarn.lock" }}
   backup1_cache_key: &backup1_cache_key
-    v1-dependencies-{{ .Branch }}-
+    v2-dependencies-{{ .Branch }}-
   backup2_cache_key: &backup2_cache_key
-    v1-dependencies-
+    v2-dependencies-
   restore_dep_cache: &restore_dep_cache
     restore_cache:
       keys:
