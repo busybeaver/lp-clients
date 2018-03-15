@@ -4,14 +4,10 @@ node_js:
   - "lts/*" # using the latest node LTS version
   - "node" # using the latest node stable version
 env:
-  # lint source code
-  - YARN_COMMAND="lint"
-  # ensure TS compiles
-  - YARN_COMMAND="compile"
-  # run unit tests
-  #- YARN_COMMAND="yarn test"
-  # create documentation
-  #- YARN_COMMAND="yarn docs"
+  # - YARN_COMMAND="lint" # TSLint is executed/checked via CodeClimate
+  - YARN_COMMAND="compile" # check if the TS code compiles
+  - YARN_COMMAND="test:ci" # check if the unit tests succeed
+  #- YARN_COMMAND="docs" # create documentation
 cache:
   yarn: true
 before_install:

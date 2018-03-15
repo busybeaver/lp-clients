@@ -1,8 +1,12 @@
 version: 2
 
 references:
+  test_path: &test_path
+    reports/junit
   defaults: &defaults
     working_directory: ~/repo
+    environment:
+      - JEST_JUNIT_OUTPUT: "reports/junit/js-test-results.xml"
   defaults_node_lts: &defaults_node_lts
     <<: *defaults
     docker:
@@ -36,7 +40,13 @@ references:
     - *restore_dep_cache
     - run: yarn install --no-progress --frozen-lockfile
     - *save_dep_cache
-    - run: echo "Going to execute 'yarn $YARN_COMMAND'" && yarn $YARN_COMMAND
+    # - run: yarn lint # TSLint is executed/checked via CodeClimate
+    - run: yarn compile # check if the TS code compiles
+    - run: yarn test:ci # check if the unit tests succeed
+    - store_test_results:
+          path: *test_path
+      - store_artifacts:
+          path: *test_path
   lint_step: &lint_step
     lint
 
