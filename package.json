@@ -29,7 +29,7 @@
     "javascript-state-machine": "^3.0.1",
     "mem": "^3.0.0",
     "most": "^1.7.3",
-    "ws": "^3.3.3"
+    "ws": "^5.0.0"
   },
   "optionalDependencies": {
     "chalk": "^2.3.2"
