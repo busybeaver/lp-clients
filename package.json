@@ -53,7 +53,7 @@
     "snake-case": "^2.1.0",
     "ts-simple-ast": "^4.2.1",
     "tslint": "^5.9.1",
-    "typescript": "^2.7.2"
+    "typescript": "^2.7.2",
     "type-zoo": "^1.2.1"
   },
   "engines": {
