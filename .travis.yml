@@ -1,22 +1,25 @@
 dist: trusty
 language: node_js
 node_js:
-  - "lts/*"
-  - "9"
-before_install:
-  - curl -o- -L https://yarnpkg.com/install.sh | bash
-  - export PATH="$HOME/.yarn/bin:$PATH"
-cache:
-  yarn: true
+  - "lts/*" # using the latest node LTS version
+  - "node" # using the latest node stable version
 env:
   # lint source code
-  - COMMAND="yarn lint"
+  - YARN_COMMAND="lint"
   # ensure TS compiles
-  #- COMMAND="yarn compile"
+  - YARN_COMMAND="compile"
   # run unit tests
-  #- COMMAND="yarn test"
+  #- YARN_COMMAND="yarn test"
   # create documentation
-  #- COMMAND="yarn docs"
+  #- YARN_COMMAND="yarn docs"
+cache:
+  yarn: true
+before_install:
+  # install the latest version of yarn
+  - curl -o- -L https://yarnpkg.com/install.sh | bash
+  - export PATH="$HOME/.yarn/bin:$PATH"
+install:
+  - yarn install --no-progress --frozen-lockfile
 script:
   # using env to run the commands in parallel
-  - (eval "$COMMAND")
+  - echo "Going to execute 'yarn $YARN_COMMAND'" && yarn $YARN_COMMAND

@@ -23,8 +23,8 @@
     "test": "jest",
     "test:watch": "yarn test --watch",
     "test:ci": "yarn test --ci --testResultsProcessor=\"jest-junit\"",
+    "compile": "lerna run compile --stream",
     "lint": "tslint --exclude '**/node_modules/**' --exclude '**/dist/**' 'packages/**/*.ts'",
-    "compile": "lerna run compile",
     "preinstall": "node -e \"if (!String(process.env.npm_execpath).includes('yarn')) {console.error('>>> Use yarn instead of npm: https://yarnpkg.com/');process.exit(1);}\"",
     "dependency-cost": "cost-of-modules --yarn --no-install"
   },

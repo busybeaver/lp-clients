@@ -1,22 +1,28 @@
 version: 2
 
 references:
-  base_container_config: &base_container_config
+  defaults: &defaults
     working_directory: ~/repo
-    # parallelism: 4
-  node_lts_image: &node_lts_image
-    image: node:carbon # LTS 8
-  node_9_image: &node_9_image
-    image: node:9
+  defaults_node_lts: &defaults_node_lts
+    <<: *defaults
+    docker:
+      - image: node:carbon # LTS 8
+  defaults_node_stable: &defaults_node_stable
+    <<: *defaults
+    docker:
+      - image: node:latest
   cache_key: &cache_key
-    v1-dependencies-{{ checksum "yarn.lock" }}
-  backup_cache_key: &backup_cache_key
-    v1-dependencies-
+    v3-dependencies-{{ .Branch }}-{{ checksum "yarn.lock" }}
+  backup1_cache_key: &backup1_cache_key
+    v3-dependencies-{{ .Branch }}-
+  backup2_cache_key: &backup2_cache_key
+    v3-dependencies-
   restore_dep_cache: &restore_dep_cache
     restore_cache:
       keys:
         - *cache_key
-        - *backup_cache_key
+        - *backup1_cache_key
+        - *backup2_cache_key
   save_dep_cache: &save_dep_cache
     save_cache:
       paths:
@@ -28,26 +34,19 @@ references:
     - run: echo 'export PATH=$HOME/.yarn/bin:$PATH' >> $BASH_ENV
     - run: node --version && npm --version && yarn --version
     - *restore_dep_cache
-    - run: yarn install --no-progress
+    - run: yarn install --no-progress --frozen-lockfile
     - *save_dep_cache
     - run: echo "Going to execute 'yarn $YARN_COMMAND'" && yarn $YARN_COMMAND
   lint_step: &lint_step
     lint
 
 jobs:
-  lint-lts:
-    <<: *base_container_config
-    docker:
-      - *node_lts_image
-    environment:
-      - YARN_COMMAND: *lint_step
+  node-lts:
+    <<: *defaults_node_lts
     steps:
       *default_steps
-  lint-9:
-    docker:
-      - *node_9_image
-    environment:
-      - YARN_COMMAND: *lint_step
+  node-stable:
+    <<: *defaults_node_stable
     steps:
       *default_steps
 
@@ -56,5 +55,5 @@ workflows:
   version: 2
   run_parallel:
     jobs:
-      - lint-lts
-      - lint-9
+      - node-lts
+      - node-stable
