@@ -2,7 +2,7 @@ version: 2
 
 references:
   base_container_config: &base_container_config
-    working_directory: ~/repo
+    # working_directory: ~/repo
     parallelism: 2
     environment:
       - YARN_COMMANDS: lint compile
@@ -11,14 +11,17 @@ references:
   node_stable_image: &node_stable_image
     image: circleci/node:latest
   cache_key: &cache_key
-    v1-dependencies-{{ checksum "yarn.lock" }}
-  backup_cache_key: &backup_cache_key
+    v1-dependencies-{{ .Branch }}-{{ checksum "yarn.lock" }}
+  backup1_cache_key: &backup1_cache_key
+    v1-dependencies-{{ .Branch }}-
+  backup2_cache_key: &backup2_cache_key
     v1-dependencies-
   restore_dep_cache: &restore_dep_cache
     restore_cache:
       keys:
         - *cache_key
-        - *backup_cache_key
+        - *backup1_cache_key
+        - *backup2_cache_key
   save_dep_cache: &save_dep_cache
     save_cache:
       paths:
@@ -30,7 +33,7 @@ references:
     - run: echo 'export PATH=$HOME/.yarn/bin:$PATH' >> $BASH_ENV
     - run: node --version && npm --version && yarn --version
     - *restore_dep_cache
-    - run: yarn install --no-progress
+    - run: yarn install --no-progress --frozen-lockfile
     - *save_dep_cache
     - run: YARN_COMMAND=$(circleci tests split $(echo $YARN_COMMANDS | tr " " "\n"))
     - run: echo "Going to execute 'yarn $YARN_COMMAND'" && yarn $YARN_COMMAND
