@@ -1,28 +1,9 @@
 {
+  "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "target": "es2016",
-    "lib": ["es2017", "dom"],
-    "module": "commonjs",
-    //"module": "esnext",
-    "sourceMap": true,
-    "outDir": "dist",
-    "moduleResolution": "node",
-    "types": [
-      "node"
-    ],
-    "pretty": true,
-    "allowSyntheticDefaultImports": true,
-    "strictNullChecks": true,
-    "strictFunctionTypes": true,
-    "alwaysStrict": true,
-    "noFallthroughCasesInSwitch": true,
-    "noImplicitAny": false,
-    "noImplicitReturns": true,
-    "noImplicitThis": true
-    // add https://github.com/Microsoft/TypeScript/pull/20075 as soon as we have TS 2.7
-  },
-  "include": [
-    "./lib/**/*",
-    "./build/**/*"
-  ]
+    "baseUrl": "./packages",
+    "paths": {
+      "@lp-libs/*": ["./*/src"]
+    }
+  }
 }

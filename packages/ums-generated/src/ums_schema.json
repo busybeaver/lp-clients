@@ -1,0 +1,4283 @@
+{
+  "anyOf": [
+    {
+      "title": "MessagingEventNotification",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object",
+      "required": [
+        "kind",
+        "type",
+        "body"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "default": "notification",
+          "readonly": "true",
+          "description": "Defines that the message is a response"
+        },
+        "type": {
+          "description": "Contains one of the APIs notification type names",
+          "type": "string",
+          "default": "ms.MessagingEventNotification",
+          "readonly": "true"
+        },
+        "body": {
+          "type": "object",
+          "required": [
+            "changes"
+          ],
+          "properties": {
+            "changes": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "sequence",
+                  "originatorId",
+                  "serverTimestamp",
+                  "event",
+                  "dialogId"
+                ],
+                "properties": {
+                  "sequence": {
+                    "type": "integer"
+                  },
+                  "originatorId": {
+                    "type": "string"
+                  },
+                  "metadata": {
+                    "type": "array",
+                    "items": {
+                      "oneOf": [
+                        {
+                          "title": "Action Reason",
+                          "description": "Reason information while the conversation is being escalated by a bot to a human agent",
+                          "additionalProperties": false,
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "enum": [
+                                "ActionReason"
+                              ],
+                              "default": "ActionReason",
+                              "type": "string"
+                            },
+                            "reasonId": {
+                              "maxLength": 64,
+                              "type": "string"
+                            },
+                            "reason": {
+                              "maxLength": 64,
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "type"
+                          ]
+                        },
+                        {
+                          "title": "Bot Response",
+                          "description": "Information coming back from the bot provider",
+                          "additionalProperties": false,
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "enum": [
+                                "BotResponse"
+                              ],
+                              "default": "BotResponse",
+                              "type": "string"
+                            },
+                            "externalConversationId": {
+                              "maxLength": 64,
+                              "type": "string"
+                            },
+                            "businessCases": {
+                              "type": "array",
+                              "items": {
+                                "maxLength": 64,
+                                "type": "string"
+                              }
+                            },
+                            "intents": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "required": [
+                                  "id",
+                                  "confidence"
+                                ],
+                                "properties": {
+                                  "name": {
+                                    "maxLength": 64,
+                                    "type": "string"
+                                  },
+                                  "id": {
+                                    "maxLength": 64,
+                                    "type": "string"
+                                  },
+                                  "confidence": {
+                                    "type": "number",
+                                    "minimum": 0,
+                                    "maximum": 1
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "required": [
+                            "type"
+                          ]
+                        },
+                        {
+                          "title": "IBM Watson Info",
+                          "description": "Information coming back from the IBM Watson virtual agent",
+                          "additionalProperties": false,
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "enum": [
+                                "IBMWatsonInfo"
+                              ],
+                              "default": "IBMWatsonInfo",
+                              "type": "string"
+                            },
+                            "branch_exited": {
+                              "type": "boolean"
+                            },
+                            "branch_exited_reason": {
+                              "maxLength": 64,
+                              "type": "string"
+                            },
+                            "capability": {
+                              "maxLength": 64,
+                              "type": "string"
+                            },
+                            "nodes_visited": {
+                              "type": "array",
+                              "items": {
+                                "maxLength": 64,
+                                "type": "string"
+                              }
+                            },
+                            "referred_capability": {
+                              "maxLength": 64,
+                              "type": "string"
+                            },
+                            "referred_nodes": {
+                              "type": "array",
+                              "items": {
+                                "maxLength": 64,
+                                "type": "string"
+                              }
+                            },
+                            "referred_visitor_message_sequences": {
+                              "type": "array",
+                              "items": {
+                                "type": "integer"
+                              }
+                            },
+                            "entities": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "entity": {
+                                    "type": "string"
+                                  },
+                                  "location": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "integer"
+                                    }
+                                  },
+                                  "value": {
+                                    "type": "string"
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "referred_visitor_message_sequences"
+                          ]
+                        },
+                        {
+                          "title": "External Id",
+                          "description": "External id of the action was made",
+                          "additionalProperties": false,
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "enum": [
+                                "ExternalId"
+                              ],
+                              "default": "ExternalId",
+                              "type": "string"
+                            },
+                            "id": {
+                              "maxLength": 64,
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "id"
+                          ]
+                        }
+                      ]
+                    }
+                  },
+                  "serverTimestamp": {
+                    "type": "integer"
+                  },
+                  "event": {
+                    "oneOf": [
+                      {
+                        "title": "TextValue",
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "default": "ContentEvent",
+                            "readonly": "true"
+                          },
+                          "contentType": {
+                            "type": "string",
+                            "default": "text/plain",
+                            "readonly": "true"
+                          },
+                          "message": {
+                            "type": "string",
+                            "encryption": "always"
+                          }
+                        },
+                        "required": [
+                          "type",
+                          "contentType",
+                          "message"
+                        ]
+                      },
+                      {
+                        "title": "RichContentEvent",
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "default": "RichContentEvent",
+                            "enum": [
+                              "RichContentEvent"
+                            ],
+                            "readonly": "true"
+                          },
+                          "content": {
+                            "type": "object",
+                            "title": "element",
+                            "description": "Refer to Structured Content documentation"
+                          }
+                        },
+                        "required": [
+                          "type",
+                          "message"
+                        ]
+                      },
+                      {
+                        "title": "HostedFile",
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "default": "ContentEvent",
+                            "readonly": "true"
+                          },
+                          "contentType": {
+                            "type": "string",
+                            "default": "HostedFile",
+                            "readonly": "true"
+                          },
+                          "message": {
+                            "type": "object",
+                            "required": [
+                              "caption",
+                              "relativePath",
+                              "fileType"
+                            ],
+                            "properties": {
+                              "caption": {
+                                "type": "string"
+                              },
+                              "relativePath": {
+                                "type": "string"
+                              },
+                              "fileType": {
+                                "type": "string",
+                                "enum": [
+                                  "IMG",
+                                  "JPG",
+                                  "PNG",
+                                  "GIF",
+                                  "TXT",
+                                  "PDF"
+                                ]
+                              },
+                              "preview": {
+                                "type": "any"
+                              }
+                            }
+                          }
+                        },
+                        "required": [
+                          "type",
+                          "contentType",
+                          "message"
+                        ]
+                      },
+                      {
+                        "title": "ChatStateEvent",
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "default": "ChatStateEvent",
+                            "readonly": "true"
+                          },
+                          "chatState": {
+                            "type": "string",
+                            "enum": [
+                              "ACTIVE",
+                              "INACTIVE",
+                              "GONE",
+                              "COMPOSING",
+                              "PAUSE"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "type",
+                          "chatState"
+                        ]
+                      },
+                      {
+                        "title": "AcceptStatusEvent",
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "default": "AcceptStatusEvent",
+                            "readonly": "true"
+                          },
+                          "status": {
+                            "type": "string",
+                            "enum": [
+                              "ACCEPT",
+                              "READ",
+                              "ACCESS",
+                              "NACK",
+                              "ACTION"
+                            ]
+                          },
+                          "sequenceList": {
+                            "type": "array",
+                            "items": {
+                              "type": "integer"
+                            }
+                          }
+                        },
+                        "required": [
+                          "type",
+                          "status",
+                          "sequenceList"
+                        ]
+                      }
+                    ]
+                  },
+                  "dialogId": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "ExConversationChangeNotification",
+      "description": "Sent once there is a change in convesation metadata",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object",
+      "required": [
+        "kind",
+        "type",
+        "body"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "default": "notification",
+          "readonly": "true",
+          "description": "Defines that the message is a response"
+        },
+        "type": {
+          "description": "Contains one of the APIs notification type names",
+          "type": "string",
+          "enum": [
+            "cqm.ExConversationChangeNotification"
+          ],
+          "default": "cqm.ExConversationChangeNotification",
+          "readonly": "true"
+        },
+        "body": {
+          "type": "object",
+          "required": [
+            "subscriptionId",
+            "changes"
+          ],
+          "properties": {
+            "subscriptionId": {
+              "type": "string"
+            },
+            "changes": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "type",
+                  "result"
+                ],
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "UPSERT",
+                      "DELETE"
+                    ]
+                  },
+                  "result": {
+                    "type": "object",
+                    "required": [
+                      "convId",
+                      "conversationDetails",
+                      "lastUpdateTime"
+                    ],
+                    "properties": {
+                      "convId": {
+                        "type": "string"
+                      },
+                      "conversationDetails": {
+                        "type": "object",
+                        "required": [
+                          "participants",
+                          "state",
+                          "startTs"
+                        ],
+                        "properties": {
+                          "participants": {
+                            "description": "Contains the IDs of the conversation participants from each role, both consumers and agents",
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string"
+                                },
+                                "role": {
+                                  "type": "string",
+                                  "enum": [
+                                    "CONSUMER",
+                                    "ASSIGNED_AGENT",
+                                    "MANAGER"
+                                  ]
+                                }
+                              }
+                            }
+                          },
+                          "state": {
+                            "type": "string",
+                            "enum": [
+                              "OPEN",
+                              "CLOSE"
+                            ]
+                          },
+                          "startTs": {
+                            "type": "integer",
+                            "description": "Time stamp of the conversation beginning"
+                          },
+                          "endTs": {
+                            "type": "integer",
+                            "description": "Time stamp of the conversation end"
+                          },
+                          "ttr": {
+                            "type": "object",
+                            "description": "Time To Respond. The contact center response SLA for this conversation",
+                            "required": [
+                              "ttrType",
+                              "value"
+                            ],
+                            "properties": {
+                              "ttrType": {
+                                "type": "string",
+                                "description": "A label for the SLA policy",
+                                "enum": [
+                                  "CUSTOM",
+                                  "NORMAL",
+                                  "PRIORITIZED",
+                                  "URGENT"
+                                ]
+                              },
+                              "value": {
+                                "description": "Seconds from consumer input till agent response.",
+                                "type": "integer"
+                              }
+                            }
+                          },
+                          "delay": {
+                            "type": "object",
+                            "description": "If the contact center is not available, this field indicates until when the handling of the current conversation will be delayed.<br><b>Note: </b> The delay value affects the TTR (see above) calculation. The TTR counts the number of seconds from the consumer response, but if there is a delay the counting will start only from the availablity point of the contact center.",
+                            "required": [
+                              "type",
+                              "tillWhen"
+                            ],
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "description": "A label for the delay type",
+                                "enum": [
+                                  "NIGHT",
+                                  "WEEKEND",
+                                  "HOLIDAY"
+                                ]
+                              },
+                              "tillWhen": {
+                                "description": "Time stamp of when the contact center will be available again to handle this conversation.",
+                                "type": "integer"
+                              }
+                            }
+                          },
+                          "csat": {
+                            "description": "Consumer statisfaction information. The data that was submitted by the consumer after the conversation was closed.",
+                            "type": "object",
+                            "required": [
+                              "field",
+                              "csatRate",
+                              "csatResolutionConfirmation",
+                              "status"
+                            ],
+                            "properties": {
+                              "field": {
+                                "type": "string",
+                                "default": "CSATRate",
+                                "enum": [
+                                  "CSATRate"
+                                ],
+                                "readonly": true
+                              },
+                              "csatRate": {
+                                "type": "integer",
+                                "enum": [
+                                  1,
+                                  2,
+                                  3,
+                                  4,
+                                  5
+                                ]
+                              },
+                              "csatResolutionConfirmation": {
+                                "type": "boolean"
+                              },
+                              "status": {
+                                "type": "string",
+                                "enum": [
+                                  "FILLED",
+                                  "PARTIALLY_FILLED",
+                                  "SKIPPED"
+                                ]
+                              }
+                            }
+                          },
+                          "manualETTR": {
+                            "description": "Timestamp of the 'Manual Effective Time To Response'. The agent can manually set the expected timestamp of the next response. This will override any value of the above TTR and Delay fields",
+                            "type": "integer"
+                          }
+                        }
+                      },
+                      "lastUpdateTime": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "routingTaskNotification",
+      "description": "Sent once there is a change in a routing task",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object",
+      "required": [
+        "kind",
+        "type",
+        "body"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "default": "notification",
+          "readonly": "true",
+          "description": "Defines that the message is a response"
+        },
+        "type": {
+          "description": "Contains one of the APIs notification type names",
+          "type": "string",
+          "enum": [
+            "routing.routingTaskNotification"
+          ],
+          "default": "routing.routingTaskNotification",
+          "readonly": "true"
+        },
+        "body": {
+          "type": "object",
+          "required": [
+            "subscriptionId",
+            "changes"
+          ],
+          "properties": {
+            "subscriptionId": {
+              "type": "string"
+            },
+            "changes": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "type",
+                  "result"
+                ],
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "DELETE",
+                      "UPSERT"
+                    ]
+                  },
+                  "result": {
+                    "type": "object",
+                    "required": [
+                      "routingTaskId",
+                      "taskCompleted",
+                      "conversationId",
+                      "consumerId",
+                      "skillId",
+                      "ringsDetails"
+                    ],
+                    "properties": {
+                      "taskCompleted": {
+                        "type": "boolean"
+                      },
+                      "conversationId": {
+                        "type": "string"
+                      },
+                      "consumerId": {
+                        "type": "string"
+                      },
+                      "skillId": {
+                        "type": "string"
+                      },
+                      "ringsDetails": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "required": [
+                            "ringState"
+                          ],
+                          "properties": {
+                            "ringId": {
+                              "type": "string"
+                            },
+                            "ringExpiration": {
+                              "type": "integer"
+                            },
+                            "ringState": {
+                              "type": "string",
+                              "enum": [
+                                "ACCEPTED",
+                                "AUTO_ACCEPT",
+                                "CANCELLED",
+                                "EXPIRED",
+                                "REJECTED",
+                                "WAITING"
+                              ]
+                            },
+                            "weight": {
+                              "type": "integer"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "agentStateNotification",
+      "description": "Sent once there is a change in the state of the agent",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object",
+      "required": [
+        "kind",
+        "type",
+        "body"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "default": "notification",
+          "readonly": "true",
+          "description": "Defines that the message is a response"
+        },
+        "type": {
+          "description": "Contains one of the APIs notification type names",
+          "type": "string",
+          "enum": [
+            "routing.agentStateNotification"
+          ],
+          "default": "routing.agentStateNotification",
+          "readonly": "true"
+        },
+        "body": {
+          "type": "object",
+          "required": [
+            "subscriptionId",
+            "changes"
+          ],
+          "properties": {
+            "subscriptionId": {
+              "type": "string"
+            },
+            "changes": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "type",
+                  "result"
+                ],
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "UPSERT",
+                      "DELETE"
+                    ]
+                  },
+                  "result": {
+                    "type": "object",
+                    "required": [
+                      "availability"
+                    ],
+                    "properties": {
+                      "availability": {
+                        "type": "string",
+                        "enum": [
+                          "AWAY",
+                          "BACK_SOON",
+                          "OFFLINE",
+                          "ONLINE"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "RequestConversationResponse",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object",
+      "required": [
+        "kind",
+        "reqId",
+        "code",
+        "type",
+        "body"
+      ],
+      "description": "Upon successful conversation creation, this reponse will be sent by the server",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "default": "resp",
+          "readonly": "true",
+          "description": "Defines that the message is a response"
+        },
+        "reqId": {
+          "type": "string",
+          "description": "The ID of the request that originated this response",
+          "minLength": 1,
+          "maxLength": 64,
+          "default": "0"
+        },
+        "type": {
+          "description": "Contains one of the APIs response type names",
+          "type": "string",
+          "default": "cm.RequestConversationResponse",
+          "readonly": "true"
+        },
+        "code": {
+          "type": "integer",
+          "description": "Response code according to the HTTP status codes standard"
+        },
+        "body": {
+          "type": "object",
+          "required": [
+            "conversationId"
+          ],
+          "properties": {
+            "conversationId": {
+              "description": "The ID of the generated conversation",
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 64
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "StringResp",
+      "description": "General response message with string description.",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object",
+      "required": [
+        "kind",
+        "reqId",
+        "code",
+        "type",
+        "body"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "default": "resp",
+          "readonly": "true",
+          "description": "Defines that the message is a response"
+        },
+        "reqId": {
+          "type": "string",
+          "description": "The ID of the request that originated this response",
+          "minLength": 1,
+          "maxLength": 64,
+          "default": "0"
+        },
+        "type": {
+          "description": "Contains one of the APIs response type names",
+          "type": "string",
+          "default": ".ReqBody$StringResp",
+          "readonly": "true"
+        },
+        "code": {
+          "type": "integer",
+          "description": "Response code according to the HTTP status codes standard"
+        },
+        "body": {
+          "type": "string",
+          "description": "Optional text description for the response",
+          "default": "Some description",
+          "maxLength": 128
+        }
+      }
+    },
+    {
+      "title": "PublishEventResponse",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object",
+      "required": [
+        "kind",
+        "reqId",
+        "code",
+        "type",
+        "body"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "default": "resp",
+          "readonly": "true",
+          "description": "Defines that the message is a response"
+        },
+        "reqId": {
+          "type": "string",
+          "description": "The ID of the request that originated this response",
+          "minLength": 1,
+          "maxLength": 64,
+          "default": "0"
+        },
+        "type": {
+          "description": "Contains one of the APIs response type names",
+          "type": "string",
+          "default": "ms.PublishEventResponse",
+          "readonly": "true"
+        },
+        "code": {
+          "type": "integer",
+          "description": "Response code according to the HTTP status codes standard"
+        },
+        "body": {
+          "type": "object",
+          "required": [],
+          "properties": {
+            "sequence": {
+              "description": "content and read receipt events get a sequential ID in the conversation.",
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "GenericSubscribeResponse",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object",
+      "required": [
+        "kind",
+        "reqId",
+        "code",
+        "type",
+        "body"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "default": "resp",
+          "readonly": "true",
+          "description": "Defines that the message is a response"
+        },
+        "reqId": {
+          "type": "string",
+          "description": "The ID of the request that originated this response",
+          "minLength": 1,
+          "maxLength": 64,
+          "default": "0"
+        },
+        "type": {
+          "description": "Contains one of the APIs response type names",
+          "type": "string",
+          "default": "GenericSubscribeResponse",
+          "readonly": "true"
+        },
+        "code": {
+          "type": "integer",
+          "description": "Response code according to the HTTP status codes standard"
+        },
+        "body": {
+          "type": "object"
+        }
+      }
+    },
+    {
+      "title": "GetUserProfileResponse",
+      "description": "Gets customer and personal info for the given consumerId.",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object",
+      "required": [
+        "body",
+        "code",
+        "kind",
+        "reqId",
+        "type"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "default": "resp",
+          "readonly": "true",
+          "description": "Defines that the message is a response"
+        },
+        "reqId": {
+          "type": "string",
+          "description": "The ID of the request that originated this response",
+          "minLength": 1,
+          "maxLength": 64,
+          "default": "0"
+        },
+        "type": {
+          "description": "Contains one of the APIs response type names",
+          "type": "string",
+          "enum": [
+            "up.GetUserProfile$Response"
+          ],
+          "default": "up.GetUserProfile$Response",
+          "readonly": "true"
+        },
+        "code": {
+          "type": "integer",
+          "description": "Response code according to the HTTP status codes standard"
+        },
+        "body": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "oneOf": [
+              {
+                "title": "CustomerInfo",
+                "description": "Customer Infomration",
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "default": "ctmrinfo",
+                    "readonly": "true"
+                  },
+                  "auth": {
+                    "type": "object",
+                    "properties": {
+                      "amr": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "enum": [
+                            "face",
+                            "fpt",
+                            "geo",
+                            "hwk",
+                            "iris",
+                            "kba",
+                            "mca",
+                            "mfa",
+                            "otp",
+                            "pin",
+                            "pwd",
+                            "rba",
+                            "retina",
+                            "sc",
+                            "sms",
+                            "swk",
+                            "tel",
+                            "user",
+                            "vbm",
+                            "wia"
+                          ],
+                          "description": "Authentication Methods References, see https://tools.ietf.org/html/draft-ietf-oauth-amr-values-05."
+                        }
+                      },
+                      "iss": {
+                        "type": "string",
+                        "description": "Issuer URI"
+                      }
+                    }
+                  },
+                  "info": {
+                    "type": "object",
+                    "properties": {
+                      "cstatus": {
+                        "type": "string",
+                        "description": "CUSTOMER LIFECYCLE STATUS. FROM PRE-DEFINED LIST."
+                      },
+                      "ctype": {
+                        "type": "string",
+                        "description": "CUSTOMER TYPE OR TIER. FROM PRE-DEFINED LIST"
+                      },
+                      "customerId": {
+                        "type": "string",
+                        "description": "UNIQUE CUSTOMER IDENTIFIER"
+                      },
+                      "balance": {
+                        "type": "number",
+                        "description": "THE CUSTOMER FINANCIAL BALANCE IN DECIMAL VALUE"
+                      },
+                      "socialId": {
+                        "type": "string",
+                        "description": "SOCIAL ID OF YOUR CHOICE: FACEBOOK, TWITTER ETC..."
+                      },
+                      "imei": {
+                        "type": "string",
+                        "description": "UNIQUE DEVICE OR PHONE IDENTIFIER"
+                      },
+                      "userName": {
+                        "type": "string",
+                        "description": "CONSUMER NICKNAME OR USERNAME"
+                      },
+                      "companySize": {
+                        "type": "integer",
+                        "description": "COMPANY SIZE MEASURED BY NUMBER OF EMPLOYEES"
+                      },
+                      "accountName": {
+                        "type": "string",
+                        "description": "THE CUSTOMER'S COMPANY NAME"
+                      },
+                      "role": {
+                        "type": "string",
+                        "description": "CONSUMER ROLE TITLE"
+                      },
+                      "lastPaymentDate": {
+                        "type": "object",
+                        "required": [
+                          "day",
+                          "month",
+                          "year"
+                        ],
+                        "properties": {
+                          "day": {
+                            "type": "integer",
+                            "description": ""
+                          },
+                          "month": {
+                            "type": "integer",
+                            "description": ""
+                          },
+                          "year": {
+                            "type": "integer",
+                            "description": ""
+                          }
+                        }
+                      },
+                      "registrationDate": {
+                        "type": "object",
+                        "description": "",
+                        "required": [
+                          "day",
+                          "month",
+                          "year"
+                        ],
+                        "properties": {
+                          "day": {
+                            "type": "integer"
+                          },
+                          "month": {
+                            "type": "integer"
+                          },
+                          "year": {
+                            "type": "integer"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": [
+                  "type",
+                  "info"
+                ]
+              },
+              {
+                "title": "PersonalInfo",
+                "description": "Personal Infomration",
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "default": "personal",
+                    "readonly": "true"
+                  },
+                  "auth": {
+                    "type": "object",
+                    "properties": {
+                      "amr": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "enum": [
+                            "face",
+                            "fpt",
+                            "geo",
+                            "hwk",
+                            "iris",
+                            "kba",
+                            "mca",
+                            "mfa",
+                            "otp",
+                            "pin",
+                            "pwd",
+                            "rba",
+                            "retina",
+                            "sc",
+                            "sms",
+                            "swk",
+                            "tel",
+                            "user",
+                            "vbm",
+                            "wia"
+                          ],
+                          "description": "Authentication Methods References, see https://tools.ietf.org/html/draft-ietf-oauth-amr-values-05."
+                        }
+                      },
+                      "iss": {
+                        "type": "string",
+                        "description": "Issuer URI"
+                      }
+                    }
+                  },
+                  "personal": {
+                    "type": "object",
+                    "properties": {
+                      "firstname": {
+                        "type": "string",
+                        "encryption": "optional"
+                      },
+                      "lastname": {
+                        "type": "string",
+                        "encryption": "optional"
+                      },
+                      "age": {
+                        "type": "object",
+                        "properties": {
+                          "age": {
+                            "type": "integer"
+                          },
+                          "year": {
+                            "type": "integer"
+                          },
+                          "month": {
+                            "type": "integer"
+                          },
+                          "day": {
+                            "type": "integer"
+                          }
+                        }
+                      },
+                      "contacts": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "email": {
+                              "type": "string",
+                              "encryption": "optional"
+                            },
+                            "phone": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      "gender": {
+                        "type": "string",
+                        "enum": [
+                          "MALE",
+                          "FEMALE",
+                          "OTHER"
+                        ]
+                      },
+                      "language": {
+                        "type": "string"
+                      },
+                      "company": {
+                        "type": "string",
+                        "description": "Company name."
+                      }
+                    }
+                  }
+                },
+                "required": [
+                  "type",
+                  "personal"
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "title": "SubscribeExConversationsResponse",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object",
+      "required": [
+        "kind",
+        "reqId",
+        "code",
+        "type",
+        "body"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "default": "resp",
+          "readonly": "true",
+          "description": "Defines that the message is a response"
+        },
+        "reqId": {
+          "type": "string",
+          "description": "The ID of the request that originated this response",
+          "minLength": 1,
+          "maxLength": 64,
+          "default": "0"
+        },
+        "type": {
+          "description": "Contains one of the APIs response type names",
+          "type": "string",
+          "default": "cqm.SubscribeExConversationsResponse",
+          "readonly": "true"
+        },
+        "code": {
+          "type": "integer",
+          "description": "Response code according to the HTTP status codes standard"
+        },
+        "body": {
+          "type": "object",
+          "required": [
+            "subscriptionId"
+          ],
+          "properties": {
+            "subscriptionId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 64
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "MessagingEventNotification",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object",
+      "required": [
+        "kind",
+        "type",
+        "body"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "default": "notification",
+          "readonly": "true",
+          "description": "Defines that the message is a response"
+        },
+        "type": {
+          "description": "Contains one of the APIs notification type names",
+          "type": "string",
+          "enum": [
+            "ms.MessagingEventNotification"
+          ],
+          "default": "ms.MessagingEventNotification",
+          "readonly": "true"
+        },
+        "body": {
+          "type": "object",
+          "required": [
+            "changes"
+          ],
+          "properties": {
+            "changes": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "sequence",
+                  "originatorId",
+                  "serverTimestamp",
+                  "event",
+                  "dialogId"
+                ],
+                "properties": {
+                  "sequence": {
+                    "type": "integer"
+                  },
+                  "originatorId": {
+                    "type": "string"
+                  },
+                  "metadata": {
+                    "type": "array",
+                    "items": {
+                      "oneOf": [
+                        {
+                          "title": "Action Reason",
+                          "description": "Reason information while the conversation is being escalated by a bot to a human agent",
+                          "additionalProperties": false,
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "enum": [
+                                "ActionReason"
+                              ],
+                              "default": "ActionReason",
+                              "type": "string"
+                            },
+                            "reasonId": {
+                              "maxLength": 64,
+                              "type": "string"
+                            },
+                            "reason": {
+                              "maxLength": 64,
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "type"
+                          ]
+                        },
+                        {
+                          "title": "Bot Response",
+                          "description": "Information coming back from the bot provider",
+                          "additionalProperties": false,
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "enum": [
+                                "BotResponse"
+                              ],
+                              "default": "BotResponse",
+                              "type": "string"
+                            },
+                            "externalConversationId": {
+                              "maxLength": 64,
+                              "type": "string"
+                            },
+                            "businessCases": {
+                              "type": "array",
+                              "items": {
+                                "maxLength": 64,
+                                "type": "string"
+                              }
+                            },
+                            "intents": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "required": [
+                                  "id",
+                                  "confidence"
+                                ],
+                                "properties": {
+                                  "name": {
+                                    "maxLength": 64,
+                                    "type": "string"
+                                  },
+                                  "id": {
+                                    "maxLength": 64,
+                                    "type": "string"
+                                  },
+                                  "confidence": {
+                                    "type": "number",
+                                    "minimum": 0,
+                                    "maximum": 1
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "required": [
+                            "type"
+                          ]
+                        },
+                        {
+                          "title": "IBM Watson Info",
+                          "description": "Information coming back from the IBM Watson virtual agent",
+                          "additionalProperties": false,
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "enum": [
+                                "IBMWatsonInfo"
+                              ],
+                              "default": "IBMWatsonInfo",
+                              "type": "string"
+                            },
+                            "branch_exited": {
+                              "type": "boolean"
+                            },
+                            "branch_exited_reason": {
+                              "maxLength": 64,
+                              "type": "string"
+                            },
+                            "capability": {
+                              "maxLength": 64,
+                              "type": "string"
+                            },
+                            "nodes_visited": {
+                              "type": "array",
+                              "items": {
+                                "maxLength": 64,
+                                "type": "string"
+                              }
+                            },
+                            "referred_capability": {
+                              "maxLength": 64,
+                              "type": "string"
+                            },
+                            "referred_nodes": {
+                              "type": "array",
+                              "items": {
+                                "maxLength": 64,
+                                "type": "string"
+                              }
+                            },
+                            "referred_visitor_message_sequences": {
+                              "type": "array",
+                              "items": {
+                                "type": "integer"
+                              }
+                            },
+                            "entities": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "entity": {
+                                    "type": "string"
+                                  },
+                                  "location": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "integer"
+                                    }
+                                  },
+                                  "value": {
+                                    "type": "string"
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "referred_visitor_message_sequences"
+                          ]
+                        },
+                        {
+                          "title": "External Id",
+                          "description": "External id of the action was made",
+                          "additionalProperties": false,
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "enum": [
+                                "ExternalId"
+                              ],
+                              "default": "ExternalId",
+                              "type": "string"
+                            },
+                            "id": {
+                              "maxLength": 64,
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "id"
+                          ]
+                        }
+                      ]
+                    }
+                  },
+                  "serverTimestamp": {
+                    "type": "integer"
+                  },
+                  "event": {
+                    "oneOf": [
+                      {
+                        "title": "TextValue",
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "default": "ContentEvent",
+                            "readonly": "true"
+                          },
+                          "contentType": {
+                            "type": "string",
+                            "default": "text/plain",
+                            "readonly": "true"
+                          },
+                          "message": {
+                            "type": "string",
+                            "encryption": "always"
+                          }
+                        },
+                        "required": [
+                          "type",
+                          "contentType",
+                          "message"
+                        ]
+                      },
+                      {
+                        "title": "RichContentEvent",
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "default": "RichContentEvent",
+                            "enum": [
+                              "RichContentEvent"
+                            ],
+                            "readonly": "true"
+                          },
+                          "content": {
+                            "type": "object",
+                            "title": "element",
+                            "description": "Refer to Structured Content documentation"
+                          }
+                        },
+                        "required": [
+                          "type",
+                          "message"
+                        ]
+                      },
+                      {
+                        "title": "HostedFile",
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "default": "ContentEvent",
+                            "readonly": "true"
+                          },
+                          "contentType": {
+                            "type": "string",
+                            "default": "HostedFile",
+                            "readonly": "true"
+                          },
+                          "message": {
+                            "type": "object",
+                            "required": [
+                              "caption",
+                              "relativePath",
+                              "fileType"
+                            ],
+                            "properties": {
+                              "caption": {
+                                "type": "string"
+                              },
+                              "relativePath": {
+                                "type": "string"
+                              },
+                              "fileType": {
+                                "type": "string",
+                                "enum": [
+                                  "IMG",
+                                  "JPG",
+                                  "PNG",
+                                  "GIF",
+                                  "TXT",
+                                  "PDF"
+                                ]
+                              },
+                              "preview": {
+                                "type": "any"
+                              }
+                            }
+                          }
+                        },
+                        "required": [
+                          "type",
+                          "contentType",
+                          "message"
+                        ]
+                      },
+                      {
+                        "title": "ChatStateEvent",
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "default": "ChatStateEvent",
+                            "readonly": "true"
+                          },
+                          "chatState": {
+                            "type": "string",
+                            "enum": [
+                              "ACTIVE",
+                              "INACTIVE",
+                              "GONE",
+                              "COMPOSING",
+                              "PAUSE"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "type",
+                          "chatState"
+                        ]
+                      },
+                      {
+                        "title": "AcceptStatusEvent",
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "default": "AcceptStatusEvent",
+                            "readonly": "true"
+                          },
+                          "status": {
+                            "type": "string",
+                            "enum": [
+                              "ACCEPT",
+                              "READ",
+                              "ACCESS",
+                              "NACK",
+                              "ACTION"
+                            ]
+                          },
+                          "sequenceList": {
+                            "type": "array",
+                            "items": {
+                              "type": "integer"
+                            }
+                          }
+                        },
+                        "required": [
+                          "type",
+                          "status",
+                          "sequenceList"
+                        ]
+                      }
+                    ]
+                  },
+                  "dialogId": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "ExConversationChangeNotification",
+      "description": "Sent once there is a change in convesation metadata",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object",
+      "required": [
+        "kind",
+        "type",
+        "body"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "default": "notification",
+          "readonly": "true",
+          "description": "Defines that the message is a response"
+        },
+        "type": {
+          "description": "Contains one of the APIs notification type names",
+          "type": "string",
+          "enum": [
+            "cqm.ExConversationChangeNotification"
+          ],
+          "default": "cqm.ExConversationChangeNotification",
+          "readonly": "true"
+        },
+        "body": {
+          "type": "object",
+          "required": [
+            "subscriptionId",
+            "changes"
+          ],
+          "properties": {
+            "subscriptionId": {
+              "type": "string"
+            },
+            "changes": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "type",
+                  "result"
+                ],
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "UPSERT",
+                      "DELETE"
+                    ]
+                  },
+                  "result": {
+                    "type": "object",
+                    "required": [
+                      "convId",
+                      "conversationDetails",
+                      "lastUpdateTime"
+                    ],
+                    "properties": {
+                      "convId": {
+                        "type": "string"
+                      },
+                      "conversationDetails": {
+                        "type": "object",
+                        "required": [
+                          "participants",
+                          "state",
+                          "startTs"
+                        ],
+                        "properties": {
+                          "participants": {
+                            "description": "Contains the IDs of the conversation participants from each role, both consumers and agents",
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string"
+                                },
+                                "role": {
+                                  "type": "string",
+                                  "enum": [
+                                    "CONSUMER",
+                                    "ASSIGNED_AGENT",
+                                    "MANAGER"
+                                  ]
+                                }
+                              }
+                            }
+                          },
+                          "state": {
+                            "type": "string",
+                            "enum": [
+                              "OPEN",
+                              "CLOSE"
+                            ]
+                          },
+                          "startTs": {
+                            "type": "integer",
+                            "description": "Time stamp of the conversation beginning"
+                          },
+                          "endTs": {
+                            "type": "integer",
+                            "description": "Time stamp of the conversation end"
+                          },
+                          "ttr": {
+                            "type": "object",
+                            "description": "Time To Respond. The contact center response SLA for this conversation",
+                            "required": [
+                              "ttrType",
+                              "value"
+                            ],
+                            "properties": {
+                              "ttrType": {
+                                "type": "string",
+                                "description": "A label for the SLA policy",
+                                "enum": [
+                                  "CUSTOM",
+                                  "NORMAL",
+                                  "PRIORITIZED",
+                                  "URGENT"
+                                ]
+                              },
+                              "value": {
+                                "description": "Seconds from consumer input till agent response.",
+                                "type": "integer"
+                              }
+                            }
+                          },
+                          "delay": {
+                            "type": "object",
+                            "description": "If the contact center is not available, this field indicates until when the handling of the current conversation will be delayed.<br><b>Note: </b> The delay value affects the TTR (see above) calculation. The TTR counts the number of seconds from the consumer response, but if there is a delay the counting will start only from the availablity point of the contact center.",
+                            "required": [
+                              "type",
+                              "tillWhen"
+                            ],
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "description": "A label for the delay type",
+                                "enum": [
+                                  "NIGHT",
+                                  "WEEKEND",
+                                  "HOLIDAY"
+                                ]
+                              },
+                              "tillWhen": {
+                                "description": "Time stamp of when the contact center will be available again to handle this conversation.",
+                                "type": "integer"
+                              }
+                            }
+                          },
+                          "csat": {
+                            "description": "Consumer statisfaction information. The data that was submitted by the consumer after the conversation was closed.",
+                            "type": "object",
+                            "required": [
+                              "field",
+                              "csatRate",
+                              "csatResolutionConfirmation",
+                              "status"
+                            ],
+                            "properties": {
+                              "field": {
+                                "type": "string",
+                                "default": "CSATRate",
+                                "enum": [
+                                  "CSATRate"
+                                ],
+                                "readonly": true
+                              },
+                              "csatRate": {
+                                "type": "integer",
+                                "enum": [
+                                  1,
+                                  2,
+                                  3,
+                                  4,
+                                  5
+                                ]
+                              },
+                              "csatResolutionConfirmation": {
+                                "type": "boolean"
+                              },
+                              "status": {
+                                "type": "string",
+                                "enum": [
+                                  "FILLED",
+                                  "PARTIALLY_FILLED",
+                                  "SKIPPED"
+                                ]
+                              }
+                            }
+                          },
+                          "manualETTR": {
+                            "description": "Timestamp of the 'Manual Effective Time To Response'. The agent can manually set the expected timestamp of the next response. This will override any value of the above TTR and Delay fields",
+                            "type": "integer"
+                          }
+                        }
+                      },
+                      "lastUpdateTime": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "RequestConversationResponse",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object",
+      "required": [
+        "kind",
+        "reqId",
+        "code",
+        "type",
+        "body"
+      ],
+      "description": "Upon successful conversation creation, this reponse will be sent by the server",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "default": "resp",
+          "readonly": "true",
+          "description": "Defines that the message is a response"
+        },
+        "reqId": {
+          "type": "string",
+          "description": "The ID of the request that originated this response",
+          "minLength": 1,
+          "maxLength": 64,
+          "default": "0"
+        },
+        "type": {
+          "description": "Contains one of the APIs response type names",
+          "type": "string",
+          "default": "cm.RequestConversationResponse",
+          "readonly": "true"
+        },
+        "code": {
+          "type": "integer",
+          "description": "Response code according to the HTTP status codes standard"
+        },
+        "body": {
+          "type": "object",
+          "required": [
+            "conversationId"
+          ],
+          "properties": {
+            "conversationId": {
+              "description": "The ID of the generated conversation",
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 64
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "StringResp",
+      "description": "General response message with string description.",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object",
+      "required": [
+        "kind",
+        "reqId",
+        "code",
+        "type",
+        "body"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "default": "resp",
+          "readonly": "true",
+          "description": "Defines that the message is a response"
+        },
+        "reqId": {
+          "type": "string",
+          "description": "The ID of the request that originated this response",
+          "minLength": 1,
+          "maxLength": 64,
+          "default": "0"
+        },
+        "type": {
+          "description": "Contains one of the APIs response type names",
+          "type": "string",
+          "default": ".ReqBody$StringResp",
+          "readonly": "true"
+        },
+        "code": {
+          "type": "integer",
+          "description": "Response code according to the HTTP status codes standard"
+        },
+        "body": {
+          "type": "string",
+          "description": "Optional text description for the response",
+          "default": "Some description",
+          "maxLength": 128
+        }
+      }
+    },
+    {
+      "title": "PublishEventResponse",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object",
+      "required": [
+        "kind",
+        "reqId",
+        "code",
+        "type",
+        "body"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "default": "resp",
+          "readonly": "true",
+          "description": "Defines that the message is a response"
+        },
+        "reqId": {
+          "type": "string",
+          "description": "The ID of the request that originated this response",
+          "minLength": 1,
+          "maxLength": 64,
+          "default": "0"
+        },
+        "type": {
+          "description": "Contains one of the APIs response type names",
+          "type": "string",
+          "default": "ms.PublishEventResponse",
+          "readonly": "true"
+        },
+        "code": {
+          "type": "integer",
+          "description": "Response code according to the HTTP status codes standard"
+        },
+        "body": {
+          "type": "object",
+          "required": [],
+          "properties": {
+            "sequence": {
+              "description": "content and read receipt events get a sequential ID in the conversation.",
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "GenericSubscribeResponse",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object",
+      "required": [
+        "kind",
+        "reqId",
+        "code",
+        "type",
+        "body"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "default": "resp",
+          "readonly": "true",
+          "description": "Defines that the message is a response"
+        },
+        "reqId": {
+          "type": "string",
+          "description": "The ID of the request that originated this response",
+          "minLength": 1,
+          "maxLength": 64,
+          "default": "0"
+        },
+        "type": {
+          "description": "Contains one of the APIs response type names",
+          "type": "string",
+          "default": "GenericSubscribeResponse",
+          "readonly": "true"
+        },
+        "code": {
+          "type": "integer",
+          "description": "Response code according to the HTTP status codes standard"
+        },
+        "body": {
+          "type": "object"
+        }
+      }
+    },
+    {
+      "title": "SubscribeExConversationsResponse",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object",
+      "required": [
+        "kind",
+        "reqId",
+        "code",
+        "type",
+        "body"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "default": "resp",
+          "readonly": "true",
+          "description": "Defines that the message is a response"
+        },
+        "reqId": {
+          "type": "string",
+          "description": "The ID of the request that originated this response",
+          "minLength": 1,
+          "maxLength": 64,
+          "default": "0"
+        },
+        "type": {
+          "description": "Contains one of the APIs response type names",
+          "type": "string",
+          "default": "cqm.SubscribeExConversationsResponse",
+          "readonly": "true"
+        },
+        "code": {
+          "type": "integer",
+          "description": "Response code according to the HTTP status codes standard"
+        },
+        "body": {
+          "type": "object",
+          "required": [
+            "subscriptionId"
+          ],
+          "properties": {
+            "subscriptionId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 64
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "InitConnection",
+      "description": "This request is needed only for clients that cannot send websocket headers. It can include the authentication and the clientProperties information.",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object",
+      "required": [
+        "headers",
+        "id",
+        "type"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "default": "req",
+          "readonly": "true",
+          "description": "Defines that the message is a request"
+        },
+        "id": {
+          "type": "string",
+          "description": "Request ID generated by the client. It should be unique per WebSocket session in order to identify the request. This ID will be reflected by the server in the response to the request.",
+          "minLength": 1,
+          "maxLength": 64,
+          "default": "0"
+        },
+        "type": {
+          "description": "Contains one of the APIs request type names",
+          "type": "string",
+          "enum": [
+            "InitConnection"
+          ],
+          "default": "InitConnection",
+          "readonly": "true"
+        },
+        "metadata": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "title": "Action Reason",
+                "description": "Reason information while the conversation is being escalated by a bot to a human agent",
+                "additionalProperties": false,
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "enum": [
+                      "ActionReason"
+                    ],
+                    "default": "ActionReason",
+                    "type": "string"
+                  },
+                  "reasonId": {
+                    "maxLength": 64,
+                    "type": "string"
+                  },
+                  "reason": {
+                    "maxLength": 64,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "type"
+                ]
+              },
+              {
+                "title": "Bot Response",
+                "description": "Information coming back from the bot provider",
+                "additionalProperties": false,
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "enum": [
+                      "BotResponse"
+                    ],
+                    "default": "BotResponse",
+                    "type": "string"
+                  },
+                  "externalConversationId": {
+                    "maxLength": 64,
+                    "type": "string"
+                  },
+                  "businessCases": {
+                    "type": "array",
+                    "items": {
+                      "maxLength": 64,
+                      "type": "string"
+                    }
+                  },
+                  "intents": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "id",
+                        "confidence"
+                      ],
+                      "properties": {
+                        "name": {
+                          "maxLength": 64,
+                          "type": "string"
+                        },
+                        "id": {
+                          "maxLength": 64,
+                          "type": "string"
+                        },
+                        "confidence": {
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 1
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": [
+                  "type"
+                ]
+              },
+              {
+                "title": "IBM Watson Info",
+                "description": "Information coming back from the IBM Watson virtual agent",
+                "additionalProperties": false,
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "enum": [
+                      "IBMWatsonInfo"
+                    ],
+                    "default": "IBMWatsonInfo",
+                    "type": "string"
+                  },
+                  "branch_exited": {
+                    "type": "boolean"
+                  },
+                  "branch_exited_reason": {
+                    "maxLength": 64,
+                    "type": "string"
+                  },
+                  "capability": {
+                    "maxLength": 64,
+                    "type": "string"
+                  },
+                  "nodes_visited": {
+                    "type": "array",
+                    "items": {
+                      "maxLength": 64,
+                      "type": "string"
+                    }
+                  },
+                  "referred_capability": {
+                    "maxLength": 64,
+                    "type": "string"
+                  },
+                  "referred_nodes": {
+                    "type": "array",
+                    "items": {
+                      "maxLength": 64,
+                      "type": "string"
+                    }
+                  },
+                  "referred_visitor_message_sequences": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer"
+                    }
+                  },
+                  "entities": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "entity": {
+                          "type": "string"
+                        },
+                        "location": {
+                          "type": "array",
+                          "items": {
+                            "type": "integer"
+                          }
+                        },
+                        "value": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": [
+                  "type",
+                  "referred_visitor_message_sequences"
+                ]
+              },
+              {
+                "title": "External Id",
+                "description": "External id of the action was made",
+                "additionalProperties": false,
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "enum": [
+                      "ExternalId"
+                    ],
+                    "default": "ExternalId",
+                    "type": "string"
+                  },
+                  "id": {
+                    "maxLength": 64,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "type",
+                  "id"
+                ]
+              }
+            ]
+          }
+        },
+        "headers": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "title": "ClientProperties",
+                "description": "Information about the client: hardware, software, timeZone, IP etc...",
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      ".ams.headers.ClientProperties"
+                    ],
+                    "default": ".ams.headers.ClientProperties",
+                    "readonly": true
+                  },
+                  "appId": {
+                    "description": "Identifies the application",
+                    "type": "string",
+                    "maxLength": 64
+                  },
+                  "appVersion": {
+                    "description": "The application version, for example, in the case of mobile it will be the host app version",
+                    "maxLength": 32,
+                    "type": "string"
+                  },
+                  "ipAddress": {
+                    "maxLength": 32,
+                    "format": "ipv4",
+                    "type": "string"
+                  },
+                  "deviceFamily": {
+                    "type": "string",
+                    "enum": [
+                      "DESKTOP",
+                      "TABLET",
+                      "MOBILE",
+                      "OTHER"
+                    ]
+                  },
+                  "os": {
+                    "type": "string",
+                    "enum": [
+                      "WINDOWS",
+                      "LINUX",
+                      "OSX",
+                      "ANDROID",
+                      "IOS",
+                      "OTHER"
+                    ]
+                  },
+                  "osVersion": {
+                    "maxLength": 64,
+                    "description": "Specifies the operating system version, and distribution type (if relevant)\n Examples: Ubuntu 15.00",
+                    "type": "string"
+                  },
+                  "osName": {
+                    "maxLength": 64,
+                    "description": "OS name is a text describing the operating system\n Examples: WindowsXP",
+                    "type": "string"
+                  },
+                  "integration": {
+                    "type": "string",
+                    "enum": [
+                      "WEB_SDK",
+                      "MOBILE_SDK",
+                      "BRAND_SDK"
+                    ]
+                  },
+                  "integrationVersion": {
+                    "maxLength": 64,
+                    "type": "string"
+                  },
+                  "browser": {
+                    "maxLength": 64,
+                    "description": "For example: chrome, firefox, etc...",
+                    "type": "string"
+                  },
+                  "browserVersion": {
+                    "maxLength": 64,
+                    "description": "Detailed version info of the user agent (browser or host-application)",
+                    "type": "string"
+                  },
+                  "timeZone": {
+                    "description": "For example: \"America/Los_Angeles\"",
+                    "maxLength": 64,
+                    "type": "string"
+                  },
+                  "deviceManufacture": {
+                    "description": "For example LG, HP, Microsoft....",
+                    "maxLength": 64,
+                    "type": "string"
+                  },
+                  "deviceModel": {
+                    "description": "For example for G3 for LG, iPhone6s for Apple...",
+                    "maxLength": 64,
+                    "type": "string"
+                  },
+                  "features": {
+                    "type": "array",
+                    "description": "Some of the client capablities are not supported by default. In order to enable them, the client should include the feature name in this field.",
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "CO_BROWSE",
+                        "CO_APP",
+                        "PHOTO_SHARING",
+                        "SECURE_FORMS",
+                        "AUTO_MESSAGES",
+                        "RICH_CONTENT"
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "type"
+                ]
+              },
+              {
+                "title": "ConsumerAuthentication",
+                "description": "Information about the client: hardware, software, timeZone, IP etc...",
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      ".ams.headers.ConsumerAuthentication"
+                    ],
+                    "default": ".ams.headers.ConsumerAuthentication",
+                    "readonly": true
+                  },
+                  "jwt": {
+                    "maxLength": 2048,
+                    "description": "jwt issued by LivePerson idp service for this consumer",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "type",
+                  "jwt"
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "title": "UpdateConversationField",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object",
+      "required": [
+        "body",
+        "id",
+        "type"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "default": "req",
+          "readonly": "true",
+          "description": "Defines that the message is a request"
+        },
+        "id": {
+          "type": "string",
+          "description": "Request ID generated by the client. It should be unique per WebSocket session in order to identify the request. This ID will be reflected by the server in the response to the request.",
+          "minLength": 1,
+          "maxLength": 64,
+          "default": "0"
+        },
+        "type": {
+          "description": "Contains one of the APIs request type names",
+          "type": "string",
+          "enum": [
+            "cm.UpdateConversationField"
+          ],
+          "default": "cm.UpdateConversationField",
+          "readonly": "true"
+        },
+        "metadata": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "title": "Action Reason",
+                "description": "Reason information while the conversation is being escalated by a bot to a human agent",
+                "additionalProperties": false,
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "enum": [
+                      "ActionReason"
+                    ],
+                    "default": "ActionReason",
+                    "type": "string"
+                  },
+                  "reasonId": {
+                    "maxLength": 64,
+                    "type": "string"
+                  },
+                  "reason": {
+                    "maxLength": 64,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "type"
+                ]
+              },
+              {
+                "title": "Bot Response",
+                "description": "Information coming back from the bot provider",
+                "additionalProperties": false,
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "enum": [
+                      "BotResponse"
+                    ],
+                    "default": "BotResponse",
+                    "type": "string"
+                  },
+                  "externalConversationId": {
+                    "maxLength": 64,
+                    "type": "string"
+                  },
+                  "businessCases": {
+                    "type": "array",
+                    "items": {
+                      "maxLength": 64,
+                      "type": "string"
+                    }
+                  },
+                  "intents": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "id",
+                        "confidence"
+                      ],
+                      "properties": {
+                        "name": {
+                          "maxLength": 64,
+                          "type": "string"
+                        },
+                        "id": {
+                          "maxLength": 64,
+                          "type": "string"
+                        },
+                        "confidence": {
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 1
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": [
+                  "type"
+                ]
+              },
+              {
+                "title": "IBM Watson Info",
+                "description": "Information coming back from the IBM Watson virtual agent",
+                "additionalProperties": false,
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "enum": [
+                      "IBMWatsonInfo"
+                    ],
+                    "default": "IBMWatsonInfo",
+                    "type": "string"
+                  },
+                  "branch_exited": {
+                    "type": "boolean"
+                  },
+                  "branch_exited_reason": {
+                    "maxLength": 64,
+                    "type": "string"
+                  },
+                  "capability": {
+                    "maxLength": 64,
+                    "type": "string"
+                  },
+                  "nodes_visited": {
+                    "type": "array",
+                    "items": {
+                      "maxLength": 64,
+                      "type": "string"
+                    }
+                  },
+                  "referred_capability": {
+                    "maxLength": 64,
+                    "type": "string"
+                  },
+                  "referred_nodes": {
+                    "type": "array",
+                    "items": {
+                      "maxLength": 64,
+                      "type": "string"
+                    }
+                  },
+                  "referred_visitor_message_sequences": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer"
+                    }
+                  },
+                  "entities": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "entity": {
+                          "type": "string"
+                        },
+                        "location": {
+                          "type": "array",
+                          "items": {
+                            "type": "integer"
+                          }
+                        },
+                        "value": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": [
+                  "type",
+                  "referred_visitor_message_sequences"
+                ]
+              },
+              {
+                "title": "External Id",
+                "description": "External id of the action was made",
+                "additionalProperties": false,
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "enum": [
+                      "ExternalId"
+                    ],
+                    "default": "ExternalId",
+                    "type": "string"
+                  },
+                  "id": {
+                    "maxLength": 64,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "type",
+                  "id"
+                ]
+              }
+            ]
+          }
+        },
+        "body": {
+          "description": "Updates conversation metadata like: state, CSAT, TimeToRespond police etc... Consumer and agent might have different permissions.",
+          "type": "object",
+          "required": [
+            "conversationId",
+            "conversationField"
+          ],
+          "properties": {
+            "conversationId": {
+              "type": "string"
+            },
+            "conversationField": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "oneOf": [
+                  {
+                    "title": "StateChange",
+                    "type": "object",
+                    "properties": {
+                      "field": {
+                        "enum": [
+                          "ConversationStateField"
+                        ],
+                        "type": "string",
+                        "default": "ConversationStateField",
+                        "readonly": true
+                      },
+                      "conversationState": {
+                        "type": "string",
+                        "enum": [
+                          "CLOSE"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "field",
+                      "conversationState"
+                    ]
+                  },
+                  {
+                    "title": "ParticipantsChange (for agents)",
+                    "type": "object",
+                    "properties": {
+                      "field": {
+                        "type": "string",
+                        "enum": [
+                          "ParticipantsChange"
+                        ],
+                        "default": "ParticipantsChange",
+                        "readonly": true
+                      },
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "ADD",
+                          "REMOVE",
+                          "UPDATE"
+                        ]
+                      },
+                      "role": {
+                        "type": "string",
+                        "enum": [
+                          "MANAGER",
+                          "READER",
+                          "ASSIGNED_AGENT"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "field",
+                      "type",
+                      "role"
+                    ]
+                  },
+                  {
+                    "title": "Skill Change",
+                    "type": "object",
+                    "properties": {
+                      "field": {
+                        "type": "string",
+                        "enum": [
+                          "Skill"
+                        ],
+                        "default": "Skill",
+                        "readonly": true
+                      },
+                      "type": {
+                        "type": "string",
+                        "default": "UPDATE",
+                        "enum": [
+                          "UPDATE"
+                        ]
+                      },
+                      "skill": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "field",
+                      "type",
+                      "skill"
+                    ]
+                  },
+                  {
+                    "title": "TTR Change",
+                    "type": "object",
+                    "properties": {
+                      "field": {
+                        "type": "string",
+                        "enum": [
+                          "TTRField"
+                        ],
+                        "default": "TTRField",
+                        "readonly": true
+                      },
+                      "ttrType": {
+                        "description": "Label for the given TTR",
+                        "type": "string",
+                        "default": "NORMAL",
+                        "enum": [
+                          "CUSTOM",
+                          "NORMAL",
+                          "PRIORITIZED",
+                          "URGENT"
+                        ]
+                      },
+                      "value": {
+                        "description": "Seconds from consumer input till agent response",
+                        "type": "integer",
+                        "minimum": 0
+                      }
+                    },
+                    "required": [
+                      "field",
+                      "ttrType",
+                      "value"
+                    ]
+                  },
+                  {
+                    "title": "CsatChange",
+                    "description": "Consumer satisfaction information. The data that was submitted by the consumer after the conversation was closed.",
+                    "type": "object",
+                    "properties": {
+                      "field": {
+                        "type": "string",
+                        "default": "CSATRate",
+                        "enum": [
+                          "CSATRate"
+                        ],
+                        "readonly": true
+                      },
+                      "csatRate": {
+                        "type": "integer",
+                        "enum": [
+                          1,
+                          2,
+                          3,
+                          4,
+                          5
+                        ]
+                      },
+                      "csatResolutionConfirmation": {
+                        "type": "boolean"
+                      },
+                      "status": {
+                        "type": "string",
+                        "enum": [
+                          "FILLED",
+                          "PARTIALLY_FILLED",
+                          "SKIPPED"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "field",
+                      "csatRate",
+                      "csatResolutionConfirmation",
+                      "status"
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "ConsumerRequestConversation",
+      "description": "This request is used by the consumer to request a new conversation",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object",
+      "required": [
+        "id",
+        "type"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "default": "req",
+          "readonly": "true",
+          "description": "Defines that the message is a request"
+        },
+        "id": {
+          "type": "string",
+          "description": "Request ID generated by the client. It should be unique per WebSocket session in order to identify the request. This ID will be reflected by the server in the response to the request.",
+          "minLength": 1,
+          "maxLength": 64,
+          "default": "0"
+        },
+        "type": {
+          "description": "Contains one of the APIs request type names",
+          "type": "string",
+          "enum": [
+            "cm.ConsumerRequestConversation"
+          ],
+          "default": "cm.ConsumerRequestConversation",
+          "readonly": "true"
+        },
+        "metadata": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "title": "Action Reason",
+                "description": "Reason information while the conversation is being escalated by a bot to a human agent",
+                "additionalProperties": false,
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "enum": [
+                      "ActionReason"
+                    ],
+                    "default": "ActionReason",
+                    "type": "string"
+                  },
+                  "reasonId": {
+                    "maxLength": 64,
+                    "type": "string"
+                  },
+                  "reason": {
+                    "maxLength": 64,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "type"
+                ]
+              },
+              {
+                "title": "Bot Response",
+                "description": "Information coming back from the bot provider",
+                "additionalProperties": false,
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "enum": [
+                      "BotResponse"
+                    ],
+                    "default": "BotResponse",
+                    "type": "string"
+                  },
+                  "externalConversationId": {
+                    "maxLength": 64,
+                    "type": "string"
+                  },
+                  "businessCases": {
+                    "type": "array",
+                    "items": {
+                      "maxLength": 64,
+                      "type": "string"
+                    }
+                  },
+                  "intents": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "id",
+                        "confidence"
+                      ],
+                      "properties": {
+                        "name": {
+                          "maxLength": 64,
+                          "type": "string"
+                        },
+                        "id": {
+                          "maxLength": 64,
+                          "type": "string"
+                        },
+                        "confidence": {
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 1
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": [
+                  "type"
+                ]
+              },
+              {
+                "title": "IBM Watson Info",
+                "description": "Information coming back from the IBM Watson virtual agent",
+                "additionalProperties": false,
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "enum": [
+                      "IBMWatsonInfo"
+                    ],
+                    "default": "IBMWatsonInfo",
+                    "type": "string"
+                  },
+                  "branch_exited": {
+                    "type": "boolean"
+                  },
+                  "branch_exited_reason": {
+                    "maxLength": 64,
+                    "type": "string"
+                  },
+                  "capability": {
+                    "maxLength": 64,
+                    "type": "string"
+                  },
+                  "nodes_visited": {
+                    "type": "array",
+                    "items": {
+                      "maxLength": 64,
+                      "type": "string"
+                    }
+                  },
+                  "referred_capability": {
+                    "maxLength": 64,
+                    "type": "string"
+                  },
+                  "referred_nodes": {
+                    "type": "array",
+                    "items": {
+                      "maxLength": 64,
+                      "type": "string"
+                    }
+                  },
+                  "referred_visitor_message_sequences": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer"
+                    }
+                  },
+                  "entities": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "entity": {
+                          "type": "string"
+                        },
+                        "location": {
+                          "type": "array",
+                          "items": {
+                            "type": "integer"
+                          }
+                        },
+                        "value": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": [
+                  "type",
+                  "referred_visitor_message_sequences"
+                ]
+              },
+              {
+                "title": "External Id",
+                "description": "External id of the action was made",
+                "additionalProperties": false,
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "enum": [
+                      "ExternalId"
+                    ],
+                    "default": "ExternalId",
+                    "type": "string"
+                  },
+                  "id": {
+                    "maxLength": 64,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "type",
+                  "id"
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "title": "PublishEvent",
+      "description": "Publishes events to existing dialog. Events can be: <ul><li>text-content</li><li>rich-content (structured content) - for more information about the supported structured content templates please refer to the Structured Content Templates page.</li><li>photo-reference-content</li><li>read-reciepts (accept status)</li><li>presense/typing events (chat-state)</li></ul>",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object",
+      "required": [
+        "body",
+        "id",
+        "type"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "default": "req",
+          "readonly": "true",
+          "description": "Defines that the message is a request"
+        },
+        "id": {
+          "type": "string",
+          "description": "Request ID generated by the client. It should be unique per WebSocket session in order to identify the request. This ID will be reflected by the server in the response to the request.",
+          "minLength": 1,
+          "maxLength": 64,
+          "default": "0"
+        },
+        "type": {
+          "description": "Contains one of the APIs request type names",
+          "type": "string",
+          "enum": [
+            "ms.PublishEvent"
+          ],
+          "default": "ms.PublishEvent",
+          "readonly": "true"
+        },
+        "metadata": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "title": "Action Reason",
+                "description": "Reason information while the conversation is being escalated by a bot to a human agent",
+                "additionalProperties": false,
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "enum": [
+                      "ActionReason"
+                    ],
+                    "default": "ActionReason",
+                    "type": "string"
+                  },
+                  "reasonId": {
+                    "maxLength": 64,
+                    "type": "string"
+                  },
+                  "reason": {
+                    "maxLength": 64,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "type"
+                ]
+              },
+              {
+                "title": "Bot Response",
+                "description": "Information coming back from the bot provider",
+                "additionalProperties": false,
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "enum": [
+                      "BotResponse"
+                    ],
+                    "default": "BotResponse",
+                    "type": "string"
+                  },
+                  "externalConversationId": {
+                    "maxLength": 64,
+                    "type": "string"
+                  },
+                  "businessCases": {
+                    "type": "array",
+                    "items": {
+                      "maxLength": 64,
+                      "type": "string"
+                    }
+                  },
+                  "intents": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "id",
+                        "confidence"
+                      ],
+                      "properties": {
+                        "name": {
+                          "maxLength": 64,
+                          "type": "string"
+                        },
+                        "id": {
+                          "maxLength": 64,
+                          "type": "string"
+                        },
+                        "confidence": {
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 1
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": [
+                  "type"
+                ]
+              },
+              {
+                "title": "IBM Watson Info",
+                "description": "Information coming back from the IBM Watson virtual agent",
+                "additionalProperties": false,
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "enum": [
+                      "IBMWatsonInfo"
+                    ],
+                    "default": "IBMWatsonInfo",
+                    "type": "string"
+                  },
+                  "branch_exited": {
+                    "type": "boolean"
+                  },
+                  "branch_exited_reason": {
+                    "maxLength": 64,
+                    "type": "string"
+                  },
+                  "capability": {
+                    "maxLength": 64,
+                    "type": "string"
+                  },
+                  "nodes_visited": {
+                    "type": "array",
+                    "items": {
+                      "maxLength": 64,
+                      "type": "string"
+                    }
+                  },
+                  "referred_capability": {
+                    "maxLength": 64,
+                    "type": "string"
+                  },
+                  "referred_nodes": {
+                    "type": "array",
+                    "items": {
+                      "maxLength": 64,
+                      "type": "string"
+                    }
+                  },
+                  "referred_visitor_message_sequences": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer"
+                    }
+                  },
+                  "entities": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "entity": {
+                          "type": "string"
+                        },
+                        "location": {
+                          "type": "array",
+                          "items": {
+                            "type": "integer"
+                          }
+                        },
+                        "value": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": [
+                  "type",
+                  "referred_visitor_message_sequences"
+                ]
+              },
+              {
+                "title": "External Id",
+                "description": "External id of the action was made",
+                "additionalProperties": false,
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "enum": [
+                      "ExternalId"
+                    ],
+                    "default": "ExternalId",
+                    "type": "string"
+                  },
+                  "id": {
+                    "maxLength": 64,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "type",
+                  "id"
+                ]
+              }
+            ]
+          }
+        },
+        "body": {
+          "type": "object",
+          "required": [
+            "dialogId",
+            "event"
+          ],
+          "properties": {
+            "dialogId": {
+              "type": "string"
+            },
+            "event": {
+              "oneOf": [
+                {
+                  "title": "TextValue",
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "default": "ContentEvent",
+                      "readonly": "true"
+                    },
+                    "contentType": {
+                      "type": "string",
+                      "default": "text/plain",
+                      "readonly": "true"
+                    },
+                    "message": {
+                      "type": "string",
+                      "encryption": "always"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "contentType",
+                    "message"
+                  ]
+                },
+                {
+                  "title": "RichContentEvent",
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "default": "RichContentEvent",
+                      "enum": [
+                        "RichContentEvent"
+                      ],
+                      "readonly": "true"
+                    },
+                    "content": {
+                      "type": "object",
+                      "title": "element",
+                      "description": "Refer to Structured Content documentation"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "message"
+                  ]
+                },
+                {
+                  "title": "HostedFile",
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "default": "ContentEvent",
+                      "readonly": "true"
+                    },
+                    "contentType": {
+                      "type": "string",
+                      "default": "HostedFile",
+                      "readonly": "true"
+                    },
+                    "message": {
+                      "type": "object",
+                      "required": [
+                        "caption",
+                        "relativePath",
+                        "fileType"
+                      ],
+                      "properties": {
+                        "caption": {
+                          "type": "string"
+                        },
+                        "relativePath": {
+                          "type": "string"
+                        },
+                        "fileType": {
+                          "type": "string",
+                          "enum": [
+                            "IMG",
+                            "JPG",
+                            "PNG",
+                            "GIF",
+                            "TXT",
+                            "PDF"
+                          ]
+                        },
+                        "preview": {
+                          "type": "any"
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "contentType",
+                    "message"
+                  ]
+                },
+                {
+                  "title": "ChatStateEvent",
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "default": "ChatStateEvent",
+                      "readonly": "true"
+                    },
+                    "chatState": {
+                      "type": "string",
+                      "enum": [
+                        "ACTIVE",
+                        "INACTIVE",
+                        "GONE",
+                        "COMPOSING",
+                        "PAUSE"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "chatState"
+                  ]
+                },
+                {
+                  "title": "AcceptStatusEvent",
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "default": "AcceptStatusEvent",
+                      "readonly": "true"
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "ACCEPT",
+                        "READ",
+                        "ACCESS",
+                        "NACK",
+                        "ACTION"
+                      ]
+                    },
+                    "sequenceList": {
+                      "type": "array",
+                      "items": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "status",
+                    "sequenceList"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "SubscribeMessagingEvents",
+      "description": "Subscribes to get the events of a conversation. Existing events will be sent immediately, while new events will be notified as they happen.",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object",
+      "required": [
+        "body",
+        "id",
+        "type"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "default": "req",
+          "readonly": "true",
+          "description": "Defines that the message is a request"
+        },
+        "id": {
+          "type": "string",
+          "description": "Request ID generated by the client. It should be unique per WebSocket session in order to identify the request. This ID will be reflected by the server in the response to the request.",
+          "minLength": 1,
+          "maxLength": 64,
+          "default": "0"
+        },
+        "type": {
+          "description": "Contains one of the APIs request type names",
+          "type": "string",
+          "enum": [
+            "ms.SubscribeMessagingEvents"
+          ],
+          "default": "ms.SubscribeMessagingEvents",
+          "readonly": "true"
+        },
+        "metadata": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "title": "Action Reason",
+                "description": "Reason information while the conversation is being escalated by a bot to a human agent",
+                "additionalProperties": false,
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "enum": [
+                      "ActionReason"
+                    ],
+                    "default": "ActionReason",
+                    "type": "string"
+                  },
+                  "reasonId": {
+                    "maxLength": 64,
+                    "type": "string"
+                  },
+                  "reason": {
+                    "maxLength": 64,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "type"
+                ]
+              },
+              {
+                "title": "Bot Response",
+                "description": "Information coming back from the bot provider",
+                "additionalProperties": false,
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "enum": [
+                      "BotResponse"
+                    ],
+                    "default": "BotResponse",
+                    "type": "string"
+                  },
+                  "externalConversationId": {
+                    "maxLength": 64,
+                    "type": "string"
+                  },
+                  "businessCases": {
+                    "type": "array",
+                    "items": {
+                      "maxLength": 64,
+                      "type": "string"
+                    }
+                  },
+                  "intents": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "id",
+                        "confidence"
+                      ],
+                      "properties": {
+                        "name": {
+                          "maxLength": 64,
+                          "type": "string"
+                        },
+                        "id": {
+                          "maxLength": 64,
+                          "type": "string"
+                        },
+                        "confidence": {
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 1
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": [
+                  "type"
+                ]
+              },
+              {
+                "title": "IBM Watson Info",
+                "description": "Information coming back from the IBM Watson virtual agent",
+                "additionalProperties": false,
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "enum": [
+                      "IBMWatsonInfo"
+                    ],
+                    "default": "IBMWatsonInfo",
+                    "type": "string"
+                  },
+                  "branch_exited": {
+                    "type": "boolean"
+                  },
+                  "branch_exited_reason": {
+                    "maxLength": 64,
+                    "type": "string"
+                  },
+                  "capability": {
+                    "maxLength": 64,
+                    "type": "string"
+                  },
+                  "nodes_visited": {
+                    "type": "array",
+                    "items": {
+                      "maxLength": 64,
+                      "type": "string"
+                    }
+                  },
+                  "referred_capability": {
+                    "maxLength": 64,
+                    "type": "string"
+                  },
+                  "referred_nodes": {
+                    "type": "array",
+                    "items": {
+                      "maxLength": 64,
+                      "type": "string"
+                    }
+                  },
+                  "referred_visitor_message_sequences": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer"
+                    }
+                  },
+                  "entities": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "entity": {
+                          "type": "string"
+                        },
+                        "location": {
+                          "type": "array",
+                          "items": {
+                            "type": "integer"
+                          }
+                        },
+                        "value": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": [
+                  "type",
+                  "referred_visitor_message_sequences"
+                ]
+              },
+              {
+                "title": "External Id",
+                "description": "External id of the action was made",
+                "additionalProperties": false,
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "enum": [
+                      "ExternalId"
+                    ],
+                    "default": "ExternalId",
+                    "type": "string"
+                  },
+                  "id": {
+                    "maxLength": 64,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "type",
+                  "id"
+                ]
+              }
+            ]
+          }
+        },
+        "body": {
+          "type": "object",
+          "required": [
+            "dialogId"
+          ],
+          "properties": {
+            "fromSeq": {
+              "description": "Fetch events with sequence greater or equal to this value",
+              "type": "integer",
+              "default": 0
+            },
+            "dialogId": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "SubscribeExConversations",
+      "description": "Subscribes to any changes in the medata of the conversations of this user. Existing conversations that matches the filter will also be sent.<h4>Responses</h4><ul><li>200: SubscribeExConversationsResponse</li><li>Notification: ExConversationChangeNotification</li></ul>",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object",
+      "required": [
+        "id",
+        "type"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "default": "req",
+          "readonly": "true",
+          "description": "Defines that the message is a request"
+        },
+        "id": {
+          "type": "string",
+          "description": "Request ID generated by the client. It should be unique per WebSocket session in order to identify the request. This ID will be reflected by the server in the response to the request.",
+          "minLength": 1,
+          "maxLength": 64,
+          "default": "0"
+        },
+        "type": {
+          "description": "Contains one of the APIs request type names",
+          "type": "string",
+          "enum": [
+            "cqm.SubscribeExConversations"
+          ],
+          "default": "cqm.SubscribeExConversations",
+          "readonly": "true"
+        },
+        "metadata": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "title": "Action Reason",
+                "description": "Reason information while the conversation is being escalated by a bot to a human agent",
+                "additionalProperties": false,
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "enum": [
+                      "ActionReason"
+                    ],
+                    "default": "ActionReason",
+                    "type": "string"
+                  },
+                  "reasonId": {
+                    "maxLength": 64,
+                    "type": "string"
+                  },
+                  "reason": {
+                    "maxLength": 64,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "type"
+                ]
+              },
+              {
+                "title": "Bot Response",
+                "description": "Information coming back from the bot provider",
+                "additionalProperties": false,
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "enum": [
+                      "BotResponse"
+                    ],
+                    "default": "BotResponse",
+                    "type": "string"
+                  },
+                  "externalConversationId": {
+                    "maxLength": 64,
+                    "type": "string"
+                  },
+                  "businessCases": {
+                    "type": "array",
+                    "items": {
+                      "maxLength": 64,
+                      "type": "string"
+                    }
+                  },
+                  "intents": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "id",
+                        "confidence"
+                      ],
+                      "properties": {
+                        "name": {
+                          "maxLength": 64,
+                          "type": "string"
+                        },
+                        "id": {
+                          "maxLength": 64,
+                          "type": "string"
+                        },
+                        "confidence": {
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 1
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": [
+                  "type"
+                ]
+              },
+              {
+                "title": "IBM Watson Info",
+                "description": "Information coming back from the IBM Watson virtual agent",
+                "additionalProperties": false,
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "enum": [
+                      "IBMWatsonInfo"
+                    ],
+                    "default": "IBMWatsonInfo",
+                    "type": "string"
+                  },
+                  "branch_exited": {
+                    "type": "boolean"
+                  },
+                  "branch_exited_reason": {
+                    "maxLength": 64,
+                    "type": "string"
+                  },
+                  "capability": {
+                    "maxLength": 64,
+                    "type": "string"
+                  },
+                  "nodes_visited": {
+                    "type": "array",
+                    "items": {
+                      "maxLength": 64,
+                      "type": "string"
+                    }
+                  },
+                  "referred_capability": {
+                    "maxLength": 64,
+                    "type": "string"
+                  },
+                  "referred_nodes": {
+                    "type": "array",
+                    "items": {
+                      "maxLength": 64,
+                      "type": "string"
+                    }
+                  },
+                  "referred_visitor_message_sequences": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer"
+                    }
+                  },
+                  "entities": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "entity": {
+                          "type": "string"
+                        },
+                        "location": {
+                          "type": "array",
+                          "items": {
+                            "type": "integer"
+                          }
+                        },
+                        "value": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": [
+                  "type",
+                  "referred_visitor_message_sequences"
+                ]
+              },
+              {
+                "title": "External Id",
+                "description": "External id of the action was made",
+                "additionalProperties": false,
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "enum": [
+                      "ExternalId"
+                    ],
+                    "default": "ExternalId",
+                    "type": "string"
+                  },
+                  "id": {
+                    "maxLength": 64,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "type",
+                  "id"
+                ]
+              }
+            ]
+          }
+        },
+        "body": {
+          "type": "object",
+          "properties": {
+            "minLastUpdatedTime": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Do not fetch conversation which have not been updated after this timestamp"
+            },
+            "convState": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "OPEN",
+                  "CLOSE"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "UnsubscribeExConversations",
+      "description": "Unsubcribes the user from getting notifications on conversation metadata changes.",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object",
+      "required": [
+        "body",
+        "id",
+        "type"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "default": "req",
+          "readonly": "true",
+          "description": "Defines that the message is a request"
+        },
+        "id": {
+          "type": "string",
+          "description": "Request ID generated by the client. It should be unique per WebSocket session in order to identify the request. This ID will be reflected by the server in the response to the request.",
+          "minLength": 1,
+          "maxLength": 64,
+          "default": "0"
+        },
+        "type": {
+          "description": "Contains one of the APIs request type names",
+          "type": "string",
+          "enum": [
+            "cqm.UnsubscribeExConversations"
+          ],
+          "default": "cqm.UnsubscribeExConversations",
+          "readonly": "true"
+        },
+        "metadata": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "title": "Action Reason",
+                "description": "Reason information while the conversation is being escalated by a bot to a human agent",
+                "additionalProperties": false,
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "enum": [
+                      "ActionReason"
+                    ],
+                    "default": "ActionReason",
+                    "type": "string"
+                  },
+                  "reasonId": {
+                    "maxLength": 64,
+                    "type": "string"
+                  },
+                  "reason": {
+                    "maxLength": 64,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "type"
+                ]
+              },
+              {
+                "title": "Bot Response",
+                "description": "Information coming back from the bot provider",
+                "additionalProperties": false,
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "enum": [
+                      "BotResponse"
+                    ],
+                    "default": "BotResponse",
+                    "type": "string"
+                  },
+                  "externalConversationId": {
+                    "maxLength": 64,
+                    "type": "string"
+                  },
+                  "businessCases": {
+                    "type": "array",
+                    "items": {
+                      "maxLength": 64,
+                      "type": "string"
+                    }
+                  },
+                  "intents": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "id",
+                        "confidence"
+                      ],
+                      "properties": {
+                        "name": {
+                          "maxLength": 64,
+                          "type": "string"
+                        },
+                        "id": {
+                          "maxLength": 64,
+                          "type": "string"
+                        },
+                        "confidence": {
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 1
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": [
+                  "type"
+                ]
+              },
+              {
+                "title": "IBM Watson Info",
+                "description": "Information coming back from the IBM Watson virtual agent",
+                "additionalProperties": false,
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "enum": [
+                      "IBMWatsonInfo"
+                    ],
+                    "default": "IBMWatsonInfo",
+                    "type": "string"
+                  },
+                  "branch_exited": {
+                    "type": "boolean"
+                  },
+                  "branch_exited_reason": {
+                    "maxLength": 64,
+                    "type": "string"
+                  },
+                  "capability": {
+                    "maxLength": 64,
+                    "type": "string"
+                  },
+                  "nodes_visited": {
+                    "type": "array",
+                    "items": {
+                      "maxLength": 64,
+                      "type": "string"
+                    }
+                  },
+                  "referred_capability": {
+                    "maxLength": 64,
+                    "type": "string"
+                  },
+                  "referred_nodes": {
+                    "type": "array",
+                    "items": {
+                      "maxLength": 64,
+                      "type": "string"
+                    }
+                  },
+                  "referred_visitor_message_sequences": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer"
+                    }
+                  },
+                  "entities": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "entity": {
+                          "type": "string"
+                        },
+                        "location": {
+                          "type": "array",
+                          "items": {
+                            "type": "integer"
+                          }
+                        },
+                        "value": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": [
+                  "type",
+                  "referred_visitor_message_sequences"
+                ]
+              },
+              {
+                "title": "External Id",
+                "description": "External id of the action was made",
+                "additionalProperties": false,
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "enum": [
+                      "ExternalId"
+                    ],
+                    "default": "ExternalId",
+                    "type": "string"
+                  },
+                  "id": {
+                    "maxLength": 64,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "type",
+                  "id"
+                ]
+              }
+            ]
+          }
+        },
+        "body": {
+          "type": "object",
+          "required": [
+            "subscriptionId"
+          ],
+          "properties": {
+            "subscriptionId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 64
+            }
+          }
+        }
+      }
+    }
+  ]
+}
