@@ -7,9 +7,9 @@ references:
     environment:
       - YARN_COMMANDS: lint compile
   node_lts_image: &node_lts_image
-    image: node:carbon # LTS 8
+    image: circleci/node:carbon # LTS 8
   node_stable_image: &node_stable_image
-    image: node:latest
+    image: circleci/node:latest
   cache_key: &cache_key
     v1-dependencies-{{ checksum "yarn.lock" }}
   backup_cache_key: &backup_cache_key
@@ -26,7 +26,6 @@ references:
       key: *cache_key
   default_steps: &default_steps
     - checkout
-    - run: curl -o /usr/local/bin/circleci https://circle-downloads.s3.amazonaws.com/releases/build_agent_wrapper/circleci && chmod +x /usr/local/bin/circleci
     - run: curl -o- -L https://yarnpkg.com/install.sh | bash
     - run: echo 'export PATH=$HOME/.yarn/bin:$PATH' >> $BASH_ENV
     - run: node --version && npm --version && yarn --version
