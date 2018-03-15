@@ -22,11 +22,10 @@
   "license": "Apache-2.0",
   "scripts": {
     "generate": "ts-node build/generate_interfaces.ts",
-    "compile": "tsc -p tsconfig.build.json && dts-bundle --baseDir dist --main dist/index.d.ts --name @lp-libs/ums-generated --out index.d.ts --removeSource --outputAsModuleFolder",
+    "compile": "tsc -p tsconfig.build.json",
     "prepack": "yarn generate && yarn compile && pkg-ok"
   },
   "devDependencies": {
-    "dts-bundle": "^0.7.3",
     "pkg-ok": "^2.1.0",
     "ts-node": "^5.0.1",
     "typescript": "^2.7.2"

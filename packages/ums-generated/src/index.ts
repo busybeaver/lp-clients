@@ -1424,45 +1424,6 @@ export interface IConsumerResponsesWrapper {
 
 export type ConsumerResponsesConstructor<T extends ISendHandler<ConsumerRequests, ConsumerResponses>> = new (...args: any[]) => T;
 export type ConsumerResponsesWrapperConstructor = new (...args: any[]) => IConsumerResponsesWrapper;
-
-export function wrapConsumerResponses<T extends ConsumerResponsesConstructor<ISendHandler<ConsumerRequests, ConsumerResponses>>>(Base: T): T & ConsumerResponsesWrapperConstructor {
-
-  class ConsumerResponsesWrapper extends Base implements IConsumerResponsesWrapper {
-    constructor(...args) {
-      super(...args);
-    }
-
-    doInitConnection(data: Omit<InitConnection, "type">): Promise<StringResp> {
-      return this.sendMessage(Object.assign(data, {type: ConsumerRequestsEvent.InitConnection}) as InitConnection);
-    }
-
-    doUpdateConversationField(data: Omit<UpdateConversationField, "type">): Promise<StringResp> {
-      return this.sendMessage(Object.assign(data, {type: ConsumerRequestsEvent.UpdateConversationField}) as UpdateConversationField);
-    }
-
-    doConsumerRequestConversation(data: Omit<ConsumerRequestConversation, "type">): Promise<RequestConversationResponse> {
-      return this.sendMessage(Object.assign(data, {type: ConsumerRequestsEvent.ConsumerRequestConversation}) as ConsumerRequestConversation);
-    }
-
-    doPublishEvent(data: Omit<PublishEvent, "type">): Promise<PublishEventResponse> {
-      return this.sendMessage(Object.assign(data, {type: ConsumerRequestsEvent.PublishEvent}) as PublishEvent);
-    }
-
-    doSubscribeMessagingEvents(data: Omit<SubscribeMessagingEvents, "type">): Promise<GenericSubscribeResponse> {
-      return this.sendMessage(Object.assign(data, {type: ConsumerRequestsEvent.SubscribeMessagingEvents}) as SubscribeMessagingEvents);
-    }
-
-    doSubscribeExConversations(data: Omit<SubscribeExConversations, "type">): Promise<SubscribeExConversationsResponse> {
-      return this.sendMessage(Object.assign(data, {type: ConsumerRequestsEvent.SubscribeExConversations}) as SubscribeExConversations);
-    }
-
-    doUnsubscribeExConversations(data: Omit<UnsubscribeExConversations, "type">): Promise<StringResp> {
-      return this.sendMessage(Object.assign(data, {type: ConsumerRequestsEvent.UnsubscribeExConversations}) as UnsubscribeExConversations);
-    }
-  }
-  return ConsumerResponsesWrapper;
-}
-
 export type ConsumerNotifications = MessagingEventNotification | ExConversationChangeNotification;
 
 export const enum ConsumerNotificationsEvent {
