@@ -45,8 +45,8 @@ references:
     - run: yarn test:ci # check if the unit tests succeed
     - store_test_results:
           path: *test_path
-      - store_artifacts:
-          path: *test_path
+    - store_artifacts:
+        path: *test_path
   lint_step: &lint_step
     lint
 
