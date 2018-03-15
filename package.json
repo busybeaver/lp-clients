@@ -52,7 +52,7 @@
     "json-schema-ref-parser": "^4.1.1",
     "json-schema-to-typescript": "^5.4.0",
     "jsonpath": "^1.0.0",
-    "mocha": "^3.2.0",
+    "mocha": "^5.0.4",
     "pascal-case": "^2.0.1",
     "pino": "^4.14.0",
     "snake-case": "^2.1.0",
