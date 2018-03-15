@@ -11,8 +11,7 @@ export class UmsClient<ConfigType extends IUmsClientConfig<TransportConfigType, 
   NotificationTypes extends INotificationsType<NotificationType>, CredentialsType,
   SessionType extends IUserSession>
   extends TransportClient<TransportConfigType, SendType, ResponseType | NotificationType, ConfigType, CredentialsType, SessionType>
-  implements INotificationHandler<NotificationTypes, NotificationType>,
-             ISendHandler<SendType, ResponseType>  {
+  implements INotificationHandler<NotificationTypes, NotificationType>, ISendHandler<SendType, ResponseType>  {
 
   constructor(config: ConfigType, loggerName: string = "UmsClient") {
     super(config, loggerName);
