@@ -47,6 +47,7 @@ references:
           path: *test_path
     - store_artifacts:
         path: *test_path
+    - run: bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
   lint_step: &lint_step
     lint
 

@@ -19,3 +19,5 @@ install:
 script:
   # using env to run the commands in parallel
   - echo "Going to execute 'yarn $YARN_COMMAND'" && yarn $YARN_COMMAND
+after_success:
+  - bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"

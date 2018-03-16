@@ -1,6 +1,7 @@
 const { join } = require('path');
 
 module.exports = {
+  testEnvironment: "node",
   verbose: true,
   transform: {
     "^.+\\.tsx?$": "ts-jest",
@@ -21,6 +22,7 @@ module.exports = {
     ".*/build/.*",
     ".*/generated/.*"
   ],
+  // coverage is ensured via codecov
   /* coverageThreshold: {
     global: {
       branches: 90,
@@ -31,6 +33,14 @@ module.exports = {
   }, */
   collectCoverage: true,
   coverageDirectory: join(process.cwd(), "dist", "coverage"),
+  projects: [
+    // "<rootDir>/packages/*/",
+    join(process.cwd(), "packages", "*"),
+  ],
+  // setupTestFrameworkScriptFile: join(process.cwd(), "jest.setup.js"),
+  unmockedModulePathPatterns: [
+    "jasmine-expect",
+  ],
   globals: {
     "ts-jest": {
       enableTsDiagnostics: true,
