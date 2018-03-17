@@ -21,7 +21,7 @@ comment:
 
 ignore:
   - "**/node_modules/**",
-    "**/tests/**",
-    "**/dist/**",
-    "**/build/**",
-    "**/generated/**"
+  - "**/dist/**",
+  - "**/build/**",
+  - "**/generated/**"
+  - "\\.(test|spec)\\.(jsx?|tsx?)$"

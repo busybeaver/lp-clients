@@ -6,7 +6,7 @@ module.exports = {
   transform: {
     "^.+\\.tsx?$": "ts-jest",
   },
-  testRegex: "(.*/tests/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+  testRegex: "\\.(test|spec)\\.(jsx?|tsx?)$",
   moduleFileExtensions: [
     "ts",
     "tsx",
@@ -17,7 +17,7 @@ module.exports = {
   ],
   coveragePathIgnorePatterns: [
     ".*/node_modules/.*",
-    ".*/tests/.*",
+    "\\.(test|spec)\\.(jsx?|tsx?)$",
     ".*/dist/.*",
     ".*/build/.*",
     ".*/generated/.*"
