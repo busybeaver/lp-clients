@@ -6,6 +6,7 @@
   },
   "exclude": [
     "dist",
+    "mocks",
     "node_modules",
     "**/*.test.ts"
   ]

@@ -12,8 +12,6 @@ export const MockLogger = jest.fn<ILogger>(() => {
 
 export const MockLoggerFactory = jest.fn<ILoggerFactory>(() => {
   return class implements ILoggerFactory {
-    public create = jest.fn<ILogger>(() => {
-      return new MockLogger();
-    });
+    public create = jest.fn<ILogger>(() => new MockLogger());
   };
 });
