@@ -5,6 +5,8 @@
     "outDir": "dist"
   },
   "exclude": [
-    "dist"
+    "dist",
+    "node_modules",
+    "**/*.test.ts"
   ]
 }

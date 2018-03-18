@@ -24,7 +24,7 @@
     "test:watch": "yarn test --watch",
     "test:ci": "yarn test --ci --testResultsProcessor=\"jest-junit\"",
     "compile": "lerna run compile --stream",
-    "lint": "tslint --exclude '**/node_modules/**' --exclude '**/dist/**' 'packages/**/*.ts'",
+    "lint": "tslint -t codeFrame --exclude '**/node_modules/**' --exclude '**/dist/**' 'packages/**/*.ts'",
     "preinstall": "node -e \"if (!String(process.env.npm_execpath).includes('yarn')) {console.error('>>> Use yarn instead of npm: https://yarnpkg.com/');process.exit(1);}\"",
     "dependency-cost": "cost-of-modules --yarn --no-install"
   },
@@ -58,7 +58,6 @@
     "ts-simple-ast": "^4.2.1",
     "tslint": "^5.9.1",
     "type-zoo": "^1.2.1",
-    "typemoq": "^2.1.0",
     "typescript": "^2.7.2"
   },
   "engines": {

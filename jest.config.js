@@ -38,9 +38,6 @@ module.exports = {
     join(process.cwd(), "packages", "*"),
   ],
   // setupTestFrameworkScriptFile: join(process.cwd(), "jest.setup.js"),
-  unmockedModulePathPatterns: [
-    "jasmine-expect",
-  ],
   globals: {
     "ts-jest": {
       enableTsDiagnostics: true,

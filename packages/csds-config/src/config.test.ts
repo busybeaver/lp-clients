@@ -1,4 +1,4 @@
-import { DefaultCsdsConfig, DefaultCsdsServiceConfig } from "../src/config";
+import { DefaultCsdsConfig, DefaultCsdsServiceConfig } from "./config";
 
 const qaDomain = "hc1n.dev.lrnd.net";
 const prodDomain = "adminlogin.liveperson.net";

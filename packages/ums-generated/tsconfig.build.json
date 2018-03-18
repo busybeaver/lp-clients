@@ -6,6 +6,8 @@
   },
   "exclude": [
     "build",
-    "dist"
+    "dist",
+    "node_modules",
+    "**/*.test.ts"
   ]
 }
