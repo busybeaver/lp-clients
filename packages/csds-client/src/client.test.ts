@@ -1,4 +1,4 @@
-import { CsdsClient } from "../src/client";
+import { CsdsClient } from "./client";
 import { MockCsdsConfig } from "@lp-libs/csds-config/mocks";
 import { MockCsdsResolver } from "@lp-libs/csds-resolver/mocks";
 import { MockLoggerFactory } from "@lp-libs/logger/mocks";

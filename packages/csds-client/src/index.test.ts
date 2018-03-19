@@ -1,4 +1,4 @@
-import * as index from "../src/index";
+import * as index from "./index";
 
 test("exposes CsdsClient", () => {
   expect(index.CsdsClient).toBeDefined();
