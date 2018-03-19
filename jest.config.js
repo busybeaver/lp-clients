@@ -4,46 +4,48 @@ module.exports = {
   testEnvironment: "node",
   verbose: true,
   transform: {
-    "^.+\\.tsx?$": "ts-jest",
+    "^.+\\.ts$": "ts-jest",
   },
-  testRegex: "\\.(test|spec)\\.(jsx?|tsx?)$",
+  testMatch: [
+    // '**/__tests__/**/*.ts',
+    '/**/?(*.)test.ts'
+  ],
   moduleFileExtensions: [
     "ts",
-    "tsx",
     "js",
-    "jsx",
     "json",
     "node",
   ],
   coveragePathIgnorePatterns: [
-    ".*/node_modules/.*",
-    "\\.(test|spec)\\.(jsx?|tsx?)$",
-    ".*/dist/.*",
     ".*/build/.*",
-    ".*/generated/.*"
+    ".*/dist/.*",
+    ".*/generated/.*",
+    ".*/mocks/.*",
+    ".*/node_modules/.*",
+    "\\.test\\.ts$",
   ],
-  // coverage is ensured via codecov
-  /* coverageThreshold: {
-    global: {
-      branches: 90,
-      functions: 95,
-      lines: 95,
-      statements: 95,
-    },
-  }, */
+  // // coverage is ensured via codecov
+  // coverageThreshold: {
+  //   global: {
+  //     branches: 90,
+  //     functions: 95,
+  //     lines: 95,
+  //     statements: 95,
+  //   },
+  // },
   collectCoverage: true,
-  coverageDirectory: join(process.cwd(), "dist", "coverage"),
+  coverageDirectory: join(__dirname, "dist", "coverage"),
   projects: [
     // "<rootDir>/packages/*/",
-    join(process.cwd(), "packages", "*"),
+    // join(__dirname, "packages", "*"),
   ],
-  // setupTestFrameworkScriptFile: join(process.cwd(), "jest.setup.js"),
+  // setupTestFrameworkScriptFile: join(__dirname, "jest.setup.js"),
   globals: {
     "ts-jest": {
       enableTsDiagnostics: true,
     },
     "jest-junit": {
-      output: process.env.JEST_JUNIT_OUTPUT || join(process.cwd(), "dist", "junit.xml"),
+      output: process.env.JEST_JUNIT_OUTPUT || join(__dirname, "dist", "junit.xml"),
     },
   },
 };

@@ -5,6 +5,8 @@ version: 2
 references:
   test_path: &test_path
     reports/junit
+  test_filename: &test_filename
+    js-test-results.xml
   defaults: &defaults
     working_directory: ~/repo
     environment:
