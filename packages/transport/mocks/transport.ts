@@ -27,7 +27,7 @@ export interface IMockTransport extends ITransport<IMockSendType, IMockReceiveTy
 }
 
 export const MockTransport = jest.fn<IMockTransport>(() => {
-  return class implements IMockTransport {
+  return new (class implements IMockTransport {
     public success = true;
     public connected = true;
     public isConnected = jest.fn<boolean>(() => this.connected);
@@ -46,5 +46,5 @@ export const MockTransport = jest.fn<IMockTransport>(() => {
     public onError = jest.fn<void>((cb: (err: Error) => void) => {
       cb(new Error("expected failure"));
     });
-  };
+  })();
 });

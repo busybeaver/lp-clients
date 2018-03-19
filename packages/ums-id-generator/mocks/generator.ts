@@ -5,8 +5,8 @@ export interface IMockIIDGenerator extends IIDGenerator {
 }
 
 export const MockIIDGenerator = jest.fn<IMockIIDGenerator>(() => {
-  return class implements IMockIIDGenerator {
+  return new (class implements IMockIIDGenerator {
     public id = "1337";
     public generateId = jest.fn(() => this.id);
-  };
+  })();
 });

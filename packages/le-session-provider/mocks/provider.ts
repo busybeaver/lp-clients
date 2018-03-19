@@ -24,7 +24,7 @@ export const MockSessionProviderOptions = jest.fn<ISessionProviderOptions>(() =>
 });
 
 export const MockSessionProvider = jest.fn<IMockSessionProvider>(() => {
-  return class implements IMockSessionProvider {
+  return new (class implements IMockSessionProvider {
     public success = true;
     public login = jest.fn<Promise<IUserSession>>(() => {
       return this.success ? Promise.resolve(new MockUserSession()) : Promise.reject(new Error("expected failure"));
@@ -35,5 +35,5 @@ export const MockSessionProvider = jest.fn<IMockSessionProvider>(() => {
     public logout = jest.fn<Promise<void>>(() => {
       return this.success ? Promise.resolve() : Promise.reject(new Error("expected failure"));
     });
-  };
+  })();
 });
