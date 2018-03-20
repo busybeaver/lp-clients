@@ -20,8 +20,9 @@ export class SimpleCsdsResolver extends AbstractCsdsResolver {
     const url = `https://${csdsDomain}/api/account/${accountId}/service/${csdsService ? `${csdsService}/` : ""}baseURI.json?version=1.0`;
     const { body } = await get<ICsdsResponse>(url);
 
-    if (body && body.baseURIs) {
-      return body.baseURIs.reduce((obj, {service, baseURI}) => {
+    if (body) {
+      const response = body.baseURIs || [ body ];
+      return response.reduce((obj, {service, baseURI}) => {
         obj[service] = baseURI;
         return obj;
       }, {});
