@@ -11,13 +11,12 @@ import got, {
 } from "got";
 
 const doRequest = async <R extends JsonStructure> (requestFn: GotFn, url: GotUrl, opts?: GotOptions<string>, secondTry: boolean = false): Promise<Response<R>> => {
-  const options = Object.assign({headers: []}, opts, {encoding: "utf8", json: true});
-
+  const options = Object.assign({headers: []}, opts, { encoding: "utf8", json: true, throwHttpErrors: false });
   const response = await Reflect.apply(requestFn, null, [url, options]) as Response<R>;
   const { body, statusCode, statusMessage } = response;
 
   if (statusCode === 503 && !secondTry) return doRequest<R>(requestFn, url, opts, true);
-  if (statusCode !== 200) throw (isJsonObject(body) && body.error) ? new Error(String(body.error)) : new Error(`${statusCode || "None"} ${statusMessage || "None"}`);
+  if (statusCode !== 200) throw (isJsonObject(body) && body.error) ? new Error(String(body.error)) : new Error(`${statusCode} - ${statusMessage || ""}`);
   return response;
 };
 
