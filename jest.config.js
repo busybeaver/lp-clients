@@ -39,7 +39,7 @@ module.exports = {
     // "<rootDir>/packages/*/",
     // join(__dirname, "packages", "*"),
   ],
-  // setupTestFrameworkScriptFile: join(__dirname, "jest.setup.js"),
+  setupTestFrameworkScriptFile: require.resolve("expect-more-jest"),
   globals: {
     "ts-jest": {
       enableTsDiagnostics: true,

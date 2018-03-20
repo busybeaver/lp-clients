@@ -1,3 +1,4 @@
+/// <reference types="expect-more-jest" />
 import * as index from "./index";
 
 test("exposes CsdsClient", () => {
@@ -9,5 +10,6 @@ test("exposes DefaultCsdsClientConfig", () => {
 });
 
 test("exposes DEFAULT_CSDS_REFRESH_INTERVAL", () => {
+  expect(index.DEFAULT_CSDS_REFRESH_INTERVAL).toBeNumber();
   expect(index.DEFAULT_CSDS_REFRESH_INTERVAL).toBeGreaterThan(0);
 });

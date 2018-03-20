@@ -1,3 +1,4 @@
+/// <reference types="expect-more-jest" />
 import { CsdsClient } from "./client";
 import { MockCsdsConfig } from "@lp-libs/csds-config/mocks";
 import { MockCsdsResolver } from "@lp-libs/csds-resolver/mocks";
@@ -12,7 +13,7 @@ test("init CsdsClient", () => {
   const client = new CsdsClient({ csdsConfig, csdsResolver, loggerFactory, refreshInterval });
   expect(client).toBeInstanceOf(CsdsClient);
   expect(client.accountId).toBe(csdsConfig.accountId);
-  expect(client.started).toBeFalsy();
+  expect(client.started).toBeFalse();
   expect(loggerFactory.create).toHaveBeenCalledTimes(1);
 });
 
@@ -21,9 +22,9 @@ test("CsdsClient start", async () => {
   const csdsResolver = new MockCsdsResolver();
   const loggerFactory = new MockLoggerFactory();
   const client = new CsdsClient({ csdsConfig, csdsResolver, loggerFactory, refreshInterval });
-  expect(client.started).toBeFalsy();
+  expect(client.started).toBeFalse();
   await client.start();
-  expect(client.started).toBeTruthy();
+  expect(client.started).toBeTrue();
   expect(csdsResolver.resolve).toHaveBeenCalledTimes(1);
   expect(client.domains).toBe(csdsResolver.response);
 });
