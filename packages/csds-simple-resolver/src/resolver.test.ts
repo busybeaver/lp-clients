@@ -9,6 +9,7 @@ test("SimpleCsdsResolver functionality", async () => {
 
   const csdsResolver = new SimpleCsdsResolver();
   expect(csdsResolver).toBeInstanceOf(AbstractCsdsResolver);
+  expect(csdsResolver).toBeInstanceOf(SimpleCsdsResolver);
 
   const param = { accountId: "123456", csdsDomain: "test.domain" };
   const paramService = Object.assign({ service: "foo" }, param);
