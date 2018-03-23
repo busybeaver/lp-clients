@@ -37,11 +37,11 @@ test("ConsoleLogger functionality", () => {
     expect(fn).toHaveBeenLastCalledWith(expect.stringMatching(msg1));
     const msg2 = "foo";
     const arg1 = "bar";
-    const arg2 = "42";
+    const arg2 = 42;
     logger[lvl](msg2, arg1, arg2);
     expect(fn).toHaveBeenCalledTimes(++counter);
     expect(fn).toHaveBeenLastCalledWith(
-      expect.stringMatching(msg2), expect.stringMatching(arg1), expect.stringMatching(arg2),
+      expect.stringMatching(msg2), expect.stringMatching(arg1), arg2,
     );
   });
 });
