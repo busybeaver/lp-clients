@@ -1,4 +1,5 @@
-const { join } = require('path');
+const { join } = require("path");
+const isCI = require("is-ci")
 
 module.exports = {
   testEnvironment: "node",
@@ -40,6 +41,7 @@ module.exports = {
     // join(__dirname, "packages", "*"),
   ],
   setupTestFrameworkScriptFile: require.resolve("expect-more-jest"),
+  testResultsProcessor: isCI ? "jest-junit" : /* default */ undefined,
   globals: {
     "ts-jest": {
       enableTsDiagnostics: true,
