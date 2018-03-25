@@ -22,7 +22,7 @@
     "bootstrap": "lerna bootstrap",
     "test": "jest",
     "test:watch": "yarn test --watch",
-    "test:ci": "yarn test --ci --testResultsProcessor=\"jest-junit\"",
+    "test:ci": "yarn test --ci",
     "compile": "lerna run compile --stream",
     "lint": "tslint -t codeFrame --exclude '**/node_modules/**' --exclude '**/dist/**' 'packages/**/*.ts'",
     "preinstall": "node -e \"if (!String(process.env.npm_execpath).includes('yarn')) {console.error('>>> Use yarn instead of npm: https://yarnpkg.com/');process.exit(1);}\"",
