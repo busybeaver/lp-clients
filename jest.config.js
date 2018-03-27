@@ -44,7 +44,21 @@ module.exports = {
   testResultsProcessor: isCI ? "jest-junit" : /* default */ undefined,
   globals: {
     "ts-jest": {
-      enableTsDiagnostics: true,
+      enableTsDiagnostics: false,
+      tsConfigFile: "tsconfig.test.json", // relative to the project's root directory
+      babelConfig: {
+        presets: [
+          ["babel-preset-env", {
+            targets: {
+              node: "current",
+            },
+          }],
+        ],
+        plugins: [
+          "jest-hoist",
+          "dynamic-import-node",
+        ],
+      },
     },
     "jest-junit": {
       output: process.env.JEST_JUNIT_OUTPUT || join(__dirname, "dist", "junit.xml"),
