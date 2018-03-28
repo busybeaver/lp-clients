@@ -42,6 +42,7 @@
     "@types/uuid": "^3.4.3",
     "@types/ws": "^3.2.1",
     "babel-plugin-dynamic-import-node": "^1.2.0",
+    "babel-plugin-jest-hoist": "^22.4.3",
     "babel-preset-env": "^1.6.1",
     "cost-of-modules": "^1.0.1",
     "expect-more-jest": "^1.0.1",
