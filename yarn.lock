@@ -3050,6 +3050,10 @@ jest-config@^22.4.0, jest-config@^22.4.2:
     jest-validate "^22.4.2"
     pretty-format "^22.4.0"
 
+jest-create-mock-instance@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/jest-create-mock-instance/-/jest-create-mock-instance-1.0.3.tgz#e94521b0ff44475125c77ec41ae2a9d2218321e5"
+
 jest-diff@^22.4.0:
   version "22.4.0"
   resolved "https://registry.yarnpkg.com/jest-diff/-/jest-diff-22.4.0.tgz#384c2b78519ca44ca126382df53f134289232525"

@@ -4,6 +4,7 @@ const isCI = require("is-ci")
 module.exports = {
   testEnvironment: "node",
   verbose: true,
+  automock: false,
   transform: {
     "^.+\\.ts$": "ts-jest",
   },
@@ -36,6 +37,7 @@ module.exports = {
   // },
   collectCoverage: true,
   coverageDirectory: join(__dirname, "dist", "coverage"),
+  rootDir: __dirname,
   projects: [
     // "<rootDir>/packages/*/",
     // join(__dirname, "packages", "*"),
