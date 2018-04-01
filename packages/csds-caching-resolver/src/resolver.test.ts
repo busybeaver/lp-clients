@@ -1,37 +1,32 @@
 /// <reference types="expect-more-jest" />
-import { CachingCsdsResolver } from "./resolver";
-import { AbstractCsdsResolver } from "@lp-libs/csds-resolver";
-import { SimpleCsdsResolver } from "@lp-libs/csds-simple-resolver";
-import nock from "nock";
+
+import { IMockCsdsResolver } from "@lp-libs/csds-resolver/mocks";
+
+beforeAll(async () => {
+  const mocks = await import("@lp-libs/csds-resolver/mocks");
+  jest.mock("@lp-libs/csds-simple-resolver", () => {
+    return {
+      SimpleCsdsResolver: mocks.MockCsdsResolver,
+    };
+  });
+});
+
+afterAll(() => jest.unmock("@lp-libs/csds-simple-resolver"));
 
 test("CachingCsdsResolver functionality", async () => {
-  const responseService = { foo: "bar.com" };
-  const response = Object.assign({ myService: "global.internet.com" }, responseService);
+  const { CachingCsdsResolver } = await import("./resolver");
 
-  const csdsResolver = new CachingCsdsResolver();
-  expect(csdsResolver).toBeInstanceOf(AbstractCsdsResolver);
-  expect(csdsResolver).toBeInstanceOf(SimpleCsdsResolver);
-  expect(csdsResolver).toBeInstanceOf(CachingCsdsResolver);
+  const das = CachingCsdsResolver;
+  const csdsResolver = new CachingCsdsResolver() as any as IMockCsdsResolver;
 
   const param = { accountId: "123456", csdsDomain: "test.domain" };
   const paramService = Object.assign({ service: "foo" }, param);
 
-  nock(`https://${param.csdsDomain}`)
-    .get(`/api/account/${param.accountId}/service/baseURI.json?version=1.0`)
-    .reply(200);
-  await expect(csdsResolver.resolve(param)).resolves.toBeEmptyObject();
-  nock(`https://${param.csdsDomain}`)
-    .get(`/api/account/${param.accountId}/service/baseURI.json?version=1.0`)
-    .reply(200, {
-      baseURIs: Object.entries(response).map(([service, baseURI]) => ({service, baseURI})),
-    });
-  await expect(csdsResolver.resolve(param)).resolves.toEqual(response);
+  await expect(csdsResolver.resolveService(paramService)).resolves.toEqual(csdsResolver.response.foo);
+  csdsResolver.response = Object.assign({}, csdsResolver.response, { foo: "test.net" }); // ensure new csdsResolver.response object
+  await expect(csdsResolver.resolveService(paramService)).resolves.not.toEqual(csdsResolver.response.foo); // caching
 
-  nock(`https://${paramService.csdsDomain}`)
-    .get(`/api/account/${paramService.accountId}/service/${paramService.service}/baseURI.json?version=1.0`)
-    .reply(200, {
-      service: paramService.service,
-      baseURI: response[paramService.service],
-    });
-  await expect(csdsResolver.resolve(paramService)).resolves.toEqual(responseService);
+  await expect(csdsResolver.resolve(param)).resolves.toEqual(expect.objectContaining(csdsResolver.response));
+  csdsResolver.response = { hello: "world.com" }; // ensure new csdsResolver.response object
+  await expect(csdsResolver.resolve(param)).resolves.not.toEqual(expect.objectContaining(csdsResolver.response)); // caching
 });
