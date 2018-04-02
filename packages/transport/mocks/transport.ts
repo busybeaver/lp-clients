@@ -26,25 +26,25 @@ export interface IMockTransport extends ITransport<IMockSendType, IMockReceiveTy
   connected: boolean;
 }
 
-export const MockTransport = jest.fn<IMockTransport>(() => {
-  return new (class implements IMockTransport {
-    public success = true;
-    public connected = true;
-    public isConnected = jest.fn<boolean>(() => this.connected);
-    public connect = jest.fn<Promise<void>>(() => {
-      return this.success ? Promise.resolve() : Promise.reject(new Error("expected failure"));
-    });
-    public disconnect = jest.fn<Promise<void>>(() => {
-      return this.success ? Promise.resolve() : Promise.reject(new Error("expected failure"));
-    });
-    public sendMessage = jest.fn<Promise<void>>(() => {
-      return this.success ? Promise.resolve() : Promise.reject(new Error("expected failure"));
-    });
-    public onMessage = jest.fn<void>((cb: (err?: Error | null, res?: IMockReceiveType) => void) => {
-      this.success ? cb(null, {}) : cb(new Error("expected failure"));
-    });
-    public onError = jest.fn<void>((cb: (err: Error) => void) => {
-      cb(new Error("expected failure"));
-    });
-  })();
-});
+class MockTransportImpl implements IMockTransport {
+  public success = true;
+  public connected = true;
+  public isConnected = jest.fn<boolean>(() => this.connected);
+  public connect = jest.fn<Promise<void>>(() => {
+    return this.success ? Promise.resolve() : Promise.reject(new Error("expected failure"));
+  });
+  public disconnect = jest.fn<Promise<void>>(() => {
+    return this.success ? Promise.resolve() : Promise.reject(new Error("expected failure"));
+  });
+  public sendMessage = jest.fn<Promise<void>>(() => {
+    return this.success ? Promise.resolve() : Promise.reject(new Error("expected failure"));
+  });
+  public onMessage = jest.fn<void>((cb: (err?: Error | null, res?: IMockReceiveType) => void) => {
+    this.success ? cb(null, {}) : cb(new Error("expected failure"));
+  });
+  public onError = jest.fn<void>((cb: (err: Error) => void) => {
+    cb(new Error("expected failure"));
+  });
+}
+
+export const MockTransport = jest.fn<IMockTransport>(() => new MockTransportImpl());

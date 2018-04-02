@@ -23,17 +23,17 @@ export const MockSessionProviderOptions = jest.fn<ISessionProviderOptions>(() =>
   } as ISessionProviderOptions;
 });
 
-export const MockSessionProvider = jest.fn<IMockSessionProvider>(() => {
-  return new (class implements IMockSessionProvider {
-    public success = true;
-    public login = jest.fn<Promise<IUserSession>>(() => {
-      return this.success ? Promise.resolve(new MockUserSession()) : Promise.reject(new Error("expected failure"));
-    });
-    public refresh = jest.fn<Promise<void>>(() => {
-      return this.success ? Promise.resolve() : Promise.reject(new Error("expected failure"));
-    });
-    public logout = jest.fn<Promise<void>>(() => {
-      return this.success ? Promise.resolve() : Promise.reject(new Error("expected failure"));
-    });
-  })();
-});
+class MockSessionProviderImpl implements IMockSessionProvider {
+  public success = true;
+  public login = jest.fn<Promise<IUserSession>>(() => {
+    return this.success ? Promise.resolve(new MockUserSession()) : Promise.reject(new Error("expected failure"));
+  });
+  public refresh = jest.fn<Promise<void>>(() => {
+    return this.success ? Promise.resolve() : Promise.reject(new Error("expected failure"));
+  });
+  public logout = jest.fn<Promise<void>>(() => {
+    return this.success ? Promise.resolve() : Promise.reject(new Error("expected failure"));
+  });
+}
+
+export const MockSessionProvider = jest.fn<IMockSessionProvider>(() => new MockSessionProviderImpl());
