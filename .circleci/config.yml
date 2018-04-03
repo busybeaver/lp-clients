@@ -69,14 +69,14 @@ references:
         command: yarn compile
     - run:
         name: Run Unit Tests
-        command: yarn test:ci && TEST_RESULT_CODE=$?
+        command: yarn test:ci
     - store_test_results:
           path: *test_path
     - store_artifacts:
         path: *test_path
     - run:
         name: Upload Code Coverage to CodeClimate
-        command: ./cc-test-reporter after-build -t lcov -p .dist --exit-code $TEST_RESULT_CODE
+        command: ./cc-test-reporter after-build -t lcov -p .dist
     - run:
         name: Upload Code Coverage to Codecov
         command: bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
