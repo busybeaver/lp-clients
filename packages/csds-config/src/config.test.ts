@@ -28,10 +28,14 @@ test("init DefaultCsdsConfig", () => {
   expect(config.csdsDomain).toBe(qaDomain);
 });
 
-test("init DefaultCsdsServiceConfig", () => {
-  const config = new DefaultCsdsServiceConfig({ accountId: accountId1, csdsDomain, service });
+const csdsConfigInstanceChecks = (config: any) => {
   expect(config).toBeInstanceOf(DefaultCsdsConfig);
   expect(config).toBeInstanceOf(DefaultCsdsServiceConfig);
+};
+
+test("init DefaultCsdsServiceConfig", () => {
+  const config = new DefaultCsdsServiceConfig({ accountId: accountId1, csdsDomain, service });
+  csdsConfigInstanceChecks(config);
   expect(config.accountId).toBe(accountId1);
   expect(config.csdsDomain).toBe(csdsDomain);
   expect(config.service).toBe(service);
@@ -39,8 +43,7 @@ test("init DefaultCsdsServiceConfig", () => {
 
 test("init DefaultCsdsServiceConfig", () => {
   const config = new DefaultCsdsServiceConfig({ accountId: accountId1, service });
-  expect(config).toBeInstanceOf(DefaultCsdsConfig);
-  expect(config).toBeInstanceOf(DefaultCsdsServiceConfig);
+  csdsConfigInstanceChecks(config);
   expect(config.accountId).toBe(accountId1);
   expect(config.csdsDomain).toBe(prodDomain);
   expect(config.service).toBe(service);

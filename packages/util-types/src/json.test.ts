@@ -1,18 +1,22 @@
 /// <reference types="expect-more-jest" />
 import { isJsonArray, isJsonObject } from "./json";
 
+const baseChecks = (fn) => {
+  expect(fn).toBeFunction();
+  expect(fn("")).toBeFalse();
+  expect(fn(2)).toBeFalse();
+  expect(fn(null)).toBeFalse();
+  expect(fn(undefined)).toBeFalse();
+};
+
 test("isJsonArray", () => {
-  expect(isJsonArray).toBeFunction();
-  expect(isJsonArray("")).toBeFalse();
-  expect(isJsonArray(2)).toBeFalse();
+  baseChecks(isJsonArray);
   expect(isJsonArray({})).toBeFalse();
   expect(isJsonArray([])).toBeTrue();
 });
 
 test("isJsonObject", () => {
-  expect(isJsonObject).toBeFunction();
-  expect(isJsonObject("")).toBeFalse();
-  expect(isJsonObject(2)).toBeFalse();
+  baseChecks(isJsonArray);
   expect(isJsonObject({})).toBeTrue();
   expect(isJsonObject([])).toBeFalse();
 });

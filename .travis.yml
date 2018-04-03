@@ -18,9 +18,6 @@ before_install:
   # install the latest version of yarn
   - curl -o- -L https://yarnpkg.com/install.sh | bash
   - export PATH="$HOME/.yarn/bin:$PATH"
-  # code climate coverage reporter
-  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter && chmod +x ./cc-test-reporter
-  - ./cc-test-reporter before-build
 install:
   - yarn install --no-progress --frozen-lockfile
 script:
@@ -30,4 +27,6 @@ after_success:
   # report results to codecov
   - bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
   # report results to code climate
-  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter && chmod +x ./cc-test-reporter
+  - ./cc-test-reporter format-coverage -t lcov -o $(pwd)/dist/coverage/codeclimate.json $(pwd)/dist/coverage/lcov.info
+  - ./cc-test-reporter upload-coverage -i $(pwd)/dist/coverage/codeclimate.json
