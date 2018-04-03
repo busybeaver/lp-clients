@@ -54,12 +54,6 @@ references:
         name: Install Dependencies
         command: yarn install --no-progress --frozen-lockfile
     - *save_dep_cache
-    - run:
-        name: Setup CodeClimate Code Coverage Reporter
-        command: |
-          curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-          chmod +x ./cc-test-reporter
-          ./cc-test-reporter before-build
     # TSLint is executed/checked via CodeClimate
     # - run:
     #     name: Run TSLint
@@ -75,11 +69,15 @@ references:
     - store_artifacts:
         path: *test_path
     - run:
-        name: Upload Code Coverage to CodeClimate
-        command: ./cc-test-reporter after-build -t lcov -p $(pwd)/dist -d
-    - run:
         name: Upload Code Coverage to Codecov
         command: bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
+    - run:
+        name: Upload Code Coverage to CodeClimate
+        command: |
+          curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+          chmod +x ./cc-test-reporter
+          ./cc-test-reporter format-coverage -t lcov -o $(pwd)/dist/coverage/codeclimate.json $(pwd)/dist/coverage/lcov.info
+          ./cc-test-reporter upload-coverage -i $(pwd)/dist/coverage/codeclimate.json
 
 jobs:
   node-lts:
