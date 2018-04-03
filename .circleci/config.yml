@@ -69,9 +69,7 @@ references:
         command: yarn compile
     - run:
         name: Run Unit Tests
-        command: |
-          yarn test:ci
-          TEST_RESULT_CODE=$?
+        command: yarn test:ci && TEST_RESULT_CODE=$?
     - store_test_results:
           path: *test_path
     - store_artifacts:
