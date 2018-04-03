@@ -20,9 +20,9 @@ comment:
   require_head: yes
 
 ignore:
-  - "**/build/**",
-  - "**/dist/**",
+  - "**/build/**"
+  - "**/dist/**"
   - "**/generated/**"
-  - "**/mocks/**",
-  - "**/node_modules/**",
+  - "**/mocks/**"
+  - "**/node_modules/**"
   - "\\.test\\.ts$"

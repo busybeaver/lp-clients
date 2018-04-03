@@ -76,7 +76,7 @@ references:
         path: *test_path
     - run:
         name: Upload Code Coverage to CodeClimate
-        command: ./cc-test-reporter after-build -t lcov -p .dist
+        command: ./cc-test-reporter after-build -t lcov -p $(pwd)/dist -d
     - run:
         name: Upload Code Coverage to Codecov
         command: bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
