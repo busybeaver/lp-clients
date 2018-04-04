@@ -1,16 +1,20 @@
 import { get, post, request } from "./request";
 import nock from "nock";
 
-test("get functionality", async () => {
+const checkFunctionality = async (fn, nockFnName) => {
   const statusCode = 200;
-  nock("http://foo.bar").get("/test").reply(statusCode);
-  await expect(get("http://foo.bar/test")).resolves.toEqual(expect.objectContaining({ statusCode }));
+  nock("http://foo.bar")[nockFnName]("/test").reply(statusCode);
+  await expect(fn("http://foo.bar/test")).resolves.toEqual(expect.objectContaining({ statusCode }));
+};
+
+test("get functionality", async () => {
+  expect.hasAssertions();
+  await checkFunctionality(get, "get");
 });
 
 test("post functionality", async () => {
-  const statusCode = 200;
-  nock("http://foo.bar").post("/test").reply(statusCode);
-  await expect(post("http://foo.bar/test")).resolves.toEqual(expect.objectContaining({ statusCode }));
+  expect.hasAssertions();
+  await checkFunctionality(post, "post");
 });
 
 test("request functionality (retry with second request success)", async () => {
