@@ -1,4 +1,4 @@
-import { DefaultCsdsConfig, DefaultCsdsServiceConfig, ICsdsServiceConfig } from "./config";
+import { DefaultCsdsConfig, DefaultCsdsServiceConfig, ICsdsServiceConfig, ICsdsConfig } from "./config";
 
 const qaDomain = "hc1n.dev.lrnd.net";
 const prodDomain = "adminlogin.liveperson.net";
@@ -7,32 +7,30 @@ const accountId2 = "le123456";
 const testCsdsDomain = "foo.bar";
 const testService = "testService";
 
+const csdsConfigChecks = (config: ICsdsConfig, account: string, csdsDomain: string) => {
+  expect(config).toBeInstanceOf(DefaultCsdsConfig);
+  expect(config.accountId).toBe(account);
+  expect(config.csdsDomain).toBe(csdsDomain);
+};
+
 test("init DefaultCsdsConfig", () => {
   const config = new DefaultCsdsConfig({ accountId: accountId1, csdsDomain: testCsdsDomain });
-  expect(config).toBeInstanceOf(DefaultCsdsConfig);
-  expect(config.accountId).toBe(accountId1);
-  expect(config.csdsDomain).toBe(testCsdsDomain);
+  csdsConfigChecks(config, accountId1, testCsdsDomain);
 });
 
 test("init DefaultCsdsConfig", () => {
   const config = new DefaultCsdsConfig({ accountId: accountId1 });
-  expect(config).toBeInstanceOf(DefaultCsdsConfig);
-  expect(config.accountId).toBe(accountId1);
-  expect(config.csdsDomain).toBe(prodDomain);
+  csdsConfigChecks(config, accountId1, prodDomain);
 });
 
 test("init DefaultCsdsConfig", () => {
   const config = new DefaultCsdsConfig({ accountId: accountId2 });
-  expect(config).toBeInstanceOf(DefaultCsdsConfig);
-  expect(config.accountId).toBe(accountId2);
-  expect(config.csdsDomain).toBe(qaDomain);
+  csdsConfigChecks(config, accountId2, qaDomain);
 });
 
 const csdsServiceConfigChecks = (config: ICsdsServiceConfig, account: string, csdsDomain: string, service: string) => {
-  expect(config).toBeInstanceOf(DefaultCsdsConfig);
+  csdsConfigChecks(config, account, csdsDomain);
   expect(config).toBeInstanceOf(DefaultCsdsServiceConfig);
-  expect(config.accountId).toBe(account);
-  expect(config.csdsDomain).toBe(csdsDomain);
   expect(config.service).toBe(service);
 };
 

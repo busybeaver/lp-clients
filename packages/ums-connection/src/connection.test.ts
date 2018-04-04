@@ -4,8 +4,9 @@ import { IConnectionFactory, IConnectionOpts } from "@lp-libs/transport";
 import { IUserSession } from "@lp-libs/le-session-provider";
 import { AgentWsConnectionFactory, ConsumerWsConnectionFactory, BaseWsConnectionFactory } from "./connection";
 
-const baseChecks = (factory: IConnectionFactory<IUserSession>): IConnectionOpts<IUserSession> => {
+const baseChecks = (factory: IConnectionFactory<IUserSession>, implClass: new (...args: any[]) => IConnectionFactory<IUserSession>, endpointContaining: string) => {
   expect(factory).toBeInstanceOf(BaseWsConnectionFactory);
+  expect(factory).toBeInstanceOf(implClass);
 
   const connectionOpts = new MockConnectionOpts();
   expect(factory.headers).toBeFunction();
@@ -14,19 +15,16 @@ const baseChecks = (factory: IConnectionFactory<IUserSession>): IConnectionOpts<
   expect(factory.endpoint).toBeFunction();
   expect(factory.endpoint(connectionOpts)).toEqual(expect.stringContaining(connectionOpts.domain));
   expect(factory.endpoint(connectionOpts)).toEqual(expect.stringContaining(connectionOpts.session.accountId));
-  return connectionOpts;
+  expect(factory.endpoint(connectionOpts)).toEqual(expect.stringContaining(endpointContaining));
 };
 
 test("AgentWsConnectionFactory functionality", () => {
   const connectionFactory = new AgentWsConnectionFactory();
-  const connectionOpts = baseChecks(connectionFactory);
-  expect(connectionFactory).toBeInstanceOf(AgentWsConnectionFactory);
-  expect(connectionFactory.endpoint(connectionOpts)).toEqual(expect.stringContaining("brand"));
+  baseChecks(connectionFactory, AgentWsConnectionFactory, "brand");
+
 });
 
 test("ConsumerWsConnectionFactory functionality", () => {
   const connectionFactory = new ConsumerWsConnectionFactory();
-  const connectionOpts = baseChecks(connectionFactory);
-  expect(connectionFactory).toBeInstanceOf(ConsumerWsConnectionFactory);
-  expect(connectionFactory.endpoint(connectionOpts)).toEqual(expect.stringContaining("consumer"));
+  baseChecks(connectionFactory, ConsumerWsConnectionFactory, "consumer");
 });
