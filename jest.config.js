@@ -57,6 +57,15 @@ module.exports = {
           }],
         ],
         plugins: [
+          ["module-resolver", {
+            //"root": ["./packages"],
+            "cwd": __dirname,
+            "alias": {
+              "^@lp-libs/([^/]+)/mocks": "./packages/\\1/mocks",
+              "^@lp-libs/([^/]+)": "./packages/\\1/src",
+            },
+            "extensions": [".js", ".ts"],
+          }],
           "jest-hoist",
           "dynamic-import-node",
         ],
