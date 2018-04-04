@@ -24,6 +24,7 @@
     "test:watch": "yarn test --watch",
     "test:ci": "yarn test --ci",
     "compile": "lerna run compile --stream",
+    "clean": "trash ./dist ./packages/*/dist",
     "lint": "tslint -t codeFrame --exclude '**/node_modules/**' --exclude '**/dist/**' 'packages/**/*.ts'",
     "preinstall": "node -e \"if (!String(process.env.npm_execpath).includes('yarn')) {console.error('>>> Use yarn instead of npm: https://yarnpkg.com/');process.exit(1);}\"",
     "dependency-cost": "cost-of-modules --yarn --no-install"
@@ -60,6 +61,7 @@
     "pascal-case": "^2.0.1",
     "pino": "^4.14.0",
     "snake-case": "^2.1.0",
+    "trash-cli": "^1.4.0",
     "ts-jest": "^22.4.1",
     "ts-simple-ast": "^4.2.1",
     "tslint": "^5.9.1",
