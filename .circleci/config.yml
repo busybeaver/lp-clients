@@ -1,8 +1,16 @@
 version: 2
 
+# the "CC_TEST_REPORTER_ID" env variable is configured via CircleCI UI to hide the value
+
 references:
+  test_path: &test_path
+    reports/junit
+  test_filename: &test_filename
+    js-test-results.xml
   defaults: &defaults
     working_directory: ~/repo
+    environment:
+      - JEST_JUNIT_OUTPUT: "reports/junit/js-test-results.xml"
   defaults_node_lts: &defaults_node_lts
     <<: *defaults
     docker:
@@ -30,15 +38,46 @@ references:
       key: *cache_key
   default_steps: &default_steps
     - checkout
-    - run: curl -o- -L https://yarnpkg.com/install.sh | bash
-    - run: echo 'export PATH=$HOME/.yarn/bin:$PATH' >> $BASH_ENV
-    - run: node --version && npm --version && yarn --version
+    - run:
+        name: Setup Yarn
+        command: |
+          curl -o- -L https://yarnpkg.com/install.sh | bash &&
+          echo 'export PATH=$HOME/.yarn/bin:$PATH' >> $BASH_ENV
+    - run:
+        name: Display Versions
+        command: |
+          echo "Node Version = $(node --version)"
+          echo "npm Version = $(npm --version)"
+          echo "Yarn Version = $(yarn --version)"
     - *restore_dep_cache
-    - run: yarn install --no-progress --frozen-lockfile
+    - run:
+        name: Install Dependencies
+        command: yarn install --no-progress --frozen-lockfile
     - *save_dep_cache
-    - run: echo "Going to execute 'yarn $YARN_COMMAND'" && yarn $YARN_COMMAND
-  lint_step: &lint_step
-    lint
+    # TSLint is executed/checked via CodeClimate
+    # - run:
+    #     name: Run TSLint
+    #     command: yarn lint
+    - run:
+        name: Compile TypeScript
+        command: yarn compile
+    - run:
+        name: Run Unit Tests
+        command: yarn test:ci
+    - store_test_results:
+          path: *test_path
+    - store_artifacts:
+        path: *test_path
+    - run:
+        name: Upload Code Coverage to Codecov
+        command: bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
+    - run:
+        name: Upload Code Coverage to CodeClimate
+        command: |
+          curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+          chmod +x ./cc-test-reporter
+          ./cc-test-reporter format-coverage -t lcov -o $(pwd)/dist/coverage/codeclimate.json $(pwd)/dist/coverage/lcov.info
+          ./cc-test-reporter upload-coverage -i $(pwd)/dist/coverage/codeclimate.json
 
 jobs:
   node-lts:

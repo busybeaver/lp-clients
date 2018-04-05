@@ -1,6 +1,6 @@
 export interface IIDGenerator {
   // generate a random uuid
-  generateId: () => string;
+  generateId(): string;
 }
 
 // source: https://gist.github.com/jed/982883

@@ -25,7 +25,7 @@
   },
   "dependencies": {
     "@lp-libs/util-types": "^0.1.0",
-    "got": "^8.0.1"
+    "got": "^8.3.0"
   },
   "devDependencies": {
     "pkg-ok": "^2.1.0",

@@ -14,6 +14,8 @@ export interface ICsdsClientConfigBase {
 
 export type ICsdsClientConfig = Required<ICsdsClientConfigBase>;
 
+export const DEFAULT_CSDS_REFRESH_INTERVAL = 10 * 60 * 1000; // 10 min;
+
 export class DefaultCsdsClientConfig implements ICsdsClientConfig {
   public readonly csdsConfig: ICsdsConfig;
   public readonly csdsResolver: ICsdsResolver;
@@ -24,6 +26,6 @@ export class DefaultCsdsClientConfig implements ICsdsClientConfig {
     this.csdsConfig = config.csdsConfig;
     this.csdsResolver = config.csdsResolver;
     this.loggerFactory = config.loggerFactory;
-    this.refreshInterval = config.refreshInterval || 10 * 60 * 1000; // 10 min
+    this.refreshInterval = config.refreshInterval || DEFAULT_CSDS_REFRESH_INTERVAL;
   }
 }

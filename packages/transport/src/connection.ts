@@ -7,6 +7,6 @@ export interface IConnectionOpts<SessionType extends IUserSession> {
 
 // mark everything optional which has default settings in the default config
 export interface IConnectionFactory<SessionType extends IUserSession> {
-  endpoint: (opts: IConnectionOpts<SessionType>) => string;
-  headers: (opts: IConnectionOpts<SessionType>) => { [key: string]: string };
+  endpoint(opts: IConnectionOpts<SessionType>): string;
+  headers(opts: IConnectionOpts<SessionType>): { [key: string]: string };
 }

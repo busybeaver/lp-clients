@@ -3,5 +3,11 @@
   "compilerOptions": {
     "rootDir": "src",
     "outDir": "dist"
-  }
+  },
+  "exclude": [
+    "dist",
+    "mocks",
+    "node_modules",
+    "**/*.test.ts"
+  ]
 }
