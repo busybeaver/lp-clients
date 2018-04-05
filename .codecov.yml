@@ -1,5 +1,7 @@
+codecov:
+  strict_yaml_branch: master
+
 coverage:
-  # strict_yaml_branch: master
   precision: 2
   round: down
   range: "70...90"
