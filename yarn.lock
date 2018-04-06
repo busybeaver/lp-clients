@@ -4455,19 +4455,19 @@ pinkie@^2.0.0:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/pinkie/-/pinkie-2.0.4.tgz#72556b80cfa0d48a974e80e77248e80ed4f7f870"
 
-pino-std-serializers@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/pino-std-serializers/-/pino-std-serializers-1.0.0.tgz#7607ab8c5b7c32bf7c4dada149da4ce3c14a3b75"
+pino-std-serializers@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/pino-std-serializers/-/pino-std-serializers-2.0.0.tgz#63cbacf34bed8c95dd2c67eec824e48b8dd3445f"
 
-pino@^4.14.0:
-  version "4.14.0"
-  resolved "https://registry.yarnpkg.com/pino/-/pino-4.14.0.tgz#12f02b17173d6bf0763714fcab6000c04d304abe"
+pino@^4.16.0:
+  version "4.16.0"
+  resolved "https://registry.yarnpkg.com/pino/-/pino-4.16.0.tgz#a47bb276da0c5dc82ccc999ed34bb8acb5f594f0"
   dependencies:
     chalk "^2.3.2"
     fast-json-parse "^1.0.3"
     fast-safe-stringify "^1.2.3"
     flatstr "^1.0.5"
-    pino-std-serializers "^1.0.0"
+    pino-std-serializers "^2.0.0"
     pump "^3.0.0"
     quick-format-unescaped "^1.1.2"
     split2 "^2.2.0"
