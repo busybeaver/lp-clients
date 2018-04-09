@@ -1,0 +1,24 @@
+environment:
+  matrix:
+    # https://www.appveyor.com/docs/build-environment/#node-js
+    - nodejs_version: "Current"
+    - nodejs_version: "LTS"
+
+install:
+  - ps: Install-Product node $env:nodejs_version x64
+  # https://www.appveyor.com/docs/build-environment/#tools
+  # yarn is preinstalled on appveyor instances
+  - yarn install --no-progress --frozen-lockfile
+
+test_script:
+  - node --version
+  - npm --version
+  - yarn --version
+  - yarn compile
+  - yarn test:ci
+
+build: off
+
+cache:
+  - node_modules
+  - '%LOCALAPPDATA%/Yarn'
