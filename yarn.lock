@@ -3501,9 +3501,9 @@ json-schema-ref-parser@^4.0.4:
     js-yaml "^3.10.0"
     ono "^4.0.2"
 
-json-schema-ref-parser@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/json-schema-ref-parser/-/json-schema-ref-parser-5.0.0.tgz#448d6cd80742b31b4d95a9b5fdfc06c9e96f4617"
+json-schema-ref-parser@^5.0.2:
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/json-schema-ref-parser/-/json-schema-ref-parser-5.0.2.tgz#0089ca2eedaee2f447942c35fbfe1d4a5a43bc1e"
   dependencies:
     call-me-maybe "^1.0.1"
     debug "^3.1.0"
