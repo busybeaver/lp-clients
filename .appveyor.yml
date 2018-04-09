@@ -1,8 +1,10 @@
 environment:
+  global:
+    JEST_JUNIT_OUTPUT: .\dist\js-test-results.xml
   matrix:
     # https://www.appveyor.com/docs/build-environment/#node-js
-    - nodejs_version: "Current"
-    - nodejs_version: "LTS"
+    - nodejs_version: Current
+    - nodejs_version: LTS
 
 install:
   - ps: Install-Product node $env:nodejs_version x64
@@ -17,7 +19,15 @@ test_script:
   - yarn compile
   - yarn test:ci
 
+on_finish:
+  - ps: |
+      $wc = New-Object 'System.Net.WebClient'
+      $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path $($env:JEST_JUNIT_OUTPUT)))
+
 build: off
+shallow_clone: true
+matrix:
+  fast_finish: true
 
 cache:
   - node_modules
