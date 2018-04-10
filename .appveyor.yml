@@ -17,7 +17,7 @@ test_script:
   - npm --version
   - yarn --version
   - yarn compile
-  - yarn test:ci
+  - yarn test:ci --forceExit
 
 on_success:
   - ps: |
