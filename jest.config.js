@@ -10,7 +10,7 @@ module.exports = {
   },
   testMatch: [
     // '**/__tests__/**/*.ts',
-    '/**/?(*.)test.ts'
+    '**/?(*.)(spec|test).ts'
   ],
   moduleFileExtensions: [
     "ts",
