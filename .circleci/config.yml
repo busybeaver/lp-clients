@@ -18,7 +18,7 @@ references:
   defaults_node_stable: &defaults_node_stable
     <<: *defaults
     docker:
-      - image: node:latest
+      - image: node:latest # Latest Stable
   cache_key: &cache_key
     v3-dependencies-{{ .Branch }}-{{ checksum "yarn.lock" }}
   backup1_cache_key: &backup1_cache_key

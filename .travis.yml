@@ -12,6 +12,11 @@ env:
     - YARN_COMMAND="compile" # check if the TS code compiles
     - YARN_COMMAND="test:ci" # check if the unit tests succeed
     #- YARN_COMMAND="docs" # create documentation
+git:
+  submodules: false
+  depth: 3
+matrix:
+  fast_finish: true
 cache:
   yarn: true
 before_install:
