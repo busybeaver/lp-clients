@@ -12,7 +12,7 @@ import { join, basename, extname } from "path";
 import Ast, {
   SourceFile,
   Scope,
-  VariableDeclarationType,
+  VariableDeclarationKind,
   EnumDeclarationStructure,
   EnumMemberStructure,
   PropertySignatureStructure,
@@ -128,7 +128,7 @@ const commonData = (sourceFile: SourceFile, baseName: string, schema: any, inter
       name: `${capitalizedBaseName}Types`,
       initializer: `[${mappings.map(({ name }) => `"${name}"`).join(", ")}]`,
     }],
-    declarationType: VariableDeclarationType.Const,
+    declarationKind: VariableDeclarationKind.Const,
     isExported: true,
   };
   sourceFile.addVariableStatement(varConfig);
@@ -312,7 +312,7 @@ const generateGenericTypings: CodeGeneratorFn = (sourceFile) => {
       name: "Omit",
     }],
   };
-  sourceFile.addImport(zooImportConfig);
+  sourceFile.addImportDeclaration(zooImportConfig);
 
   const typedName = "ITyped";
   const typedInterfaceConfig: InterfaceDeclarationStructure = {
