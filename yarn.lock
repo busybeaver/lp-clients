@@ -107,13 +107,9 @@
   dependencies:
     "@types/node" "*"
 
-"@types/node@*":
-  version "8.0.53"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-8.0.53.tgz#396b35af826fa66aad472c8cb7b8d5e277f4e6d8"
-
-"@types/node@8.5.8":
-  version "8.5.8"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-8.5.8.tgz#92509422653f10e9c0ac18d87e0610b39f9821c7"
+"@types/node@*", "@types/node@9.6.2":
+  version "9.6.2"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-9.6.2.tgz#e49ac1adb458835e95ca6487bc20f916b37aff23"
 
 "@types/node@^8.0.50":
   version "8.5.1"
