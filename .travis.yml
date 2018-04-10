@@ -11,7 +11,7 @@ env:
     # - YARN_COMMAND="lint" # TSLint is executed/checked via CodeClimate
     - YARN_COMMAND="compile" # check if the TS code compiles
     - YARN_COMMAND="test:ci" # check if the unit tests succeed
-    #- YARN_COMMAND="docs" # create documentation
+
 git:
   submodules: false
   depth: 3
