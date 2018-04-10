@@ -1,5 +1,7 @@
 codecov:
   strict_yaml_branch: master
+  ci:
+    - !appveyor
 
 coverage:
   precision: 2

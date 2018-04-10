@@ -3,6 +3,7 @@ language: node_js
 node_js:
   - "lts/*" # using the latest node LTS version
   - "node" # using the latest node stable version
+
 env:
   global:
     # circle ci test reporter id
@@ -11,9 +12,15 @@ env:
     # - YARN_COMMAND="lint" # TSLint is executed/checked via CodeClimate
     - YARN_COMMAND="compile" # check if the TS code compiles
     - YARN_COMMAND="test:ci" # check if the unit tests succeed
-    #- YARN_COMMAND="docs" # create documentation
+
+git:
+  submodules: false
+  depth: 3
+matrix:
+  fast_finish: true
 cache:
   yarn: true
+
 before_install:
   # install the latest version of yarn
   - curl -o- -L https://yarnpkg.com/install.sh | bash

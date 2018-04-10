@@ -2,6 +2,7 @@
 
 [![Travis Build Status](https://travis-ci.org/busybeaver/lp-libs.svg?branch=master)](https://travis-ci.org/busybeaver/lp-libs)
 [![CircleCI Build Status](https://circleci.com/gh/busybeaver/lp-libs.svg?style=shield)](https://circleci.com/gh/busybeaver/lp-libs)
+[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/busybeaver/lp-libs?branch=master&svg=true)](https://ci.appveyor.com/project/busybeaver/lp-libs)
 [![CodeFactor](https://www.codefactor.io/repository/github/busybeaver/lp-libs/badge/master)](https://www.codefactor.io/repository/github/busybeaver/lp-libs/overview/master)
 [![Maintainability](https://api.codeclimate.com/v1/badges/6046092c94b7b4417a64/maintainability)](https://codeclimate.com/github/busybeaver/lp-libs/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/6046092c94b7b4417a64/test_coverage)](https://codeclimate.com/github/busybeaver/lp-libs/test_coverage)
