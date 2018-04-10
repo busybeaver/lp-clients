@@ -3,6 +3,7 @@ language: node_js
 node_js:
   - "lts/*" # using the latest node LTS version
   - "node" # using the latest node stable version
+
 env:
   global:
     # circle ci test reporter id
@@ -19,6 +20,7 @@ matrix:
   fast_finish: true
 cache:
   yarn: true
+
 before_install:
   # install the latest version of yarn
   - curl -o- -L https://yarnpkg.com/install.sh | bash
