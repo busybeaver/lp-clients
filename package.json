@@ -63,7 +63,7 @@
     "pascal-case": "^2.0.1",
     "pino": "^4.16.1",
     "snake-case": "^2.1.0",
-    "ts-jest": "^22.4.2",
+    "ts-jest": "^22.4.3",
     "ts-simple-ast": "^10.3.0",
     "tslint": "^5.9.1",
     "type-zoo": "^1.2.1",
