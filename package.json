@@ -64,7 +64,7 @@
     "pino": "^4.16.1",
     "snake-case": "^2.1.0",
     "ts-jest": "^22.4.3",
-    "ts-simple-ast": "^10.3.0",
+    "ts-simple-ast": "^10.3.2",
     "tslint": "^5.9.1",
     "type-zoo": "^1.2.1",
     "typescript": "^2.8.1"
