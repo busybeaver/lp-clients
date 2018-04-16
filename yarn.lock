@@ -5731,9 +5731,9 @@ ts-node@^5.0.1:
     source-map-support "^0.5.3"
     yn "^2.0.0"
 
-ts-simple-ast@^10.3.0:
-  version "10.3.0"
-  resolved "https://registry.yarnpkg.com/ts-simple-ast/-/ts-simple-ast-10.3.0.tgz#dc84753a7369b3c8dfa04ba3c42ecd5cbc75faec"
+ts-simple-ast@^10.3.2:
+  version "10.3.2"
+  resolved "https://registry.yarnpkg.com/ts-simple-ast/-/ts-simple-ast-10.3.2.tgz#e68e235d8bec6287a1cbf55f560568fdf7e5da45"
   dependencies:
     "@dsherret/to-absolute-glob" "^2.0.2"
     code-block-writer "6.13.0"
