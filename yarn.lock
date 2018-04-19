@@ -5731,9 +5731,9 @@ ts-node@^6.0.0:
     source-map-support "^0.5.3"
     yn "^2.0.0"
 
-ts-simple-ast@^10.3.3:
-  version "10.3.3"
-  resolved "https://registry.yarnpkg.com/ts-simple-ast/-/ts-simple-ast-10.3.3.tgz#45b94ac60647cfeb27fd6a6ab0bb9bf3f2f51714"
+ts-simple-ast@^10.4.0:
+  version "10.4.0"
+  resolved "https://registry.yarnpkg.com/ts-simple-ast/-/ts-simple-ast-10.4.0.tgz#bef8b02699959e69f662356c541f142bd8d56c4a"
   dependencies:
     "@dsherret/to-absolute-glob" "^2.0.2"
     code-block-writer "6.13.0"
@@ -5742,6 +5742,7 @@ ts-simple-ast@^10.3.3:
     is-negated-glob "^1.0.0"
     multimatch "^2.1.0"
     object-assign "^4.1.1"
+    tslib "^1.9.0"
     typescript "2.8.1"
 
 tslib@^1.7.1:
@@ -5751,6 +5752,10 @@ tslib@^1.7.1:
 tslib@^1.8.0:
   version "1.8.1"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.8.1.tgz#6946af2d1d651a7b1863b531d6e5afa41aa44eac"
+
+tslib@^1.9.0:
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.9.0.tgz#e37a86fda8cbbaf23a057f473c9f4dc64e5fc2e8"
 
 tslint@^5.9.1:
   version "5.9.1"
