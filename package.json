@@ -67,7 +67,7 @@
     "ts-simple-ast": "^10.4.0",
     "tslint": "^5.9.1",
     "type-zoo": "^1.2.1",
-    "typescript": "^2.8.1"
+    "typescript": "^2.8.3"
   },
   "engines": {
     "node": ">=8.9.0",
