@@ -58,7 +58,7 @@
     "json-schema-ref-parser": "^5.0.3",
     "json-schema-to-typescript": "^5.4.0",
     "jsonpath": "^1.0.0",
-    "lerna": "^2.10.2",
+    "lerna": "^2.11.0",
     "nock": "^9.2.5",
     "pascal-case": "^2.0.1",
     "pino": "^4.16.1",
