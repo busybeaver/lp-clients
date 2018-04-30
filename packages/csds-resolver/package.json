@@ -27,7 +27,7 @@
     "@lp-libs/csds-config": "^0.1.0"
   },
   "devDependencies": {
-    "pkg-ok": "^2.1.0",
+    "pkg-ok": "^2.2.0",
     "typescript": "^2.8.3"
   },
   "engines": {
