@@ -3578,9 +3578,9 @@ json-schema-ref-parser@^5.0.3:
     js-yaml "^3.11.0"
     ono "^4.0.3"
 
-json-schema-to-typescript@^5.4.0:
-  version "5.4.0"
-  resolved "https://registry.yarnpkg.com/json-schema-to-typescript/-/json-schema-to-typescript-5.4.0.tgz#5ec7b56b12296042eb63264b818e95cb73646655"
+json-schema-to-typescript@^5.5.0:
+  version "5.5.0"
+  resolved "https://registry.yarnpkg.com/json-schema-to-typescript/-/json-schema-to-typescript-5.5.0.tgz#1d49b279e8d448b23ef34c4f802f717fbc14c923"
   dependencies:
     "@types/cli-color" "^0.3.29"
     "@types/json-schema" "^4.0.0"
