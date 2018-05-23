@@ -27,7 +27,7 @@
     "@lp-libs/le-session-provider": "^0.1.0",
     "@lp-libs/logger": "^0.1.0",
     "@lp-libs/transport": "^0.1.0",
-    "async": "^2.6.0",
+    "async": "^2.6.1",
     "most": "^1.7.3",
     "ws": "^3.3.3"
   },
