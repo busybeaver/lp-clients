@@ -115,9 +115,9 @@
   version "8.5.1"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-8.5.1.tgz#4ec3020bcdfe2abffeef9ba3fbf26fca097514b5"
 
-"@types/pino@^4.7.1":
-  version "4.7.1"
-  resolved "https://registry.yarnpkg.com/@types/pino/-/pino-4.7.1.tgz#8f818f8cde5c2052aef6c68a4560347f86256805"
+"@types/pino@^4.16.0":
+  version "4.16.0"
+  resolved "https://registry.yarnpkg.com/@types/pino/-/pino-4.16.0.tgz#802d0e8d36009a39c5c9163634a3344073f04be5"
   dependencies:
     "@types/events" "*"
     "@types/node" "*"
