@@ -4699,9 +4699,9 @@ pino-std-serializers@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/pino-std-serializers/-/pino-std-serializers-2.0.0.tgz#63cbacf34bed8c95dd2c67eec824e48b8dd3445f"
 
-pino@^4.17.1:
-  version "4.17.1"
-  resolved "https://registry.yarnpkg.com/pino/-/pino-4.17.1.tgz#cb586a99388e8edfa7eb917471dded9e4bbaafa2"
+pino@^4.17.2:
+  version "4.17.2"
+  resolved "https://registry.yarnpkg.com/pino/-/pino-4.17.2.tgz#d4d0410c4d862d9caa7b6c8c3ded6d6bb144c98f"
   dependencies:
     chalk "^2.4.1"
     fast-json-parse "^1.0.3"
@@ -5917,7 +5917,7 @@ typescript@2.8.1:
   version "2.8.1"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.8.1.tgz#6160e4f8f195d5ba81d4876f9c0cc1fbc0820624"
 
-typescript@2.8.4, typescript@^2.8.4:
+typescript@^2.8.4:
   version "2.8.4"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.8.4.tgz#0b1db68e6bdfb0b767fa2ab642136a35b059b199"
 
