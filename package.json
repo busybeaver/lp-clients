@@ -59,7 +59,7 @@
     "json-schema-to-typescript": "^5.5.0",
     "jsonpath": "^1.0.0",
     "lerna": "^2.11.0",
-    "nock": "^9.2.6",
+    "nock": "^9.3.0",
     "pascal-case": "^2.0.1",
     "pino": "^4.17.1",
     "snake-case": "^2.1.0",
