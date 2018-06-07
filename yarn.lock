@@ -134,9 +134,9 @@
   dependencies:
     "@types/node" "*"
 
-"@types/ws@^4.0.2":
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/@types/ws/-/ws-4.0.2.tgz#b29037627dd7ba31ec49a4f1584840422efb856f"
+"@types/ws@^5.1.1":
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/@types/ws/-/ws-5.1.1.tgz#4adc1f1a5e92e7e0e95658fb35c7eab1bc52f4ac"
   dependencies:
     "@types/events" "*"
     "@types/node" "*"
