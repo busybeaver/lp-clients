@@ -26,7 +26,7 @@
   "dependencies": {
     "@lp-libs/csds-config": "^0.1.0",
     "@lp-libs/csds-simple-resolver": "^0.1.0",
-    "mem": "^3.0.0"
+    "mem": "^3.0.1"
   },
   "devDependencies": {
     "pkg-ok": "^2.2.0",
