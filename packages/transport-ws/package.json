@@ -29,7 +29,7 @@
     "@lp-libs/transport": "^0.1.0",
     "async": "^2.6.1",
     "most": "^1.7.3",
-    "ws": "^3.3.3"
+    "ws": "^5.2.2"
   },
   "devDependencies": {
     "pkg-ok": "^2.2.0",
