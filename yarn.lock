@@ -5772,9 +5772,9 @@ type-detect@^4.0.0:
   version "4.0.8"
   resolved "https://registry.yarnpkg.com/type-detect/-/type-detect-4.0.8.tgz#7646fb5f18871cfbb7749e69bd39a6388eb7450c"
 
-type-zoo@^1.1.1, type-zoo@^1.2.1:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/type-zoo/-/type-zoo-1.2.1.tgz#978f2a825fef06f440718fa4671adf917e8b16cb"
+type-zoo@3.1.0, type-zoo@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/type-zoo/-/type-zoo-3.1.0.tgz#984cf7b60235129aebfd7207b79a0afd02f5c841"
 
 typedarray@^0.0.6:
   version "0.0.6"

@@ -66,7 +66,7 @@
     "ts-jest": "^23.0.1",
     "ts-simple-ast": "^10.5.0",
     "tslint": "^5.10.0",
-    "type-zoo": "^1.2.1",
+    "type-zoo": "^3.1.0",
     "typescript": "^2.8.4"
   },
   "engines": {
