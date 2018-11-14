@@ -29,7 +29,7 @@
     "@lp-libs/util-request": "^0.1.0",
     "@lp-libs/util-types": "^0.1.0",
     "got": "^8.3.2",
-    "type-zoo": "^1.1.1"
+    "type-zoo": "^3.2.1"
   },
   "devDependencies": {
     "pkg-ok": "^2.2.0",
