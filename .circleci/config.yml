@@ -1,4 +1,4 @@
-version: 2
+version: 2.1
 
 # the "CC_TEST_REPORTER_ID" env variable is configured via CircleCI UI to hide the value
 
