@@ -48,7 +48,7 @@
     "babel-preset-env": "^1.7.0",
     "cost-of-modules": "^1.0.1",
     "del-cli": "^1.1.0",
-    "expect-more-jest": "^1.0.1",
+    "expect-more-jest": "^2.3.0",
     "fs-extra": "^7.0.0",
     "is-ci": "^1.1.0",
     "jest": "^23.2.0",
