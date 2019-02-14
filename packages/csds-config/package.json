@@ -24,7 +24,7 @@
     "prepack": "yarn compile && pkg-ok"
   },
   "dependencies": {
-    "type-zoo": "^1.1.1"
+    "type-zoo": "^3.3.0"
   },
   "devDependencies": {
     "pkg-ok": "^2.2.0",
