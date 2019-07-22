@@ -28,7 +28,7 @@
     "@lp-libs/csds-resolver": "^0.1.0",
     "@lp-libs/logger": "^0.1.0",
     "javascript-state-machine": "^3.0.1",
-    "type-zoo": "^1.1.1"
+    "type-zoo": "^3.4.0"
   },
   "devDependencies": {
     "pkg-ok": "^2.2.0",
