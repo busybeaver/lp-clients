@@ -27,7 +27,7 @@
     "@lp-libs/le-client": "^0.1.0",
     "@lp-libs/le-session-provider": "^0.1.0",
     "@lp-libs/transport": "^0.1.0",
-    "type-zoo": "^1.1.1"
+    "type-zoo": "^3.4.1"
   },
   "devDependencies": {
     "pkg-ok": "^2.2.0",
