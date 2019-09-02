@@ -134,11 +134,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/ws@^4.0.2":
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/@types/ws/-/ws-4.0.2.tgz#b29037627dd7ba31ec49a4f1584840422efb856f"
+"@types/ws@^6.0.3":
+  version "6.0.3"
+  resolved "https://registry.yarnpkg.com/@types/ws/-/ws-6.0.3.tgz#b772375ba59d79066561c8d87500144d674ba6b3"
   dependencies:
-    "@types/events" "*"
     "@types/node" "*"
 
 JSONSelect@0.4.0:
