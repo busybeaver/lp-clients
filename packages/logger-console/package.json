@@ -29,7 +29,7 @@
   },
   "devDependencies": {
     "pkg-ok": "^2.2.0",
-    "typescript": "^2.8.4"
+    "typescript": "^3.6.3"
   },
   "engines": {
     "node": ">=8.9.0",
